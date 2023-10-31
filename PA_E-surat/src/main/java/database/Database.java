@@ -13,7 +13,7 @@ public class Database {
         Connection conn = null;
         try {
             String dbHost = "localhost";
-            String dbName = "e-suratdata";
+            String dbName = "database_e_surat";
             String dbUser = "root";
             String dbPass = "";
 
@@ -40,33 +40,10 @@ public class Database {
             System.out.println("Failed to close the database.");
         }
     }
-    
-//    public String[] retrieveData(String nim) {
-//        try {
-//            String[] data = new String[2]; // Assuming there are 2 values to retrieve (nim and nama_mahasiswa)
-//            String sql = "SELECT NIM, Nama_Mahasiswa FROM data_diri WHERE NIM = ?";
-//            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-//            preparedStatement.setString(1, nim);
-//            ResultSet resultSet = preparedStatement.executeQuery();
-//
-//            if (resultSet.next()) {
-//                data[0] = resultSet.getString("NIM");
-//                data[1] = resultSet.getString("Nama_Mahasiswa");
-//                return data;
-//            } else {
-//                return null;
-//            }
-//        } catch (SQLException e) {
-//            // Handle the exception appropriately
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
-
 
     public Object[] retrieveData(String nim) {
         try {
-            String[] data = new String[10]; // Array to store the data for all columns
+            String[] data = new String[10];
             String sql = "SELECT * FROM data_diri WHERE NIM = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, nim);
@@ -83,28 +60,26 @@ public class Database {
                 data[7] = resultSet.getString("Semester");
                 data[8] = resultSet.getString("Alamat");
                 data[9] = resultSet.getString("TTL");
-                return data; // Return the data as an array
+                return data; 
             }
         } catch (SQLException e) {
-            // Handle the error appropriately
         }
-        return null; // Return null if nim is not found
+        return null;
     }
-
 
 
     public boolean checkLogin(String id_pengguna, String password) {
         try {
-            String sql = "SELECT * FROM mahasiswa WHERE ID_Pengguna = ? AND Password = ?";
+            String sql = "SELECT * FROM pengguna WHERE ID_Pengguna = ? AND Password = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, id_pengguna);
             preparedStatement.setString(2, password);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            return resultSet.next(); // True if login is successful, false if not
+            return resultSet.next();
         } catch (SQLException e) {
-            return false;  // Handle the error appropriately
+            return false; 
         }
     }
 
