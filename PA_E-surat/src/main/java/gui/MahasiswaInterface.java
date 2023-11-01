@@ -1,6 +1,7 @@
 package gui;
 
 import database.Database;
+import entitas.DataMahasiswa;
 import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.util.Arrays;
@@ -87,6 +88,9 @@ public class MahasiswaInterface extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         changeButton = new javax.swing.JButton();
         suratPanel = new javax.swing.JPanel();
+        buatSuratButton = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -384,6 +388,7 @@ public class MahasiswaInterface extends javax.swing.JFrame {
         alamatRumah.setText("Alamat");
         alamatRumah.setToolTipText("");
         alamatRumah.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        alamatRumah.setMaximumSize(new java.awt.Dimension(100, 100));
 
         tempatTanggalLahir.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         tempatTanggalLahir.setForeground(new java.awt.Color(51, 51, 51));
@@ -412,80 +417,78 @@ public class MahasiswaInterface extends javax.swing.JFrame {
             .addGroup(bioData1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(bioData1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bioData1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jLabel3)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 831, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(33, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bioData1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(bioData1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(bioData1Layout.createSequentialGroup()
+                        .addComponent(jLabel19)
+                        .addGap(97, 97, 97)
+                        .addComponent(jLabel30)
+                        .addGap(27, 27, 27)
+                        .addComponent(kontakNomor))
+                    .addGroup(bioData1Layout.createSequentialGroup()
+                        .addComponent(jLabel20)
+                        .addGap(84, 84, 84)
+                        .addComponent(jLabel31)
+                        .addGap(27, 27, 27)
+                        .addComponent(angkatanTahun))
+                    .addGroup(bioData1Layout.createSequentialGroup()
+                        .addComponent(jLabel21)
+                        .addGap(83, 83, 83)
+                        .addComponent(jLabel32)
+                        .addGap(27, 27, 27)
+                        .addComponent(semesterTahun))
+                    .addGroup(bioData1Layout.createSequentialGroup()
+                        .addComponent(jLabel22)
+                        .addGap(98, 98, 98)
+                        .addComponent(jLabel33)
+                        .addGap(27, 27, 27)
+                        .addComponent(alamatRumah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(bioData1Layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
                         .addGroup(bioData1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(bioData1Layout.createSequentialGroup()
-                                .addComponent(jLabel19)
-                                .addGap(97, 97, 97)
-                                .addComponent(jLabel30)
+                                .addComponent(jLabel15)
+                                .addGap(54, 54, 54)
+                                .addComponent(jLabel27)
                                 .addGap(27, 27, 27)
-                                .addComponent(kontakNomor))
+                                .addComponent(programStudi))
                             .addGroup(bioData1Layout.createSequentialGroup()
-                                .addComponent(jLabel20)
-                                .addGap(84, 84, 84)
-                                .addComponent(jLabel31)
+                                .addComponent(jLabel16)
+                                .addGap(60, 60, 60)
+                                .addComponent(jLabel28)
                                 .addGap(27, 27, 27)
-                                .addComponent(angkatanTahun))
+                                .addComponent(jenjangStudi))
                             .addGroup(bioData1Layout.createSequentialGroup()
-                                .addComponent(jLabel21)
-                                .addGap(83, 83, 83)
-                                .addComponent(jLabel32)
+                                .addComponent(jLabel17)
+                                .addGap(115, 115, 115)
+                                .addComponent(jLabel29)
                                 .addGap(27, 27, 27)
-                                .addComponent(semesterTahun))
+                                .addComponent(ipkMahasiswa))
                             .addGroup(bioData1Layout.createSequentialGroup()
-                                .addComponent(jLabel22)
-                                .addGap(98, 98, 98)
-                                .addComponent(jLabel33)
+                                .addComponent(jLabel13)
+                                .addGap(52, 52, 52)
+                                .addComponent(jLabel25)
                                 .addGap(27, 27, 27)
-                                .addComponent(alamatRumah))
+                                .addComponent(namaLengkap))
                             .addGroup(bioData1Layout.createSequentialGroup()
-                                .addComponent(jLabel23)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel34)
+                                .addComponent(jLabel14)
+                                .addGap(111, 111, 111)
+                                .addComponent(jLabel26)
                                 .addGap(27, 27, 27)
-                                .addComponent(tempatTanggalLahir))
-                            .addGroup(bioData1Layout.createSequentialGroup()
-                                .addGap(3, 3, 3)
-                                .addGroup(bioData1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(bioData1Layout.createSequentialGroup()
-                                        .addComponent(jLabel15)
-                                        .addGap(54, 54, 54)
-                                        .addComponent(jLabel27)
-                                        .addGap(27, 27, 27)
-                                        .addComponent(programStudi))
-                                    .addGroup(bioData1Layout.createSequentialGroup()
-                                        .addComponent(jLabel16)
-                                        .addGap(60, 60, 60)
-                                        .addComponent(jLabel28)
-                                        .addGap(27, 27, 27)
-                                        .addComponent(jenjangStudi))
-                                    .addGroup(bioData1Layout.createSequentialGroup()
-                                        .addComponent(jLabel17)
-                                        .addGap(115, 115, 115)
-                                        .addComponent(jLabel29)
-                                        .addGap(27, 27, 27)
-                                        .addComponent(ipkMahasiswa))
-                                    .addGroup(bioData1Layout.createSequentialGroup()
-                                        .addComponent(jLabel13)
-                                        .addGap(52, 52, 52)
-                                        .addComponent(jLabel25)
-                                        .addGap(27, 27, 27)
-                                        .addComponent(namaLengkap))
-                                    .addGroup(bioData1Layout.createSequentialGroup()
-                                        .addComponent(jLabel14)
-                                        .addGap(111, 111, 111)
-                                        .addComponent(jLabel26)
-                                        .addGap(27, 27, 27)
-                                        .addComponent(nimNomor)))))
-                        .addGap(158, 158, 158))
+                                .addComponent(nimNomor))))
                     .addGroup(bioData1Layout.createSequentialGroup()
-                        .addGroup(bioData1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jLabel23)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel34)
+                        .addGap(27, 27, 27)
+                        .addGroup(bioData1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(changeButton)
-                            .addGroup(bioData1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel3)
-                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 831, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(33, Short.MAX_VALUE))))
+                            .addComponent(tempatTanggalLahir))))
+                .addGap(199, 199, 199))
         );
         bioData1Layout.setVerticalGroup(
             bioData1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -494,7 +497,7 @@ public class MahasiswaInterface extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addGap(27, 27, 27)
                 .addGroup(bioData1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel25)
                     .addGroup(bioData1Layout.createSequentialGroup()
@@ -565,7 +568,7 @@ public class MahasiswaInterface extends javax.swing.JFrame {
                         .addGap(6, 6, 6)
                         .addGroup(bioData1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel22)
-                            .addComponent(alamatRumah))))
+                            .addComponent(alamatRumah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(12, 12, 12)
                 .addGroup(bioData1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel34)
@@ -574,7 +577,7 @@ public class MahasiswaInterface extends javax.swing.JFrame {
                         .addGroup(bioData1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel23)
                             .addComponent(tempatTanggalLahir))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(changeButton)
                 .addGap(16, 16, 16))
         );
@@ -589,6 +592,33 @@ public class MahasiswaInterface extends javax.swing.JFrame {
         suratPanel.setName(""); // NOI18N
         suratPanel.setPreferredSize(new java.awt.Dimension(960, 578));
         suratPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        buatSuratButton.setBackground(new java.awt.Color(255, 153, 51));
+        buatSuratButton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        buatSuratButton.setForeground(new java.awt.Color(255, 255, 255));
+        buatSuratButton.setText("Buat Surat");
+        buatSuratButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buatSuratButtonActionPerformed(evt);
+            }
+        });
+        suratPanel.add(buatSuratButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 20, -1, -1));
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        suratPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 50, 620, 260));
+
         pnlCards.add(suratPanel, "card2");
 
         javax.swing.GroupLayout backgroundLayout = new javax.swing.GroupLayout(background);
@@ -622,7 +652,8 @@ public class MahasiswaInterface extends javax.swing.JFrame {
         // TODO add your handling code here:
         cardLayout.show(pnlCards, "pnlCard1");
         String nimToCheck = roleChecker;
-        String[] data = (String[]) database.retrieveData(nimToCheck);
+        DataMahasiswa dataMahasiswa = new DataMahasiswa();
+        String[] data = dataMahasiswa.retrieveData(nimToCheck); // Use dataMahasiswa to call retrieveData
 
         if (data != null) {
             System.out.println("NIM: " + Arrays.toString(data));
@@ -659,7 +690,35 @@ public class MahasiswaInterface extends javax.swing.JFrame {
 
     private void changeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeButtonActionPerformed
         // TODO add your handling code here:
+//        String newNIM = nimTextField.getText();
+//        String newNama = namaTextField.getText();
+//        String newProdi = prodiTextField.getText();
+//        // and so on for other fields
+//
+//        // Create or retrieve a DataMahasiswa object
+//        DataMahasiswa dataMahasiswa = new DataMahasiswa();
+//
+//        // Set the updated values in the DataMahasiswa object
+//        dataMahasiswa.setNIM(newNIM);
+//        dataMahasiswa.setNamaMahasiswa(newNama);
+//        dataMahasiswa.setProdi(newProdi);
+//        // and so on for other fields
+//
+//        // Call the updateData method to update the database
+//        boolean updateSuccessful = dataMahasiswa.updateData();
+//
+//        if (updateSuccessful) {
+//            // Data was successfully updated
+//            System.out.println("Data updated successfully.");
+//        } else {
+//            // Update failed
+//            System.out.println("Data update failed.");
+//        }
     }//GEN-LAST:event_changeButtonActionPerformed
+
+    private void buatSuratButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buatSuratButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buatSuratButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -702,6 +761,7 @@ public class MahasiswaInterface extends javax.swing.JFrame {
     private javax.swing.JLabel angkatanTahun;
     private javax.swing.JPanel background;
     private javax.swing.JPanel bioData1;
+    private javax.swing.JButton buatSuratButton;
     private javax.swing.JButton changeButton;
     private javax.swing.JLabel ipkMahasiswa;
     private javax.swing.JLabel jLabel13;
@@ -727,6 +787,8 @@ public class MahasiswaInterface extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JLabel jenjangStudi;
     private javax.swing.JLabel kontakNomor;
     private javax.swing.JLabel mahasiswaText;

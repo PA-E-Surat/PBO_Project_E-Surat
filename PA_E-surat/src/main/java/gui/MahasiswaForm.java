@@ -1,8 +1,8 @@
 package gui;
 
 import database.Database;
+import entitas.DataMahasiswa;
 import java.awt.Color;
-
 
 /**
  *
@@ -10,7 +10,7 @@ import java.awt.Color;
  */
 public class MahasiswaForm extends javax.swing.JFrame {
     final Database database;
-    private Object mahasiswaInterface;
+    private  DataMahasiswa dataMahasiswa;
  
     public MahasiswaForm() {
         initComponents();
@@ -198,7 +198,10 @@ public class MahasiswaForm extends javax.swing.JFrame {
             popError.setText("• Nim tidak boleh kosong\n• Password tidak boleh kosong");
             popError.setVisible(true);
         } else {
-            if (database.checkLogin(nim, password)) {
+            DataMahasiswa data = new DataMahasiswa(); // Create an instance of DataMahasiswa
+            data.openConnection(); // Assuming this method opens the connection
+
+            if (data.checkLogin(nim, password)) { // Call checkLogin on the DataMahasiswa instance
                 MahasiswaInterface mahasiswaInterface = new MahasiswaInterface(nim);
                 mahasiswaInterface.setVisible(true);
                 popError.setVisible(false);
@@ -207,6 +210,8 @@ public class MahasiswaForm extends javax.swing.JFrame {
                 popError.setText("• Login gagal, silahkan cek kembali nim dan password");
                 popError.setVisible(true);
             }
+
+            data.closeConnection(); // Close the connection
         }
     }//GEN-LAST:event_signButtonActionPerformed
 

@@ -6,11 +6,13 @@ database\Database.class
 gui\MahasiswaForm$3.class
 controller\Main$Model.class
 gui\MahasiswaInterface$2.class
+gui\MahasiswaInterface$5.class
 gui\MahasiswaForm$6.class
 gui\StaffForm$1.class
 gui\MahasiswaInterface.class
 gui\StaffForm.class
 gui\MahasiswaForm.class
+database\Data.class
 controller\Controller.class
 gui\MahasiswaInterface$3.class
 gui\StaffForm$2.class
@@ -18,6 +20,7 @@ gui\MahasiswaForm$2.class
 gui\StaffForm$5.class
 gui\ChooseLogin$2.class
 gui\ChooseLogin.class
+entitas\DataMahasiswa.class
 gui\MahasiswaForm$5.class
 gui\MahasiswaInterface$4.class
 gui\StaffForm$3.class
