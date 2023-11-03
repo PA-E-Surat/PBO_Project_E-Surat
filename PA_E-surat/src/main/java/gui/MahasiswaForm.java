@@ -1,7 +1,8 @@
 package gui;
 
 import database.Database;
-import entitas.DataMahasiswa;
+import entitas.DataDiri;
+import entitas.Pengguna;
 import java.awt.Color;
 
 /**
@@ -10,7 +11,7 @@ import java.awt.Color;
  */
 public class MahasiswaForm extends javax.swing.JFrame {
     final Database database;
-    private  DataMahasiswa dataMahasiswa;
+    private  DataDiri dataMahasiswa;
  
     public MahasiswaForm() {
         initComponents();
@@ -66,7 +67,7 @@ public class MahasiswaForm extends javax.swing.JFrame {
         frameName.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         frameName.setText("E-Surat Fakultas Teknik UNMUL");
         frameName.setBorder(null);
-        background1.add(frameName, new org.netbeans.lib.awtextra.AbsoluteConstraints(288, 220, 390, -1));
+        background1.add(frameName, new org.netbeans.lib.awtextra.AbsoluteConstraints(298, 220, 370, -1));
 
         warningText.setEditable(false);
         warningText.setBackground(new java.awt.Color(255, 153, 0));
@@ -198,10 +199,11 @@ public class MahasiswaForm extends javax.swing.JFrame {
             popError.setText("• Nim tidak boleh kosong\n• Password tidak boleh kosong");
             popError.setVisible(true);
         } else {
-            DataMahasiswa data = new DataMahasiswa(); // Create an instance of DataMahasiswa
-            data.openConnection(); // Assuming this method opens the connection
+            Pengguna data = new Pengguna(nim, password);
 
-            if (data.checkLogin(nim, password)) { // Call checkLogin on the DataMahasiswa instance
+            data.openConnection();
+
+            if (data.readData()) {
                 MahasiswaInterface mahasiswaInterface = new MahasiswaInterface(nim);
                 mahasiswaInterface.setVisible(true);
                 popError.setVisible(false);
@@ -211,7 +213,7 @@ public class MahasiswaForm extends javax.swing.JFrame {
                 popError.setVisible(true);
             }
 
-            data.closeConnection(); // Close the connection
+            data.closeConnection();
         }
     }//GEN-LAST:event_signButtonActionPerformed
 

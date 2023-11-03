@@ -1,13 +1,14 @@
 package gui;
 
-
 import java.awt.Dimension;
 
 public class ChooseLogin extends javax.swing.JFrame {
     private MahasiswaForm mahasiswaForm;
+    private StaffForm staffForm;
     public ChooseLogin() {
         initComponents();
         mahasiswaForm = new MahasiswaForm();
+        staffForm = new StaffForm();
         this.setPreferredSize(new Dimension(800, 600));
     }
 
@@ -84,16 +85,14 @@ public class ChooseLogin extends javax.swing.JFrame {
 
     private void loginNonMahasiswaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginNonMahasiswaActionPerformed
         // TODO add your handling code here:
+        staffForm.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_loginNonMahasiswaActionPerformed
 
     private void loginMahasiswaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginMahasiswaActionPerformed
         // TODO add your handling code here:
-
-        // Make the MahasiswaForm visible
         mahasiswaForm.setVisible(true);
-
-        // Close the ChooseLogin form (if needed)
-        this.dispose(); // This will close the current form
+        this.dispose();
     }//GEN-LAST:event_loginMahasiswaActionPerformed
 
     /**

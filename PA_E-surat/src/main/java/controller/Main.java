@@ -3,6 +3,11 @@ package controller;
 import gui.ChooseLogin;
 import java.awt.Dimension;
 
+/**
+ *
+ * @author Udinkosd
+ */
+
 public class Main {
     public static void main(String[] args) {
         ChooseLogin chooseLogin = new ChooseLogin();

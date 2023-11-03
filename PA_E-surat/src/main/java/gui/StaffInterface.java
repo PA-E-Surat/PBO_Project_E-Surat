@@ -7,8 +7,6 @@ import entitas.Pengajuan;
 import entitas.RiwayatSurat;
 import java.awt.CardLayout;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Arrays;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
@@ -19,17 +17,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JButton;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
-
-
-/**
- *
- * @author Footdua
- */
-public class MahasiswaInterface extends javax.swing.JFrame {
+public class StaffInterface extends javax.swing.JFrame {
     final Database database;
     private final String roleChecker;
     RiwayatSurat riwayatSurat = new RiwayatSurat();
@@ -38,13 +27,8 @@ public class MahasiswaInterface extends javax.swing.JFrame {
     private String peruntukan;
     private String mahasiswaNim;
     private String checkNim;
-    private JPanel suratButtonPanel;
-    /**
-     * Creates new form MahasiswaInterface
-     * @param roleChecker
-     */
-    
-    public MahasiswaInterface(String roleChecker) {
+
+    public StaffInterface(String roleChecker) {
         initComponents();
         database = new Database();
         this.roleChecker = roleChecker;
@@ -56,7 +40,6 @@ public class MahasiswaInterface extends javax.swing.JFrame {
         Navigation.setPreferredSize(new Dimension(50, 520)); 
         Navigation.setVisible(true);
         cardLayout = (CardLayout) (pnlCards.getLayout());
-        suratButtonPanel = new JPanel();
     }
     
      public void setPeruntukan(String peruntukan) {
@@ -87,7 +70,6 @@ public class MahasiswaInterface extends javax.swing.JFrame {
         }
         suratTabel.setModel(model);
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -101,6 +83,7 @@ public class MahasiswaInterface extends javax.swing.JFrame {
         Navigation = new javax.swing.JPanel();
         profil = new javax.swing.JButton();
         surat = new javax.swing.JButton();
+        dashboard = new javax.swing.JButton();
         orangePanel = new javax.swing.JPanel();
         navButton = new javax.swing.JButton();
         mahasiswaText = new javax.swing.JLabel();
@@ -110,7 +93,7 @@ public class MahasiswaInterface extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         suratPanel = new javax.swing.JPanel();
         buatSuratButton = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPane2 = new javax.swing.JScrollPane();
         suratTabel = new javax.swing.JTable();
         profilPanel = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
@@ -203,13 +186,13 @@ public class MahasiswaInterface extends javax.swing.JFrame {
                 profilActionPerformed(evt);
             }
         });
-        Navigation.add(profil, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 0, 140, -1));
+        Navigation.add(profil, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 40, 140, -1));
 
         surat.setBackground(new java.awt.Color(51, 51, 51));
         surat.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         surat.setForeground(new java.awt.Color(51, 51, 51));
-        surat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/messageIcon.png"))); // NOI18N
-        surat.setText("Surat");
+        surat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/dashIcon.png"))); // NOI18N
+        surat.setText("Home");
         surat.setBorderPainted(false);
         surat.setContentAreaFilled(false);
         surat.setIconTextGap(16);
@@ -219,7 +202,23 @@ public class MahasiswaInterface extends javax.swing.JFrame {
                 suratActionPerformed(evt);
             }
         });
-        Navigation.add(surat, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 40, 140, -1));
+        Navigation.add(surat, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 80, -1));
+
+        dashboard.setBackground(new java.awt.Color(51, 51, 51));
+        dashboard.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        dashboard.setForeground(new java.awt.Color(51, 51, 51));
+        dashboard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/messageIcon.png"))); // NOI18N
+        dashboard.setText("Surat");
+        dashboard.setBorderPainted(false);
+        dashboard.setContentAreaFilled(false);
+        dashboard.setIconTextGap(16);
+        dashboard.setInheritsPopupMenu(true);
+        dashboard.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dashboardActionPerformed(evt);
+            }
+        });
+        Navigation.add(dashboard, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 80, 140, -1));
 
         orangePanel.setBackground(new java.awt.Color(255, 153, 51));
         orangePanel.setMaximumSize(new java.awt.Dimension(970, 60));
@@ -237,7 +236,7 @@ public class MahasiswaInterface extends javax.swing.JFrame {
 
         mahasiswaText.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         mahasiswaText.setForeground(new java.awt.Color(255, 255, 255));
-        mahasiswaText.setText("MAHASISWA");
+        mahasiswaText.setText("DASHBOARD");
 
         javax.swing.GroupLayout orangePanelLayout = new javax.swing.GroupLayout(orangePanel);
         orangePanel.setLayout(orangePanelLayout);
@@ -273,13 +272,13 @@ public class MahasiswaInterface extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel1.setText("SELAMAT DATANG");
+        jLabel1.setText("DASHBOARD");
         welcomePanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 150, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel2.setText("Klik menu surat untuk membuat pengajuan");
-        welcomePanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 210, -1, -1));
+        jLabel2.setText("Selamat datang,");
+        welcomePanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 210, -1, -1));
 
         pnlCards.add(welcomePanel, "card2");
 
@@ -328,9 +327,9 @@ public class MahasiswaInterface extends javax.swing.JFrame {
         suratTabel.setShowGrid(true);
         suratTabel.getTableHeader().setResizingAllowed(false);
         suratTabel.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(suratTabel);
+        jScrollPane2.setViewportView(suratTabel);
 
-        suratPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 50, 620, 300));
+        suratPanel.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 50, 620, 300));
 
         pnlCards.add(suratPanel, "card2");
 
@@ -566,7 +565,7 @@ public class MahasiswaInterface extends javax.swing.JFrame {
                 .addGroup(profilPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 831, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(123, Short.MAX_VALUE))
+                .addContainerGap(55, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, profilPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(profilPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -934,58 +933,55 @@ public class MahasiswaInterface extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        getContentPane().add(background, java.awt.BorderLayout.CENTER);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 960, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(background, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 592, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(background, javax.swing.GroupLayout.PREFERRED_SIZE, 592, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
-    private void showData() {
-        String nimToCheck = roleChecker;
-        DataDiri dataMahasiswa = new DataDiri();
-        String[] data = dataMahasiswa.readData(nimToCheck);
-        
-        if (data != null) {
-            System.out.println("NIM: " + Arrays.toString(data));
-            namaLengkap.setText((String) data[0]);
-            nimNomor.setText((String) data[1]);
-            programStudi.setText((String) data[2]);
-            jenjangStudi.setText((String) data[3]);
-            ipkMahasiswa.setText((String) data[4]);
-            kontakNomor.setText((String) data[5]);
-            angkatanTahun.setText((String) data[6]);
-            semesterTahun.setText((String) data[7]);
-            alamatRumah.setText((String) data[8]);
-            tempatTanggalLahir.setText((String) data[9]);
-        } else {
-            System.out.println("Data tidak ditemukan");
-        }
-    }
-    
-    private void inputDataShow() {
-        String nimToCheck = roleChecker;
-        DataDiri dataMahasiswa = new DataDiri();
-        String[] data = dataMahasiswa.readData(nimToCheck);
-        
-        if (data != null) {
-            System.out.println("NIM: " + Arrays.toString(data));
-            inputAlamat.setText((String) data[8]);
-            inputTempat.setText((String) data[9]);
-            inputTanggal.setText((String) data[9]);
-            inputAngkatan.setText((String) data[6]);
-            inputIPK.setText((String) data[4]);
-            inputProgram.setText((String) data[2]);
-            inputJenjang.setText((String) data[3]);
-            inputKontak.setText((String) data[5]);
-            inputSemester.setText((String) data[7]);
-        } else {
-            System.out.println("Data tidak ditemukan"); 
-        }
-    }
+
+//    private void showData() {
+//        String nimToCheck = roleChecker;
+//        DataDiri dataMahasiswa = new DataDiri();
+//        String[] data = dataMahasiswa.readData(nimToCheck);
+//        
+//        if (data != null) {
+//            System.out.println("NIM: " + Arrays.toString(data));
+//            namaLengkap.setText((String) data[0]);
+//            nimNomor.setText((String) data[1]);
+//            programStudi.setText((String) data[2]);
+//            jenjangStudi.setText((String) data[3]);
+//            ipkMahasiswa.setText((String) data[4]);
+//            kontakNomor.setText((String) data[5]);
+//            angkatanTahun.setText((String) data[6]);
+//            semesterTahun.setText((String) data[7]);
+//            alamatRumah.setText((String) data[8]);
+//            tempatTanggalLahir.setText((String) data[9]);
+//        } else {
+//            System.out.println("Data tidak ditemukan");
+//        }
+//    }
     
     private void profilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profilActionPerformed
         // TODO add your handling code here:
         cardLayout.show(pnlCards, "pnlCard1");
-        showData();
     }//GEN-LAST:event_profilActionPerformed
 
     private void suratActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_suratActionPerformed
@@ -993,6 +989,32 @@ public class MahasiswaInterface extends javax.swing.JFrame {
         cardLayout.show(pnlCards, "pnlCard2");
         showTable();
     }//GEN-LAST:event_suratActionPerformed
+
+    private void buatSuratButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buatSuratButtonActionPerformed
+        // TODO add your handling code here:
+        cardLayout.show(pnlCards, "pnlCard4");
+    }//GEN-LAST:event_buatSuratButtonActionPerformed
+
+    private void changeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeButtonActionPerformed
+        // TODO add your handling code here:
+        cardLayout.show(pnlCards, "pnlCard3");
+    }//GEN-LAST:event_changeButtonActionPerformed
+
+    private void changeButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_changeButton1ActionPerformed
+
+    private void pilihSuratActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pilihSuratActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pilihSuratActionPerformed
+
+    private void buatSuratActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buatSuratActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buatSuratActionPerformed
+
+    private void peruntukanFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_peruntukanFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_peruntukanFieldActionPerformed
 
     private void navButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_navButtonActionPerformed
         // TODO add your handling code here:
@@ -1008,96 +1030,9 @@ public class MahasiswaInterface extends javax.swing.JFrame {
         Navigation.repaint();
     }//GEN-LAST:event_navButtonActionPerformed
 
-    private void changeButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeButton1ActionPerformed
+    private void dashboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dashboardActionPerformed
         // TODO add your handling code here:
-        String newAlamat = inputAlamat.getText();
-        String newTanggalLahir = inputTanggal.getText();
-        String newAngkatan = inputAngkatan.getText();
-        String newIpk = inputIPK.getText()  ;
-        String newProgram = inputProgram.getText();
-        String newJenjang = inputJenjang.getText();
-        String newKontak = inputKontak.getText();
-        String newSemester = inputSemester.getText();
-        String nim = roleChecker;
-        
-        DataUpdate dataUpdate = new DataUpdate(nim, newAlamat, newTanggalLahir, newAngkatan, newIpk, newProgram, newJenjang, newKontak, newSemester);
-    
-        DataDiri dataMahasiswa = new DataDiri();
-        boolean updateSuccessful = dataMahasiswa.updateData(dataUpdate);
-
-        if (updateSuccessful) {
-            System.out.println("Data updated successfully.");
-        } else {
-            System.out.println("Data update failed.");
-        }
-    }//GEN-LAST:event_changeButton1ActionPerformed
-
-    private void buatSuratButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buatSuratButtonActionPerformed
-        // TODO add your handling code here:
-        cardLayout.show(pnlCards, "pnlCard4");
-    }//GEN-LAST:event_buatSuratButtonActionPerformed
-
-    private void changeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeButtonActionPerformed
-        // TODO add your handling code here:
-        cardLayout.show(pnlCards, "pnlCard3");
-        inputDataShow();
-    }//GEN-LAST:event_changeButtonActionPerformed
-
-    private void pilihSuratActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pilihSuratActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_pilihSuratActionPerformed
-
-    private void buatSuratActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buatSuratActionPerformed
-        // TODO add your handling code here:
-        String selectedSurat = (String) pilihSurat.getSelectedItem();
-        String posisiSurat;
-        String action = "Detail";
-        if (selectedSurat != null) {
-            if (selectedSurat.equals("Surat Aktif Kuliah") || selectedSurat.equals("Surat Keterangan Berkelakuan baik") || selectedSurat.equals("Surat KETERANGAN KEHIlangan KTM") || selectedSurat.equals("Surat Keterangan Tugas Akhir")) {
-                posisiSurat = "Staff Kemahasiswaan";
-            } else {
-                posisiSurat = "Staff Akademik";
-            }
-            
-            Pengajuan pengajuanSurat = new Pengajuan(peruntukanField.getText(), mahasiswaNIM, roleChecker);
-            String idPengajuan = pengajuanSurat.insertData();
-
-            if (idPengajuan != null) {
-                RiwayatSurat riwayatSurat = new RiwayatSurat();
-
-                boolean insertSuccessful = riwayatSurat.insertData(selectedSurat, posisiSurat, action, idPengajuan);
-
-                if (insertSuccessful) {
-                    System.out.println("Inserted: " + selectedSurat);
-                    cardLayout.show(pnlCards, "pnlCard2");
-                    showTable();
-                    JButton detailButton = new JButton("Detail: " + selectedSurat);
-                    detailButton.addActionListener((ActionEvent e) -> {
-                        JOptionPane.showMessageDialog(null, "Displaying details for: " + selectedSurat);
-                    });
-                    
-                    suratButtonPanel.add(detailButton);
-                    suratButtonPanel.revalidate();
-                    suratButtonPanel.repaint();
-                } else {
-                    System.out.println("Failed to insert: " + selectedSurat);
-                }
-            } else {
-                System.out.println("Failed to obtain ID_Pengajuan");
-            }
-        }
-    }//GEN-LAST:event_buatSuratActionPerformed
-
-    private void peruntukanFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_peruntukanFieldActionPerformed
-        // TODO add your handling code here:
-        String userPeruntukanInput = peruntukanField.getText();
-
-        if (userPeruntukanInput != null && !userPeruntukanInput.isEmpty()) {
-            peruntukanField.setText(userPeruntukanInput);
-        } else {
-            System.out.println("Data tidak ditemukan");
-        }
-    }//GEN-LAST:event_peruntukanFieldActionPerformed
+    }//GEN-LAST:event_dashboardActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1116,20 +1051,20 @@ public class MahasiswaInterface extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MahasiswaInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(StaffInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MahasiswaInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(StaffInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MahasiswaInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(StaffInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MahasiswaInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(StaffInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            MahasiswaInterface mahasiswaInterface = new MahasiswaInterface("roleChecker");
-            mahasiswaInterface.setVisible(true);
+            StaffInterface staffInterface = new StaffInterface("roleChecker");
+            staffInterface.setVisible(true);
         });
     }
 
@@ -1144,6 +1079,7 @@ public class MahasiswaInterface extends javax.swing.JFrame {
     private javax.swing.JButton changeButton;
     private javax.swing.JButton changeButton1;
     private javax.swing.JPanel changeProfil;
+    private javax.swing.JButton dashboard;
     private javax.swing.JTextField inputAlamat;
     private javax.swing.JTextField inputAngkatan;
     private javax.swing.JTextField inputEmail;
@@ -1192,7 +1128,7 @@ public class MahasiswaInterface extends javax.swing.JFrame {
     private javax.swing.JLabel jLabell5;
     private javax.swing.JLabel jLebeel;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel jenjangStudi;
     private javax.swing.JLabel kontakNomor;
     private javax.swing.JLabel mahasiswaText;
@@ -1213,5 +1149,4 @@ public class MahasiswaInterface extends javax.swing.JFrame {
     private javax.swing.JLabel tempatTanggalLahir;
     private javax.swing.JPanel welcomePanel;
     // End of variables declaration//GEN-END:variables
-
 }

@@ -1,18 +1,12 @@
 package gui;
 
 import database.Database;
-import entitas.DataMahasiswa;
 import java.awt.Color;
+import entitas.Admin;
 
-
-/**
- *
- * @author Footdua
- */
 public class StaffForm extends javax.swing.JFrame {
     final Database database;
-    private Object mahasiswaInterface;
- 
+    
     public StaffForm() {
         initComponents();
         database = new Database();
@@ -34,7 +28,7 @@ public class StaffForm extends javax.swing.JFrame {
         popError = new javax.swing.JTextArea();
         frameName = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
-        nimTextField = new javax.swing.JTextField();
+        emailTextField = new javax.swing.JTextField();
         passTextField = new javax.swing.JPasswordField();
         signButton = new javax.swing.JButton();
 
@@ -71,25 +65,25 @@ public class StaffForm extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        nimTextField.setBackground(new java.awt.Color(255, 255, 255));
-        nimTextField.setForeground(new java.awt.Color(204, 204, 204));
-        nimTextField.setText("Nim");
-        nimTextField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        nimTextField.setName("nim"); // NOI18N
-        nimTextField.addFocusListener(new java.awt.event.FocusAdapter() {
+        emailTextField.setBackground(new java.awt.Color(255, 255, 255));
+        emailTextField.setForeground(new java.awt.Color(204, 204, 204));
+        emailTextField.setText("Nim");
+        emailTextField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        emailTextField.setName("nim"); // NOI18N
+        emailTextField.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                nimTextFieldFocusGained(evt);
+                emailTextFieldFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                nimTextFieldFocusLost(evt);
+                emailTextFieldFocusLost(evt);
             }
         });
-        nimTextField.addActionListener(new java.awt.event.ActionListener() {
+        emailTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nimTextFieldActionPerformed(evt);
+                emailTextFieldActionPerformed(evt);
             }
         });
-        jPanel1.add(nimTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 330, 40));
+        jPanel1.add(emailTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 330, 40));
 
         passTextField.setBackground(new java.awt.Color(255, 255, 255));
         passTextField.setText("Password");
@@ -131,25 +125,25 @@ public class StaffForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
        
-    private void nimTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nimTextFieldActionPerformed
+    private void emailTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailTextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_nimTextFieldActionPerformed
+    }//GEN-LAST:event_emailTextFieldActionPerformed
 
-    private void nimTextFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_nimTextFieldFocusGained
+    private void emailTextFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_emailTextFieldFocusGained
         // TODO add your handling code here:
-        if (nimTextField.getText().equals("Nim")) {
-        nimTextField.setText("");
-        nimTextField.setForeground(Color.BLACK);
+        if (emailTextField.getText().equals("Nim")) {
+        emailTextField.setText("");
+        emailTextField.setForeground(Color.BLACK);
         }
-    }//GEN-LAST:event_nimTextFieldFocusGained
+    }//GEN-LAST:event_emailTextFieldFocusGained
 
-    private void nimTextFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_nimTextFieldFocusLost
+    private void emailTextFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_emailTextFieldFocusLost
         // TODO add your handling code here:
-        if (nimTextField.getText().isEmpty()) {
-        nimTextField.setText("Nim");
-        nimTextField.setForeground(Color.GRAY);
+        if (emailTextField.getText().isEmpty()) {
+        emailTextField.setText("Nim");
+        emailTextField.setForeground(Color.GRAY);
         }
-    }//GEN-LAST:event_nimTextFieldFocusLost
+    }//GEN-LAST:event_emailTextFieldFocusLost
 
     private void passTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passTextFieldActionPerformed
         // TODO add your handling code here:
@@ -160,7 +154,7 @@ public class StaffForm extends javax.swing.JFrame {
         if (new String(passTextField.getPassword()).equals("Password")) {
         passTextField.setText("");
         passTextField.setEchoChar('*');
-        nimTextField.setForeground(Color.GRAY);
+        emailTextField.setForeground(Color.GRAY);
         }
     }//GEN-LAST:event_passTextFieldFocusGained
 
@@ -169,26 +163,26 @@ public class StaffForm extends javax.swing.JFrame {
         if (new String(passTextField.getPassword()).isEmpty()) {
         passTextField.setText("Password");
         passTextField.setEchoChar((char) 0);
-        nimTextField.setForeground(Color.GRAY);
+        emailTextField.setForeground(Color.GRAY);
         
         }
     }//GEN-LAST:event_passTextFieldFocusLost
 
     private void signButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signButtonActionPerformed
         // TODO add your handling code here:
-        String nim = nimTextField.getText();
+        String email = emailTextField.getText();
         String password = new String(passTextField.getPassword());
 
-        if (nim.equals("Nim") || password.isEmpty()) {
-            popError.setText("• Nim tidak boleh kosong\n• Password tidak boleh kosong");
+        if (email.equals("Email") || password.isEmpty()) {
+            popError.setText("• Email tidak boleh kosong\n• Password tidak boleh kosong");
             popError.setVisible(true);
         } else {
-            DataMahasiswa data = new DataMahasiswa(); // Create an instance of DataMahasiswa
-            data.openConnection(); // Assuming this method opens the connection
+            Admin data = new Admin (email,password);
+            data.openConnection();
 
-            if (data.checkLogin(nim, password)) { // Call checkLogin on the DataMahasiswa instance
-                MahasiswaInterface mahasiswaInterface = new MahasiswaInterface(nim);
-                mahasiswaInterface.setVisible(true);
+            if (data.readData()) {
+                StaffInterface staffInterface = new StaffInterface(email);
+                staffInterface.setVisible(true);
                 popError.setVisible(false);
                 this.dispose();
             } else {
@@ -196,7 +190,7 @@ public class StaffForm extends javax.swing.JFrame {
                 popError.setVisible(true);
             }
 
-            data.closeConnection(); // Close the connection
+            data.closeConnection();
         }
     }//GEN-LAST:event_signButtonActionPerformed
 
@@ -239,9 +233,9 @@ public class StaffForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel background1;
+    private javax.swing.JTextField emailTextField;
     private javax.swing.JTextField frameName;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField nimTextField;
     private javax.swing.JPasswordField passTextField;
     private javax.swing.JTextArea popError;
     private javax.swing.JButton signButton;
