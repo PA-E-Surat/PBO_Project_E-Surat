@@ -2,6 +2,7 @@ package controller;
 
 public class DataUpdate {
     private String nim;
+    private String status;
     private String alamat;
     private String tanggalLahir;
     private String angkatan;
@@ -10,6 +11,11 @@ public class DataUpdate {
     private String jenjang;
     private String kontak;
     private String semester;
+
+    public DataUpdate(String nim, String status) {
+        this.nim = nim;
+        this.status = status;
+    }
 
     public DataUpdate(String nim, String alamat, String tanggalLahir, String angkatan, String ipk, String program, String jenjang, String kontak, String semester) {
         this.nim = nim;
@@ -29,6 +35,14 @@ public class DataUpdate {
 
     public void setNim(String nim) {
         this.nim = nim;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getAlamat() {

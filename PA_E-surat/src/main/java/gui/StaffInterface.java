@@ -1,12 +1,23 @@
 package gui;
 
+import action.PanelAction;
+import action.TableActionCellRender;
 import controller.DataUpdate;
 import database.Database;
+import entitas.Admin;
 import entitas.DataDiri;
 import entitas.Pengajuan;
 import entitas.RiwayatSurat;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
+import javax.swing.JTable;
 import java.awt.CardLayout;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Arrays;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
@@ -17,29 +28,36 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class StaffInterface extends javax.swing.JFrame {
     final Database database;
     private final String roleChecker;
     RiwayatSurat riwayatSurat = new RiwayatSurat();
+//    PanelAction actionPanel = new PanelAction();
     CardLayout cardLayout;
+    private String email;
+    private String password;
     private String mahasiswaNIM;
     private String peruntukan;
     private String mahasiswaNim;
     private String checkNim;
+    private String currentNim;
+    private String idSuratToAccept;
 
     public StaffInterface(String roleChecker) {
         initComponents();
         database = new Database();
         this.roleChecker = roleChecker;
-        pnlCards.add(welcomePanel, "pnlCard4");
+        pnlCards.add(welcomePanel, "pnlCard5");
         pnlCards.add(suratPanel, "pnlCard2");
         pnlCards.add(profilPanel, "pnlCard1");
-        pnlCards.add(changeProfil, "pnlCard3");
         pnlCards.add(buatPanel, "pnlCard4");
         Navigation.setPreferredSize(new Dimension(50, 520)); 
         Navigation.setVisible(true);
         cardLayout = (CardLayout) (pnlCards.getLayout());
+        suratTabel.setDefaultEditor(Object.class, null);
+        suratTabel.setCellSelectionEnabled(false);
     }
     
      public void setPeruntukan(String peruntukan) {
@@ -56,20 +74,74 @@ public class StaffInterface extends javax.swing.JFrame {
 
     private void showTable() {
         DefaultTableModel model = new DefaultTableModel();
+        Admin admin = new Admin(email, password);
 
         model.addColumn("ID Surat");
         model.addColumn("Jenis Surat");
         model.addColumn("Status");
         model.addColumn("Posisi Surat");
         model.addColumn("Action");
-        
+
         List<String[]> riwayatSuratData = riwayatSurat.readData();
 
         for (String[] row : riwayatSuratData) {
             model.addRow(row);
         }
+
         suratTabel.setModel(model);
+
+        TableColumn column = suratTabel.getColumnModel().getColumn(4);
+        column.setCellRenderer(new TableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                return new PanelAction();
+            }
+        });
+
+        suratTabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int column = suratTabel.getColumnModel().getColumnIndex("Action");
+                int row = suratTabel.rowAtPoint(e.getPoint());
+                if (column == 4 && row >= 0) {
+                    idSuratToAccept = (String) suratTabel.getValueAt(row, 0);
+                    currentNim = admin.findData(idSuratToAccept);
+                    System.out.println("NIM: " + currentNim);
+                    System.out.println(".mouseClicked()");
+                    cardLayout.show(pnlCards, "pnlCard1");
+                    showData(currentNim, idSuratToAccept);
+                }
+            }
+        });
     }
+
+    private void showData(String nimToCheck, String idSurat) {
+        DataDiri dataMahasiswa = new DataDiri();
+        String[] data = dataMahasiswa.readData(nimToCheck);
+
+        if (data != null) {
+            System.out.println("NIM: " + Arrays.toString(data));
+            namaLengkap.setText((String) data[0]);
+            nimNomor.setText((String) data[1]);
+            programStudi.setText((String) data[2]);
+            jenjangStudi.setText((String) data[3]);
+            ipkMahasiswa.setText((String) data[4]);
+            kontakNomor.setText((String) data[5]);
+            angkatanTahun.setText((String) data[6]);
+            semesterTahun.setText((String) data[7]);
+            alamatRumah.setText((String) data[8]);
+            tempatTanggalLahir.setText((String) data[9]);
+        } else {
+            System.out.println("Data tidak ditemukan");
+        }
+    }
+
+    private void navigateToLoginScreen() {
+            ChooseLogin loginScreen = new ChooseLogin();
+            loginScreen.setVisible(true); 
+            this.dispose();
+        }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -81,19 +153,18 @@ public class StaffInterface extends javax.swing.JFrame {
 
         background = new javax.swing.JPanel();
         Navigation = new javax.swing.JPanel();
-        profil = new javax.swing.JButton();
         surat = new javax.swing.JButton();
         dashboard = new javax.swing.JButton();
         orangePanel = new javax.swing.JPanel();
         navButton = new javax.swing.JButton();
         mahasiswaText = new javax.swing.JLabel();
+        signOut = new javax.swing.JButton();
         pnlCards = new javax.swing.JPanel();
         welcomePanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         suratPanel = new javax.swing.JPanel();
-        buatSuratButton = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
         suratTabel = new javax.swing.JTable();
         profilPanel = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
@@ -129,31 +200,8 @@ public class StaffInterface extends javax.swing.JFrame {
         alamatRumah = new javax.swing.JLabel();
         tempatTanggalLahir = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        changeButton = new javax.swing.JButton();
-        changeProfil = new javax.swing.JPanel();
-        jLabel15 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
-        jLabel23 = new javax.swing.JLabel();
-        jLabell1 = new javax.swing.JLabel();
-        jLabell2 = new javax.swing.JLabel();
-        jLabell3 = new javax.swing.JLabel();
-        jLabell4 = new javax.swing.JLabel();
-        jLabell15 = new javax.swing.JLabel();
-        changeButton1 = new javax.swing.JButton();
-        inputAlamat = new javax.swing.JTextField();
-        inputTempat = new javax.swing.JTextField();
-        inputTanggal = new javax.swing.JTextField();
-        inputAngkatan = new javax.swing.JTextField();
-        inputIPK = new javax.swing.JTextField();
-        inputProgram = new javax.swing.JTextField();
-        inputEmail = new javax.swing.JTextField();
-        inputJenjang = new javax.swing.JTextField();
-        inputFoto = new javax.swing.JTextField();
-        inputKontak = new javax.swing.JTextField();
-        inputSemester = new javax.swing.JTextField();
-        jLabell5 = new javax.swing.JLabel();
+        acceptButton = new javax.swing.JButton();
+        deniedButton = new javax.swing.JButton();
         buatPanel = new javax.swing.JPanel();
         pilihSurat = new javax.swing.JComboBox<>();
         buatSurat = new javax.swing.JButton();
@@ -171,22 +219,6 @@ public class StaffInterface extends javax.swing.JFrame {
         Navigation.setName(""); // NOI18N
         Navigation.setPreferredSize(new java.awt.Dimension(50, 520));
         Navigation.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        profil.setBackground(new java.awt.Color(51, 51, 51));
-        profil.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        profil.setForeground(new java.awt.Color(51, 51, 51));
-        profil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/profilIcon.png"))); // NOI18N
-        profil.setText("Profil");
-        profil.setBorderPainted(false);
-        profil.setContentAreaFilled(false);
-        profil.setIconTextGap(15);
-        profil.setInheritsPopupMenu(true);
-        profil.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                profilActionPerformed(evt);
-            }
-        });
-        Navigation.add(profil, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 40, 140, -1));
 
         surat.setBackground(new java.awt.Color(51, 51, 51));
         surat.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -218,7 +250,7 @@ public class StaffInterface extends javax.swing.JFrame {
                 dashboardActionPerformed(evt);
             }
         });
-        Navigation.add(dashboard, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 80, 140, -1));
+        Navigation.add(dashboard, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 40, 140, -1));
 
         orangePanel.setBackground(new java.awt.Color(255, 153, 51));
         orangePanel.setMaximumSize(new java.awt.Dimension(970, 60));
@@ -238,6 +270,16 @@ public class StaffInterface extends javax.swing.JFrame {
         mahasiswaText.setForeground(new java.awt.Color(255, 255, 255));
         mahasiswaText.setText("DASHBOARD");
 
+        signOut.setBackground(new java.awt.Color(255, 255, 255));
+        signOut.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        signOut.setForeground(new java.awt.Color(0, 0, 0));
+        signOut.setText("Sign Out");
+        signOut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                signOutActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout orangePanelLayout = new javax.swing.GroupLayout(orangePanel);
         orangePanel.setLayout(orangePanelLayout);
         orangePanelLayout.setHorizontalGroup(
@@ -247,7 +289,9 @@ public class StaffInterface extends javax.swing.JFrame {
                 .addComponent(navButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(mahasiswaText)
-                .addContainerGap(754, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 652, Short.MAX_VALUE)
+                .addComponent(signOut)
+                .addGap(20, 20, 20))
         );
         orangePanelLayout.setVerticalGroup(
             orangePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -256,7 +300,9 @@ public class StaffInterface extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(orangePanelLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addComponent(navButton)
+                .addGroup(orangePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(signOut)
+                    .addComponent(navButton))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
@@ -277,7 +323,7 @@ public class StaffInterface extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel2.setText("Selamat datang,");
+        jLabel2.setText("Selamat datang Admin");
         welcomePanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 210, -1, -1));
 
         pnlCards.add(welcomePanel, "card2");
@@ -289,25 +335,15 @@ public class StaffInterface extends javax.swing.JFrame {
         suratPanel.setPreferredSize(new java.awt.Dimension(960, 578));
         suratPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        buatSuratButton.setBackground(new java.awt.Color(255, 153, 51));
-        buatSuratButton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        buatSuratButton.setForeground(new java.awt.Color(255, 255, 255));
-        buatSuratButton.setText("Buat Surat");
-        buatSuratButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buatSuratButtonActionPerformed(evt);
-            }
-        });
-        suratPanel.add(buatSuratButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 50, -1, -1));
-
-        suratTabel.setBackground(new java.awt.Color(255, 255, 255));
-        suratTabel.setForeground(new java.awt.Color(0, 0, 0));
         suratTabel.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "No", "Jenis Surat", "Status", "Posisi Surat", "Aksi"
+                "No", "Jenis Surat", "Status", "Posisi", "Aksi"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -318,18 +354,15 @@ public class StaffInterface extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        suratTabel.setToolTipText("");
-        suratTabel.setFocusable(false);
-        suratTabel.setGridColor(new java.awt.Color(204, 204, 204));
-        suratTabel.setRowSelectionAllowed(false);
-        suratTabel.setSelectionBackground(new java.awt.Color(255, 153, 102));
-        suratTabel.setSelectionForeground(new java.awt.Color(204, 204, 204));
-        suratTabel.setShowGrid(true);
-        suratTabel.getTableHeader().setResizingAllowed(false);
-        suratTabel.getTableHeader().setReorderingAllowed(false);
-        jScrollPane2.setViewportView(suratTabel);
+        suratTabel.setRowHeight(30);
+        suratTabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                suratTabelMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(suratTabel);
 
-        suratPanel.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 50, 620, 300));
+        suratPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(56, 30, 680, -1));
 
         pnlCards.add(suratPanel, "card2");
 
@@ -340,7 +373,7 @@ public class StaffInterface extends javax.swing.JFrame {
 
         jLabel4.setBackground(new java.awt.Color(0, 166, 90));
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 9)); // NOI18N
-        jLabel4.setText("Anda perlu memperbarui data diri Anda secara berkala karena data ini akan digunakan sebagai referensi dalam surat yang akan diajukan ke Fakultas Teknik Universitas Mulawarman.");
+        jLabel4.setText("Berikut adalah data mahasiswa yang melakukan pengajuan surat, mohon periksa dengan seksama");
         jPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 800, 30));
 
         jLabeel.setBackground(new java.awt.Color(51, 51, 51));
@@ -546,13 +579,23 @@ public class StaffInterface extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(51, 51, 51));
         jLabel5.setText("Data Diri Mahasiswa");
 
-        changeButton.setBackground(new java.awt.Color(255, 153, 51));
-        changeButton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        changeButton.setForeground(new java.awt.Color(255, 255, 255));
-        changeButton.setText("Ubah Data");
-        changeButton.addActionListener(new java.awt.event.ActionListener() {
+        acceptButton.setBackground(new java.awt.Color(255, 153, 51));
+        acceptButton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        acceptButton.setForeground(new java.awt.Color(255, 255, 255));
+        acceptButton.setText("Accept");
+        acceptButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                changeButtonActionPerformed(evt);
+                acceptButtonActionPerformed(evt);
+            }
+        });
+
+        deniedButton.setBackground(new java.awt.Color(204, 0, 0));
+        deniedButton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        deniedButton.setForeground(new java.awt.Color(255, 255, 255));
+        deniedButton.setText("Denied");
+        deniedButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deniedButtonActionPerformed(evt);
             }
         });
 
@@ -561,80 +604,84 @@ public class StaffInterface extends javax.swing.JFrame {
         profilPanelLayout.setHorizontalGroup(
             profilPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(profilPanelLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(profilPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 831, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(profilPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(profilPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 831, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(profilPanelLayout.createSequentialGroup()
+                        .addGap(165, 165, 165)
+                        .addGroup(profilPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(profilPanelLayout.createSequentialGroup()
+                                .addComponent(deniedButton)
+                                .addGap(30, 30, 30)
+                                .addComponent(acceptButton))
+                            .addGroup(profilPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(profilPanelLayout.createSequentialGroup()
+                                    .addComponent(jLabel38)
+                                    .addGap(97, 97, 97)
+                                    .addComponent(jLabel48)
+                                    .addGap(27, 27, 27)
+                                    .addComponent(kontakNomor))
+                                .addGroup(profilPanelLayout.createSequentialGroup()
+                                    .addComponent(jLabel39)
+                                    .addGap(84, 84, 84)
+                                    .addComponent(jLabel49)
+                                    .addGap(27, 27, 27)
+                                    .addComponent(angkatanTahun))
+                                .addGroup(profilPanelLayout.createSequentialGroup()
+                                    .addComponent(jLabel40)
+                                    .addGap(83, 83, 83)
+                                    .addComponent(jLabel50)
+                                    .addGap(27, 27, 27)
+                                    .addComponent(semesterTahun))
+                                .addGroup(profilPanelLayout.createSequentialGroup()
+                                    .addComponent(jLabel41)
+                                    .addGap(98, 98, 98)
+                                    .addComponent(jLabel51)
+                                    .addGap(27, 27, 27)
+                                    .addComponent(alamatRumah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(profilPanelLayout.createSequentialGroup()
+                                    .addGap(3, 3, 3)
+                                    .addGroup(profilPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(profilPanelLayout.createSequentialGroup()
+                                            .addComponent(jLebeel)
+                                            .addGap(54, 54, 54)
+                                            .addComponent(jLabel45)
+                                            .addGap(27, 27, 27)
+                                            .addComponent(programStudi))
+                                        .addGroup(profilPanelLayout.createSequentialGroup()
+                                            .addComponent(jLabel36)
+                                            .addGap(60, 60, 60)
+                                            .addComponent(jLabel46)
+                                            .addGap(27, 27, 27)
+                                            .addComponent(jenjangStudi))
+                                        .addGroup(profilPanelLayout.createSequentialGroup()
+                                            .addComponent(jLabel37)
+                                            .addGap(115, 115, 115)
+                                            .addComponent(jLabel47)
+                                            .addGap(27, 27, 27)
+                                            .addComponent(ipkMahasiswa))
+                                        .addGroup(profilPanelLayout.createSequentialGroup()
+                                            .addComponent(jLabeel)
+                                            .addGap(52, 52, 52)
+                                            .addComponent(jLabel43)
+                                            .addGap(27, 27, 27)
+                                            .addComponent(namaLengkap))
+                                        .addGroup(profilPanelLayout.createSequentialGroup()
+                                            .addComponent(jLabel24)
+                                            .addGap(111, 111, 111)
+                                            .addComponent(jLabel44)
+                                            .addGap(27, 27, 27)
+                                            .addComponent(nimNomor))))
+                                .addGroup(profilPanelLayout.createSequentialGroup()
+                                    .addComponent(jLabel42)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jLabel52)
+                                    .addGap(27, 27, 27)
+                                    .addComponent(tempatTanggalLahir))))))
                 .addContainerGap(55, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, profilPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(profilPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(profilPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel38)
-                        .addGap(97, 97, 97)
-                        .addComponent(jLabel48)
-                        .addGap(27, 27, 27)
-                        .addComponent(kontakNomor))
-                    .addGroup(profilPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel39)
-                        .addGap(84, 84, 84)
-                        .addComponent(jLabel49)
-                        .addGap(27, 27, 27)
-                        .addComponent(angkatanTahun))
-                    .addGroup(profilPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel40)
-                        .addGap(83, 83, 83)
-                        .addComponent(jLabel50)
-                        .addGap(27, 27, 27)
-                        .addComponent(semesterTahun))
-                    .addGroup(profilPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel41)
-                        .addGap(98, 98, 98)
-                        .addComponent(jLabel51)
-                        .addGap(27, 27, 27)
-                        .addComponent(alamatRumah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(profilPanelLayout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addGroup(profilPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(profilPanelLayout.createSequentialGroup()
-                                .addComponent(jLebeel)
-                                .addGap(54, 54, 54)
-                                .addComponent(jLabel45)
-                                .addGap(27, 27, 27)
-                                .addComponent(programStudi))
-                            .addGroup(profilPanelLayout.createSequentialGroup()
-                                .addComponent(jLabel36)
-                                .addGap(60, 60, 60)
-                                .addComponent(jLabel46)
-                                .addGap(27, 27, 27)
-                                .addComponent(jenjangStudi))
-                            .addGroup(profilPanelLayout.createSequentialGroup()
-                                .addComponent(jLabel37)
-                                .addGap(115, 115, 115)
-                                .addComponent(jLabel47)
-                                .addGap(27, 27, 27)
-                                .addComponent(ipkMahasiswa))
-                            .addGroup(profilPanelLayout.createSequentialGroup()
-                                .addComponent(jLabeel)
-                                .addGap(52, 52, 52)
-                                .addComponent(jLabel43)
-                                .addGap(27, 27, 27)
-                                .addComponent(namaLengkap))
-                            .addGroup(profilPanelLayout.createSequentialGroup()
-                                .addComponent(jLabel24)
-                                .addGap(111, 111, 111)
-                                .addComponent(jLabel44)
-                                .addGap(27, 27, 27)
-                                .addComponent(nimNomor))))
-                    .addGroup(profilPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel42)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel52)
-                        .addGap(27, 27, 27)
-                        .addGroup(profilPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(changeButton)
-                            .addComponent(tempatTanggalLahir))))
-                .addGap(199, 199, 199))
         );
         profilPanelLayout.setVerticalGroup(
             profilPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -643,7 +690,7 @@ public class StaffInterface extends javax.swing.JFrame {
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
                 .addGroup(profilPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel43)
                     .addGroup(profilPanelLayout.createSequentialGroup()
@@ -723,150 +770,14 @@ public class StaffInterface extends javax.swing.JFrame {
                         .addGroup(profilPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel42)
                             .addComponent(tempatTanggalLahir))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(changeButton)
-                .addGap(16, 16, 16))
+                .addGap(18, 18, 18)
+                .addGroup(profilPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(acceptButton)
+                    .addComponent(deniedButton))
+                .addGap(40, 40, 40))
         );
 
         pnlCards.add(profilPanel, "card5");
-
-        changeProfil.setBackground(new java.awt.Color(255, 255, 255));
-        changeProfil.setMaximumSize(new java.awt.Dimension(1000, 1000));
-        changeProfil.setMinimumSize(new java.awt.Dimension(300, 300));
-        changeProfil.setName(""); // NOI18N
-        changeProfil.setPreferredSize(new java.awt.Dimension(960, 578));
-        changeProfil.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel15.setBackground(new java.awt.Color(51, 51, 51));
-        jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel15.setText("Program Studi");
-        changeProfil.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 100, -1, -1));
-
-        jLabel16.setBackground(new java.awt.Color(51, 51, 51));
-        jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel16.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel16.setText("Jenjang Studi");
-        changeProfil.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 220, -1, -1));
-
-        jLabel17.setBackground(new java.awt.Color(51, 51, 51));
-        jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel17.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel17.setText("IPK");
-        changeProfil.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 40, -1, -1));
-
-        jLabel22.setBackground(new java.awt.Color(51, 51, 51));
-        jLabel22.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel22.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel22.setText("Alamat");
-        changeProfil.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 40, -1, -1));
-
-        jLabel23.setBackground(new java.awt.Color(51, 51, 51));
-        jLabel23.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel23.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel23.setText("Tempat Lahir");
-        changeProfil.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 100, -1, -1));
-
-        jLabell1.setBackground(new java.awt.Color(51, 51, 51));
-        jLabell1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabell1.setForeground(new java.awt.Color(51, 51, 51));
-        jLabell1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabell1.setText("Email");
-        jLabell1.setToolTipText("");
-        jLabell1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        changeProfil.add(jLabell1, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 160, -1, -1));
-
-        jLabell2.setBackground(new java.awt.Color(51, 51, 51));
-        jLabell2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabell2.setForeground(new java.awt.Color(51, 51, 51));
-        jLabell2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabell2.setText("Foto");
-        jLabell2.setToolTipText("");
-        jLabell2.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        changeProfil.add(jLabell2, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 340, -1, -1));
-
-        jLabell3.setBackground(new java.awt.Color(51, 51, 51));
-        jLabell3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabell3.setForeground(new java.awt.Color(51, 51, 51));
-        jLabell3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabell3.setText("Kontak");
-        jLabell3.setToolTipText("");
-        jLabell3.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        changeProfil.add(jLabell3, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 280, -1, -1));
-
-        jLabell4.setBackground(new java.awt.Color(51, 51, 51));
-        jLabell4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabell4.setForeground(new java.awt.Color(51, 51, 51));
-        jLabell4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabell4.setText("Angkatan");
-        jLabell4.setToolTipText("");
-        jLabell4.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        changeProfil.add(jLabell4, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, -1, -1));
-
-        jLabell15.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabell15.setForeground(new java.awt.Color(51, 51, 51));
-        jLabell15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabell15.setText("Tanggal Lahir");
-        jLabell15.setToolTipText("");
-        changeProfil.add(jLabell15, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 160, -1, -1));
-
-        changeButton1.setBackground(new java.awt.Color(255, 153, 51));
-        changeButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        changeButton1.setForeground(new java.awt.Color(255, 255, 255));
-        changeButton1.setText("Ubah Data");
-        changeButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                changeButton1ActionPerformed(evt);
-            }
-        });
-        changeProfil.add(changeButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 410, -1, -1));
-        changeProfil.add(inputAlamat, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 60, 260, -1));
-        changeProfil.add(inputTempat, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 120, 260, -1));
-
-        inputTanggal.setText("jTextField1");
-        changeProfil.add(inputTanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 180, 260, -1));
-
-        inputAngkatan.setText("jTextField1");
-        changeProfil.add(inputAngkatan, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 240, 260, -1));
-
-        inputIPK.setText("jTextField1");
-        changeProfil.add(inputIPK, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 60, 260, -1));
-
-        inputProgram.setText("jTextField1");
-        changeProfil.add(inputProgram, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 120, 260, -1));
-
-        inputEmail.setText("jTextField1");
-        inputEmail.setEnabled(false);
-        changeProfil.add(inputEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 180, 260, -1));
-
-        inputJenjang.setText("jTextField1");
-        changeProfil.add(inputJenjang, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 240, 260, -1));
-
-        inputFoto.setText("jTextField1");
-        inputFoto.setEnabled(false);
-        changeProfil.add(inputFoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 360, 260, -1));
-
-        inputKontak.setText("jTextField1");
-        changeProfil.add(inputKontak, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 300, 260, -1));
-
-        inputSemester.setText("jTextField1");
-        changeProfil.add(inputSemester, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 300, 260, -1));
-
-        jLabell5.setBackground(new java.awt.Color(51, 51, 51));
-        jLabell5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabell5.setForeground(new java.awt.Color(51, 51, 51));
-        jLabell5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabell5.setText("Semester");
-        jLabell5.setToolTipText("");
-        jLabell5.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        changeProfil.add(jLabell5, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 280, -1, -1));
-
-        pnlCards.add(changeProfil, "card3");
 
         buatPanel.setBackground(new java.awt.Color(255, 255, 255));
         buatPanel.setMaximumSize(new java.awt.Dimension(960, 578));
@@ -957,52 +868,24 @@ public class StaffInterface extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-//    private void showData() {
-//        String nimToCheck = roleChecker;
-//        DataDiri dataMahasiswa = new DataDiri();
-//        String[] data = dataMahasiswa.readData(nimToCheck);
-//        
-//        if (data != null) {
-//            System.out.println("NIM: " + Arrays.toString(data));
-//            namaLengkap.setText((String) data[0]);
-//            nimNomor.setText((String) data[1]);
-//            programStudi.setText((String) data[2]);
-//            jenjangStudi.setText((String) data[3]);
-//            ipkMahasiswa.setText((String) data[4]);
-//            kontakNomor.setText((String) data[5]);
-//            angkatanTahun.setText((String) data[6]);
-//            semesterTahun.setText((String) data[7]);
-//            alamatRumah.setText((String) data[8]);
-//            tempatTanggalLahir.setText((String) data[9]);
-//        } else {
-//            System.out.println("Data tidak ditemukan");
-//        }
-//    }
-    
-    private void profilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profilActionPerformed
-        // TODO add your handling code here:
-        cardLayout.show(pnlCards, "pnlCard1");
-    }//GEN-LAST:event_profilActionPerformed
-
     private void suratActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_suratActionPerformed
         // TODO add your handling code here:
-        cardLayout.show(pnlCards, "pnlCard2");
+        cardLayout.show(pnlCards, "pnlCard5");
         showTable();
     }//GEN-LAST:event_suratActionPerformed
 
-    private void buatSuratButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buatSuratButtonActionPerformed
+    private void acceptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acceptButtonActionPerformed
         // TODO add your handling code here:
-        cardLayout.show(pnlCards, "pnlCard4");
-    }//GEN-LAST:event_buatSuratButtonActionPerformed
+        DataUpdate dataUpdate = new DataUpdate(idSuratToAccept, "Accept");
+        RiwayatSurat riwayatSurat = new RiwayatSurat();
+        boolean updateSuccessful = riwayatSurat.updateData(dataUpdate);
 
-    private void changeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeButtonActionPerformed
-        // TODO add your handling code here:
-        cardLayout.show(pnlCards, "pnlCard3");
-    }//GEN-LAST:event_changeButtonActionPerformed
-
-    private void changeButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_changeButton1ActionPerformed
+        if (updateSuccessful) {
+            System.out.println("Status updated to 'accept'");
+        } else {
+            System.out.println("Status update failed");
+        }
+    }//GEN-LAST:event_acceptButtonActionPerformed
 
     private void pilihSuratActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pilihSuratActionPerformed
         // TODO add your handling code here:
@@ -1032,7 +915,30 @@ public class StaffInterface extends javax.swing.JFrame {
 
     private void dashboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dashboardActionPerformed
         // TODO add your handling code here:
+        cardLayout.show(pnlCards, "pnlCard2");
     }//GEN-LAST:event_dashboardActionPerformed
+
+    private void suratTabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_suratTabelMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_suratTabelMouseClicked
+
+    private void signOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signOutActionPerformed
+        // TODO add your handling code here:
+        navigateToLoginScreen();
+    }//GEN-LAST:event_signOutActionPerformed
+
+    private void deniedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deniedButtonActionPerformed
+        // TODO add your handling code here:
+        DataUpdate dataUpdate = new DataUpdate(idSuratToAccept, "Denied");
+        RiwayatSurat riwayatSurat = new RiwayatSurat();
+        boolean updateSuccessful = riwayatSurat.updateData(dataUpdate);
+
+        if (updateSuccessful) {
+            System.out.println("Status updated to 'denied'");
+        } else {
+            System.out.println("Status update failed");
+        }
+    }//GEN-LAST:event_deniedButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1070,36 +976,18 @@ public class StaffInterface extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Navigation;
+    private javax.swing.JButton acceptButton;
     private javax.swing.JLabel alamatRumah;
     private javax.swing.JLabel angkatanTahun;
     private javax.swing.JPanel background;
     private javax.swing.JPanel buatPanel;
     private javax.swing.JButton buatSurat;
-    private javax.swing.JButton buatSuratButton;
-    private javax.swing.JButton changeButton;
-    private javax.swing.JButton changeButton1;
-    private javax.swing.JPanel changeProfil;
     private javax.swing.JButton dashboard;
-    private javax.swing.JTextField inputAlamat;
-    private javax.swing.JTextField inputAngkatan;
-    private javax.swing.JTextField inputEmail;
-    private javax.swing.JTextField inputFoto;
-    private javax.swing.JTextField inputIPK;
-    private javax.swing.JTextField inputJenjang;
-    private javax.swing.JTextField inputKontak;
-    private javax.swing.JTextField inputProgram;
-    private javax.swing.JTextField inputSemester;
-    private javax.swing.JTextField inputTanggal;
-    private javax.swing.JTextField inputTempat;
+    private javax.swing.JButton deniedButton;
     private javax.swing.JLabel ipkMahasiswa;
     private javax.swing.JLabel jLabeel;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
@@ -1120,15 +1008,9 @@ public class StaffInterface extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel50;
     private javax.swing.JLabel jLabel51;
     private javax.swing.JLabel jLabel52;
-    private javax.swing.JLabel jLabell1;
-    private javax.swing.JLabel jLabell15;
-    private javax.swing.JLabel jLabell2;
-    private javax.swing.JLabel jLabell3;
-    private javax.swing.JLabel jLabell4;
-    private javax.swing.JLabel jLabell5;
     private javax.swing.JLabel jLebeel;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel jenjangStudi;
     private javax.swing.JLabel kontakNomor;
     private javax.swing.JLabel mahasiswaText;
@@ -1139,10 +1021,10 @@ public class StaffInterface extends javax.swing.JFrame {
     private javax.swing.JTextField peruntukanField;
     private javax.swing.JComboBox<String> pilihSurat;
     private javax.swing.JPanel pnlCards;
-    private javax.swing.JButton profil;
     private javax.swing.JPanel profilPanel;
     private javax.swing.JLabel programStudi;
     private javax.swing.JLabel semesterTahun;
+    private javax.swing.JButton signOut;
     private javax.swing.JButton surat;
     private javax.swing.JPanel suratPanel;
     private javax.swing.JTable suratTabel;

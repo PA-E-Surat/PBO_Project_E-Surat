@@ -38,4 +38,19 @@ public class Admin extends Database {
 
         return loginSuccessful;
     }
+    
+    public String findData(String suratID) {
+        String nim = null;
+        try {
+            String sql = "SELECT Mahasiswa_NIM1 FROM pengajuan WHERE ID_Pengajuan = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, suratID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                nim = resultSet.getString("Mahasiswa_NIM1");
+            }
+        } catch (SQLException e) {
+        }
+        return nim;
+    }
 }

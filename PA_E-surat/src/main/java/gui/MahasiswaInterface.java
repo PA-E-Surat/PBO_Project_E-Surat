@@ -104,6 +104,7 @@ public class MahasiswaInterface extends javax.swing.JFrame {
         orangePanel = new javax.swing.JPanel();
         navButton = new javax.swing.JButton();
         mahasiswaText = new javax.swing.JLabel();
+        signOut = new javax.swing.JButton();
         pnlCards = new javax.swing.JPanel();
         welcomePanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -239,6 +240,16 @@ public class MahasiswaInterface extends javax.swing.JFrame {
         mahasiswaText.setForeground(new java.awt.Color(255, 255, 255));
         mahasiswaText.setText("MAHASISWA");
 
+        signOut.setBackground(new java.awt.Color(255, 255, 255));
+        signOut.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        signOut.setForeground(new java.awt.Color(0, 0, 0));
+        signOut.setText("Sign Out");
+        signOut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                signOutActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout orangePanelLayout = new javax.swing.GroupLayout(orangePanel);
         orangePanel.setLayout(orangePanelLayout);
         orangePanelLayout.setHorizontalGroup(
@@ -248,7 +259,9 @@ public class MahasiswaInterface extends javax.swing.JFrame {
                 .addComponent(navButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(mahasiswaText)
-                .addContainerGap(754, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 654, Short.MAX_VALUE)
+                .addComponent(signOut)
+                .addGap(18, 18, 18))
         );
         orangePanelLayout.setVerticalGroup(
             orangePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -257,7 +270,9 @@ public class MahasiswaInterface extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(orangePanelLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addComponent(navButton)
+                .addGroup(orangePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(signOut)
+                    .addComponent(navButton))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
@@ -981,6 +996,12 @@ public class MahasiswaInterface extends javax.swing.JFrame {
             System.out.println("Data tidak ditemukan"); 
         }
     }
+        
+    private void navigateToLoginScreen() {
+        ChooseLogin loginScreen = new ChooseLogin();
+        loginScreen.setVisible(true); 
+        this.dispose();
+    }
     
     private void profilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profilActionPerformed
         // TODO add your handling code here:
@@ -1098,6 +1119,11 @@ public class MahasiswaInterface extends javax.swing.JFrame {
             System.out.println("Data tidak ditemukan");
         }
     }//GEN-LAST:event_peruntukanFieldActionPerformed
+    
+    private void signOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signOutActionPerformed
+        // TODO add your handling code here:
+        navigateToLoginScreen();
+    }//GEN-LAST:event_signOutActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1207,6 +1233,7 @@ public class MahasiswaInterface extends javax.swing.JFrame {
     private javax.swing.JPanel profilPanel;
     private javax.swing.JLabel programStudi;
     private javax.swing.JLabel semesterTahun;
+    private javax.swing.JButton signOut;
     private javax.swing.JButton surat;
     private javax.swing.JPanel suratPanel;
     private javax.swing.JTable suratTabel;

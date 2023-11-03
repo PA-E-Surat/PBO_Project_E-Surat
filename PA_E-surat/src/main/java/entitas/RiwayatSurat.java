@@ -1,5 +1,6 @@
 package entitas;
 
+import controller.DataUpdate;
 import database.Database;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -50,7 +51,7 @@ public class RiwayatSurat extends Database {
         try {
             openConnection();
 
-            String sql = "SELECT * FROM riwayat_surat";  // Replace with your actual table name
+            String sql = "SELECT * FROM riwayat_surat"; 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -72,6 +73,31 @@ public class RiwayatSurat extends Database {
         }
         return data;
     }
+    
+    public final boolean updateData(DataUpdate dataUpdate) {
+      boolean updateSuccessful = false;
+
+      try {
+          openConnection();
+
+          String sql = "UPDATE riwayat_surat SET Status = ? WHERE ID_Surat = ?";
+          PreparedStatement preparedStatement = connection.prepareStatement(sql);
+          preparedStatement.setString(1, dataUpdate.getStatus()); 
+          preparedStatement.setString(2, dataUpdate.getNim());
+
+          int rowsUpdated = preparedStatement.executeUpdate();
+
+          if (rowsUpdated > 0) {
+              updateSuccessful = true;
+          }
+      } catch (SQLException e) {
+          e.printStackTrace();
+      } finally {
+          closeConnection();
+      }
+
+      return updateSuccessful;
+  }
 }
 
 
