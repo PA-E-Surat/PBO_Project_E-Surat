@@ -13,104 +13,40 @@ Berikut adalah diagram yang menggambarkan alur proses sistem E-Surat:
 ### ERD
 
 Berikut adalah diagram yang digunakan untuk perancangan database yang menunjukan relasi antar objek beserta atribut-atribut dalam sistem E-Surat secara detail:
-![erd esurat19](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/6d1c52fb-874f-49a4-99e8-0d911dc57b52)
 
 
 ### Hierarki Kelas
 Berikut adalah kelas yang digunakan dalam sistem E-Surat:
 
-![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/fabea52a-155c-457f-adb6-1e4857fab174)
 
 
 ### Source Code
-Berikut adalah screenshot source code dari program E-Surat:
 ### Action Package
-Merupakan paket yang berisi kostum tombol untuk tabel.
-##### ActionButton - Tombol Kustom
-![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/2bb529c3-aeac-4de4-a71d-ee2e1beda4f7)
-`ActionButton` adalah kelas yang mewarisi dari `JButton` dan digunakan untuk membuat tombol kustom dengan efek visual saat mouse ditekan. Fitur utama dari kelas ini adalah:
-- Ketika mouse ditekan, tombol akan berubah warna menjadi abu-abu tua.
-- Ketika mouse dilepaskan, tombol akan kembali ke warna asalnya.
-
-##### PanelAction - Panel Tombol
-`PanelAction` adalah kelas JPanel yang berisi sebuah tombol kustom `actionButton` yang digunakan untuk memicu tindakan tertentu ketika diklik. Fitur utama dari kelas ini adalah:
-- Tombol `actionButton` dengan latar belakang biru dan teks "DETAIL" yang akan melakukan tindakan ketika diklik.
-![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/1c8b7db2-43da-41a1-81e4-c2d156812b7d)
-
+##### ActionButton - Tombol 
+##### PanelAction - Panel Tombolndakan ketika diklik.
 ##### TableActionCellRender - Pengatur Tampilan Tombol Kustome Tabel
-![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/fd608b6e-9000-45e8-9377-d2603b196ca5)
-`TableActionCellRender` adalah kelas yang memungkinkan kita mengatur tampilan sel dalam `JTable` dengan aksi kustom. Dengan kelas ini, Anda dapat menampilkan panel aksi kustom (`PanelAction`) sebagai konten sel dalam tabel.
-
 ##### Tester - Untuk Mencoba Aplikasi
-![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/dad65653-6730-4ef9-92f2-f2e56b61f681)
-`Test` adalah kelas utama dalam _package_ action. Ini adalah aplikasi GUI sederhana yang menggunakan `JTable` dengan sel kustom yang berisi panel aksi (`PanelAction`) untuk menampilkan kostum tabel yang telah dibuat.
 
 ### Controller Package
-Merupakan paket yang berisi fungsi utama dari aplikasi ini, yaitu main.java
 ##### Controller
-package controller;
-![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/b35cfaec-72e9-427d-ba87-52184df05044)
 ###### Controller - Kontroller Aplikasi
-`Controller` adalah kelas yang berfungsi sebagai pengendali utama dalam aplikasi ini. Ini mengelola hubungan antara model dan tampilan aplikasi
-## Deskripsi Singkat
-Kelas `Controller` adalah bagian penting dari arsitektur aplikasi. Ini menerima model data, berinteraksi dengan berbagai tampilan seperti `ChooseLogin`, `MahasiswaForm`, `MahasiswaInterface`, dan `StaffForm`. 
+##### DataUpdate 
 
-##### DataUpdate Kelas - Sebagai pengendali update (create, read, update,)
-![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/656d256e-5d9d-47ec-b9d8-038efeede17a)
-`DataUpdate` adalah kelas yang digunakan untuk mengelola dan menyimpan data pembaruan informasi seputar seorang mahasiswa. Kelas ini memiliki berbagai atribut yang mencakup berbagai informasi mahasiswa, seperti alamat, tanggal lahir, angkatan, IPK, program studi, jenjang, kontak, dan semester.
-Kelas `DataUpdate` dirancang untuk membantu dalam menyimpan dan mengelola informasi pembaruan mahasiswa. Dengan atribut dan metode yang sesuai, kita dapat dengan mudah mengakses, mengubah, dan menyimpan informasi yang diperlukan.
-
-#####  Main - Kelas utama dari package  Controller
-![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/ddf8d666-5ee1-4821-b436-ddcdb69f88f2)
-Main` adalah kelas utama yang berfungsi sebagai titik awal aplikasi. Kelas ini bertanggung jawab untuk membuat dan menampilkan jendela `ChooseLogin`, yang merupakan layar awal aplikasi.
-
-### Database Package
-Merupakan paket yang berisi database.java, dengan cara JDBC
-##### Database
-![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/ed42d567-d242-4c69-a713-b9be1eb5ecb3)
-`Database` adalah kelas yang digunakan untuk mengelola koneksi ke database MySQL. Kelas ini menyediakan metode untuk membuka dan menutup koneksi ke database.
-
-### Entitas Package
-Merupakan java class yang berisi entitas pemanggil / dari GUI class
-
-##### Admin
-![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/fb420d47-2ea8-4794-9dac-b1cbe89f6391)
-Kelas `Admin` digunakan untuk mengelola data admin dalam aplikasi. Ini memiliki atribut seperti email dan kata sandi admin, serta metode seperti `readData` untuk mengautentikasi admin dan `findData` untuk menemukan data terkait admin dalam database.
-
-##### DataDiri
-![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/8f7868b6-5fa4-4568-876d-5fb4fda99708)
-`DataDiri` adalah kelas yang digunakan untuk mengelola data diri mahasiswa dalam aplikasi. Kelas ini memiliki atribut yang mencakup berbagai informasi tentang mahasiswa, seperti NIM, alamat, tempat lahir, angkatan, IPK, program studi, jenjang studi, dan kontak.
+### 
+##### DataDir
 
 ##### Pengajuan
-![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/b0995903-687b-461f-b6a2-3bc713255c71)
-`DataDiri` adalah kelas yang digunakan untuk mengelola data diri mahasiswa dalam aplikasi. Kelas ini memiliki atribut yang mencakup berbagai informasi tentang mahasiswa, seperti NIM, alamat, tempat lahir, angkatan, IPK, program studi, jenjang studi, dan kontak
+
 
 ##### Pengguna
-![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/b10adfa8-037d-47a6-a74c-307940b40222)
-`Pengguna` adalah kelas yang digunakan untuk mengelola pengguna dalam aplikasi. Kelas ini berfungsi untuk mengautentikasi pengguna berdasarkan ID pengguna dan kata sandi yang dimasukkan.
-
 ##### Riwayat Surat
-![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/1477e93a-8852-4f45-a1de-6f67c24d73ca)
-`RiwayatSurat` adalah kelas yang digunakan untuk mengelola riwayat surat dalam aplikasi. Kelas ini memiliki atribut yang mencakup informasi tentang jenis surat, status, posisi surat, dan tindakan (action).
-
-
 ### Entitas Gui
-Merupakan Jframe yang berisi ui atau interface dari aplikasi sederhana ini
 
 ##### ChooseLogin
-![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/682147aa-29f5-4615-bf17-ed88166994b0)
-
 ##### MahasiswaForm
-![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/863dc436-54b3-44ee-8239-57f0b1116b6f)
-
-
-
-
-#####
-#####
-#####
-#####
-
+##### MahasiswaInterface
+##### StaffForm
+##### Staff Interface
 
 ### Output
 Berikut adalah screenshoot output dari program E-Surat:
