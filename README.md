@@ -32,15 +32,8 @@ Berikut adalah kelas yang digunakan dalam sistem E-Surat:
 ###### Controller - Kontroller Aplikasi
 ##### DataUpdate 
 
-### 
-##### DataDir
-
-##### Pengajuan
-
-
-##### Pengguna
-##### Riwayat Surat
-### Entitas Gui
+### Database
+##### Database
 
 ##### ChooseLogin
 ##### MahasiswaForm
