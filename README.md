@@ -24,6 +24,8 @@ Berikut adalah kelas yang digunakan dalam sistem E-Surat:
 
 ### Source Code
 Berikut adalah screenshot source code dari program E-Surat:
+### Action Package
+Merupakan paket yang berisi kostum tombol untuk tabel.
 ##### ActionButton - Tombol Kustom
 ![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/2bb529c3-aeac-4de4-a71d-ee2e1beda4f7)
 `ActionButton` adalah kelas yang mewarisi dari `JButton` dan digunakan untuk membuat tombol kustom dengan efek visual saat mouse ditekan. Fitur utama dari kelas ini adalah:
@@ -43,13 +45,42 @@ Berikut adalah screenshot source code dari program E-Surat:
 ![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/dad65653-6730-4ef9-92f2-f2e56b61f681)
 `Test` adalah kelas utama dalam _package_ action. Ini adalah aplikasi GUI sederhana yang menggunakan `JTable` dengan sel kustom yang berisi panel aksi (`PanelAction`) untuk menampilkan kostum tabel yang telah dibuat.
 
-#####
-#####
-#####
-#####
-#####
+### Controller Package
+Merupakan paket yang berisi fungsi utama dari aplikasi ini, yaitu main.java
+##### Controller
+package controller;
+![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/b35cfaec-72e9-427d-ba87-52184df05044)
+###### Controller - Kontroller Aplikasi
+`Controller` adalah kelas yang berfungsi sebagai pengendali utama dalam aplikasi ini. Ini mengelola hubungan antara model dan tampilan aplikasi
+## Deskripsi Singkat
+Kelas `Controller` adalah bagian penting dari arsitektur aplikasi. Ini menerima model data, berinteraksi dengan berbagai tampilan seperti `ChooseLogin`, `MahasiswaForm`, `MahasiswaInterface`, dan `StaffForm`. 
+
+##### DataUpdate Kelas - Sebagai pengendali update (create, read, update,)
+![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/656d256e-5d9d-47ec-b9d8-038efeede17a)
+`DataUpdate` adalah kelas yang digunakan untuk mengelola dan menyimpan data pembaruan informasi seputar seorang mahasiswa. Kelas ini memiliki berbagai atribut yang mencakup berbagai informasi mahasiswa, seperti alamat, tanggal lahir, angkatan, IPK, program studi, jenjang, kontak, dan semester.
+Kelas `DataUpdate` dirancang untuk membantu dalam menyimpan dan mengelola informasi pembaruan mahasiswa. Dengan atribut dan metode yang sesuai, kita dapat dengan mudah mengakses, mengubah, dan menyimpan informasi yang diperlukan.
+
+#####  Main - Kelas utama dari package  Controller
+![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/ddf8d666-5ee1-4821-b436-ddcdb69f88f2)
+Main` adalah kelas utama yang berfungsi sebagai titik awal aplikasi. Kelas ini bertanggung jawab untuk membuat dan menampilkan jendela `ChooseLogin`, yang merupakan layar awal aplikasi.
+
+### Database Package
+Merupakan paket yang berisi database.java, dengan cara JDBC
+##### Database
+![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/ed42d567-d242-4c69-a713-b9be1eb5ecb3)
+`Database` adalah kelas yang digunakan untuk mengelola koneksi ke database MySQL. Kelas ini menyediakan metode untuk membuka dan menutup koneksi ke database.
 
 
+
+
+#####
+#####
+#####
+#####
+#####
+#####
+#####
+#####
 
 
 ### Output
