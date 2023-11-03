@@ -70,6 +70,11 @@ Merupakan paket yang berisi database.java, dengan cara JDBC
 ![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/ed42d567-d242-4c69-a713-b9be1eb5ecb3)
 `Database` adalah kelas yang digunakan untuk mengelola koneksi ke database MySQL. Kelas ini menyediakan metode untuk membuka dan menutup koneksi ke database.
 
+### Entitas Package
+Merupakan java class yang berisi entitas pemanggil / dari GUI class
+##### Admin
+![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/fb420d47-2ea8-4794-9dac-b1cbe89f6391)
+Kelas `Admin` digunakan untuk mengelola data admin dalam aplikasi. Ini memiliki atribut seperti email dan kata sandi admin, serta metode seperti `readData` untuk mengautentikasi admin dan `findData` untuk menemukan data terkait admin dalam database.
 
 
 
