@@ -7,12 +7,17 @@
 Proyek E-Surat adalah aplikasi manajemen surat berbasis pemrograman berorientasi objek yang bertujuan untuk mengotomatisasi dan meningkatkan efisiensi dalam proses pembuatan surat di Fakultas Teknik Universitas Mulawarman. Aplikasi ini dirancang untuk menggantikan proses manual dalam penanganan surat dan membawa manfaat signifikan seperti peningkatan efisiensi, pengurangan penggunaan kertas, penghematan biaya pengiriman surat fisik, dan peningkatan kemampuan dalam mengelola surat elektronik. Aplikasi ini memberikan solusi modern dan berkelanjutan untuk manajemen surat.
 ### Flowchart
 Berikut adalah diagram yang menggambarkan alur proses sistem E-Surat:
+![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/848f6c5d-d068-4e06-a9fc-da42f8d27c06)
 
 ### ERD
 Berikut adalah diagram yang digunakan untuk perancangan database yang menunjukan relasi antar objek beserta atribut-atribut dalam sistem E-Surat secara detail:
+![erd esurat19](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/6d1c52fb-874f-49a4-99e8-0d911dc57b52)
+
 
 ### Hierarki Kelas
 Berikut adalah kelas yang digunakan dalam sistem E-Surat:
+![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/fabea52a-155c-457f-adb6-1e4857fab174)
+
 
 ### Source Code
 Berikut adalah screenshoot source code dari program E-Surat:
