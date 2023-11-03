@@ -72,16 +72,40 @@ Merupakan paket yang berisi database.java, dengan cara JDBC
 
 ### Entitas Package
 Merupakan java class yang berisi entitas pemanggil / dari GUI class
+
 ##### Admin
 ![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/fb420d47-2ea8-4794-9dac-b1cbe89f6391)
 Kelas `Admin` digunakan untuk mengelola data admin dalam aplikasi. Ini memiliki atribut seperti email dan kata sandi admin, serta metode seperti `readData` untuk mengautentikasi admin dan `findData` untuk menemukan data terkait admin dalam database.
 
+##### DataDiri
+![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/8f7868b6-5fa4-4568-876d-5fb4fda99708)
+`DataDiri` adalah kelas yang digunakan untuk mengelola data diri mahasiswa dalam aplikasi. Kelas ini memiliki atribut yang mencakup berbagai informasi tentang mahasiswa, seperti NIM, alamat, tempat lahir, angkatan, IPK, program studi, jenjang studi, dan kontak.
+
+##### Pengajuan
+![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/b0995903-687b-461f-b6a2-3bc713255c71)
+`DataDiri` adalah kelas yang digunakan untuk mengelola data diri mahasiswa dalam aplikasi. Kelas ini memiliki atribut yang mencakup berbagai informasi tentang mahasiswa, seperti NIM, alamat, tempat lahir, angkatan, IPK, program studi, jenjang studi, dan kontak
+
+##### Pengguna
+![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/b10adfa8-037d-47a6-a74c-307940b40222)
+`Pengguna` adalah kelas yang digunakan untuk mengelola pengguna dalam aplikasi. Kelas ini berfungsi untuk mengautentikasi pengguna berdasarkan ID pengguna dan kata sandi yang dimasukkan.
+
+##### Riwayat Surat
+![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/1477e93a-8852-4f45-a1de-6f67c24d73ca)
+`RiwayatSurat` adalah kelas yang digunakan untuk mengelola riwayat surat dalam aplikasi. Kelas ini memiliki atribut yang mencakup informasi tentang jenis surat, status, posisi surat, dan tindakan (action).
 
 
-#####
-#####
-#####
-#####
+### Entitas Gui
+Merupakan Jframe yang berisi ui atau interface dari aplikasi sederhana ini
+
+##### ChooseLogin
+![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/682147aa-29f5-4615-bf17-ed88166994b0)
+
+##### MahasiswaForm
+![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/863dc436-54b3-44ee-8239-57f0b1116b6f)
+
+
+
+
 #####
 #####
 #####
