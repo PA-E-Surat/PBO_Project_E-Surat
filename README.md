@@ -32,9 +32,12 @@ Berikut adalah kelas yang digunakan dalam sistem E-Surat:
 ###### Controller - Kontroller Aplikasi
 ##### DataUpdate 
 
-### Database
+### Database Package
 ##### Database
 
+### Entitas Package
+
+### GUI Package
 ##### ChooseLogin
 ##### MahasiswaForm
 ##### MahasiswaInterface
