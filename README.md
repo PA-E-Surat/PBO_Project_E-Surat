@@ -8,11 +8,10 @@ Proyek E-Surat adalah aplikasi manajemen surat berbasis pemrograman berorientasi
 ### Flowchart
 Berikut adalah diagram yang menggambarkan alur proses sistem E-Surat:
 
-![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/848f6c5d-d068-4e06-a9fc-da42f8d27c06)
 
 ### ERD
 
-Berikut adalah diagram yang digunakan untuk perancangan database yang menunjukan relasi antar objek beserta atribut-atribut dalam sistem E-Surat secara detail:
+``Berikut adalah diagram yang digunakan untuk perancangan database yang menunjukan relasi antar objek beserta atribut-atribut dalam sistem E-Surat secara detail:``
 
 
 ### Hierarki Kelas
@@ -42,11 +41,47 @@ Berikut adalah kelas yang digunakan dalam sistem E-Surat:
 ##### MahasiswaForm
 ##### MahasiswaInterface
 ##### StaffForm
-##### Staff Interface
 
-### Output
-Berikut adalah screenshoot output dari program E-Surat:
-# Tampilan menu awal
+#### Staff Interface
+- Imported Package
+![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/259546ce-53de-4d76-be85-3634138c33bb)
+```
+ackage gui;
+
+import action.PanelAction;
+import action.TableActionCellRender;
+import controller.DataUpdate;
+import database.Database;
+import entitas.Admin;
+import entitas.DataDiri;
+import entitas.Pengajuan;
+import entitas.RiwayatSurat;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
+import javax.swing.JTable;
+import java.awt.CardLayout;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.Arrays;
+import javax.swing.table.DefaultTableModel;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.List;
+import java.sql.SQLException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
+````
+Di kelas, ini akan melakuknimo _import___ package dari java, salah, satuunya dalam contoh diatas adalah ArrayList.
+
+- ![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/04cb50f8-c49d-4ea7-bed0-2440e7c76768)
 ![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/ccda7616-44af-4639-899e-9cf47290800c)
 Dibagian ini, user dapat memilih menu berdasarkan _role_ akun yang dimiliki, dalam kasus ini, kita akan menggunakan akun mahasiswa.
 ![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/ddf5644c-4e36-4558-ad2e-8624e2acaa55)
