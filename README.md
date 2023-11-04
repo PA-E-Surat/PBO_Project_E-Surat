@@ -44,10 +44,8 @@ Berikut adalah kelas yang digunakan dalam sistem E-Surat:
 
 #### Staff Interface
 - Imported Package
-![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/259546ce-53de-4d76-be85-3634138c33bb)
 ```
-ackage gui;
-
+package gui;
 import action.PanelAction;
 import action.TableActionCellRender;
 import controller.DataUpdate;
@@ -77,9 +75,35 @@ import java.sql.ResultSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-
 ````
-Di kelas, ini akan melakuknimo _import___ package dari java, salah, satuunya dalam contoh diatas adalah ArrayList.
+### Penjelasan Kode
+- `database`: Objek database yang digunakan dalam kelas ini.
+- `roleChecker`: String yang menyimpan peran pengguna.
+- `riwayatSurat`: Objek RiwayatSurat yang digunakan untuk mengakses data riwayat surat.
+- `cardLayout`: Objek CardLayout yang digunakan untuk mengelola tampilan panel.
+- `email`: String yang menyimpan alamat email.
+- `password`: String yang menyimpan kata sandi.
+- `mahasiswaNIM`: String yang menyimpan NIM mahasiswa.
+- `peruntukan`: String yang menyimpan peruntukan.
+- `mahasiswaNim`: String yang menyimpan NIM mahasiswa.
+- `checkNim`: String yang digunakan untuk memeriksa NIM.
+- `currentNim`: String yang menyimpan NIM saat ini.
+- `idSuratToAccept`: String yang menyimpan ID surat yang akan diterima.
+
+### Penjelasan
+Kode ini adalah bagian dari kelas `StaffInterface`, yang digunakan untuk mengelola antarmuka pengguna dalam aplikasi Java. Kelas ini memiliki berbagai variabel yang digunakan untuk mengakses data, mengelola tampilan, dan menyimpan informasi pengguna.
+
+Kelas ini digunakan dalam aplikasi untuk berinteraksi dengan pengguna, mengelola data surat, dan mengelola pengajuan. Variabel-variabelnya digunakan untuk menyimpan data seperti alamat email, kata sandi, NIM mahasiswa, peruntukan, dan ID surat yang sedang diterima.
+
+Kelas ini memiliki banyak fungsi dan fitur yang tidak ditampilkan di potongan kode ini, tetapi kode ini adalah bagian penting dari aplikasi untuk memulai antarmuka pengguna dan mengakses data.
+
+### Penggunaan
+Kode ini digunakan sebagai dasar untuk mengembangkan fungsi lebih lanjut dalam aplikasi dan dapat diintegrasikan dengan komponen antarmuka pengguna lainnya.
+
+### Catatan
+Pastikan kode ini terhubung dengan bagian lain dari aplikasi untuk menjalankan fungsi yang diinginkan.
+
+Di kelas, ini akan melakuknimo _import___ package dari java, salah, satunya dalam contoh diatas adalah ArrayList.
 
 - ![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/04cb50f8-c49d-4ea7-bed0-2440e7c76768)
 ![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/ccda7616-44af-4639-899e-9cf47290800c)
