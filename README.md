@@ -90,6 +90,89 @@ import javax.swing.JOptionPane;
 - `currentNim`: String yang menyimpan NIM saat ini.
 - `idSuratToAccept`: String yang menyimpan ID surat yang akan diterima.
 
+- Created Constrcutor
+```
+ public StaffInterface(String roleChecker) {
+        initComponents();
+        database = new Database();
+        this.roleChecker = roleChecker;
+        pnlCards.add(welcomePanel, "pnlCard5");
+        pnlCards.add(suratPanel, "pnlCard2");
+        pnlCards.add(profilPanel, "pnlCard1");
+        pnlCards.add(buatPanel, "pnlCard4");
+        Navigation.setPreferredSize(new Dimension(50, 520)); 
+        Navigation.setVisible(true);
+        cardLayout = (CardLayout) (pnlCards.getLayout());
+        suratTabel.setDefaultEditor(Object.class, null);
+        suratTabel.setCellSelectionEnabled(false);
+    }
+```
+### Penjelasan Kode
+- `database`: Variabel database adalah objek dari kelas Database yang digunakan untuk berinteraksi dengan basis data.
+- `roleChecker`: Variabel roleChecker adalah string yang digunakan untuk menyimpan peran pengguna yang saat ini digunakan dalam aplikasi.
+- `riwayatSurat`: Variabel riwayatSurat adalah objek dari kelas RiwayatSurat yang digunakan untuk mengakses dan mengelola data riwayat surat.
+- `cardLayout`: Variabel cardLayout adalah objek dari kelas CardLayout yang digunakan untuk mengelola tampilan panel (kartu) dalam antarmuka pengguna.
+- `email`: Variabel email adalah string yang digunakan untuk menyimpan alamat email yang digunakan dalam aplikasi.
+- `password`: Variabel password adalah string yang digunakan untuk menyimpan kata sandi yang digunakan dalam aplikasi.
+- `mahasiswaNIM`: Variabel mahasiswaNIM adalah string yang digunakan untuk menyimpan NIM (Nomor Induk Mahasiswa) mahasiswa yang saat ini terkait dengan operasi yang dilakukan.
+- `peruntukan`: Variabel peruntukan adalah string yang digunakan untuk menyimpan peruntukan yang terkait dengan operasi yang dilakukan dalam aplikasi.
+- `mahasiswaNim`: Variabel mahasiswaNim adalah string yang digunakan untuk menyimpan NIM (Nomor Induk Mahasiswa) mahasiswa yang terkait dalam operasi aplikasi.
+- `checkNim`: Variabel checkNim adalah string yang digunakan untuk memeriksa dan menyimpan NIM (Nomor Induk Mahasiswa) saat memeriksa operasi aplikasi.
+- `currentNim`: Variabel currentNim adalah string yang digunakan untuk menyimpan NIM (Nomor Induk Mahasiswa) saat ini dalam aplikasi.
+- `idSuratToAccept`: Variabel idSuratToAccept adalah string yang digunakan untuk menyimpan ID surat yang akan diterima atau terkait dalam operasi aplikasi.
+
+### Metode showTable
+```
+  private void showTable() {
+        DefaultTableModel model = new DefaultTableModel();
+        Admin admin = new Admin(email, password);
+
+        model.addColumn("ID Surat");
+        model.addColumn("Jenis Surat");
+        model.addColumn("Status");
+        model.addColumn("Posisi Surat");
+        model.addColumn("Action");
+
+        List<String[]> riwayatSuratData = riwayatSurat.readData();
+
+        for (String[] row : riwayatSuratData) {
+            model.addRow(row);
+        }
+
+        suratTabel.setModel(model);
+
+        TableColumn column = suratTabel.getColumnModel().getColumn(4);
+        column.setCellRenderer(new TableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                return new PanelAction();
+            }
+        });
+```
+### Penjelasan Kode
+- Metode `showTable()` digunakan untuk mengisi dan menampilkan data pada sebuah tabel di antarmuka pengguna.
+- Sebuah model tabel (DefaultTableModel) dibuat untuk menampung data yang akan ditampilkan.
+- Objek Admin diciptakan dengan menggunakan alamat email dan kata sandi yang ada.
+- Kemudian, kolom-kolom (kolom "ID Surat", "Jenis Surat", "Status", "Posisi Surat", dan "Action") ditambahkan ke model tabel.
+- Data riwayat surat dibaca dan dimasukkan ke dalam model tabel sebagai baris-baris data.
+- Model tabel ditetapkan ke komponen JTable dengan nama suratTabel.
+- Kolom "Action" (kolom ke-4) dalam tabel diperoleh dan diubah penampilannya agar dapat menampilkan komponen PanelAction di dalam sel "Action". Ini memungkinkan kita untuk menampilkan komponen khusus di dalam sel ini.
+
+### Metode AddMouseListener
+### Penjelasan Kode
+Kode ini digunakan untuk mengendalikan tindakan ketika pengguna mengklik sel dalam kolom "Action" di tabel `suratTabel`.
+- `suratTabel.addMouseListener(new MouseAdapter())` menambahkan sebuah mouse listener ke tabel `suratTabel`, sehingga mengizinkan kita untuk menangani peristiwa ketika pengguna mengklik sel dalam tabel.
+- `int column = suratTabel.getColumnModel().getColumnIndex("Action")` digunakan untuk mendapatkan indeks kolom yang bernama "Action". Ini memungkinkan kita untuk memeriksa apakah pengguna mengklik sel di kolom "Action".
+- `int row = suratTabel.rowAtPoint(e.getPoint())` mengembalikan indeks baris yang sesuai dengan titik yang diklik oleh pengguna.
+- Berdasarkan kolom yang di-klik ("Action") dan indeks baris yang ditemukan, kode ini memeriksa apakah pengguna mengklik sel di kolom "Action" dan juga memeriksa apakah indeks baris valid (lebih besar atau sama dengan nol).
+- Jika pengguna mengklik sel di kolom "Action" dan indeks baris valid, maka program akan mengambil ID surat yang terkait dengan baris yang diklik, mencari data berdasarkan ID surat tersebut, dan menampilkan data tersebut di "pnlCard1" dalam antarmuka pengguna.
+- Hasil dari kode ini adalah mengubah tampilan antarmuka pengguna ke kartu "pnlCard1" dan menampilkan data yang sesuai dengan surat yang diklik oleh pengguna.
+
+
+
+
+
+
 ### Penjelasan
 Kode ini adalah bagian dari kelas `StaffInterface`, yang digunakan untuk mengelola antarmuka pengguna dalam aplikasi Java. Kelas ini memiliki berbagai variabel yang digunakan untuk mengakses data, mengelola tampilan, dan menyimpan informasi pengguna.
 
@@ -99,6 +182,7 @@ Kelas ini memiliki banyak fungsi dan fitur yang tidak ditampilkan di potongan ko
 
 ### Penggunaan
 Kode ini digunakan sebagai dasar untuk mengembangkan fungsi lebih lanjut dalam aplikasi dan dapat diintegrasikan dengan komponen antarmuka pengguna lainnya.
+
 
 ### Catatan
 Pastikan kode ini terhubung dengan bagian lain dari aplikasi untuk menjalankan fungsi yang diinginkan.
