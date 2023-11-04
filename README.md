@@ -1345,16 +1345,7 @@ Kelas ini digunakan dalam aplikasi untuk berinteraksi dengan pengguna, mengelola
 
 Kelas ini memiliki banyak fungsi dan fitur yang tidak ditampilkan di potongan kode ini, tetapi kode ini adalah bagian penting dari aplikasi untuk memulai antarmuka pengguna dan mengakses data.
 
-### Penggunaan
-Kode ini digunakan sebagai dasar untuk mengembangkan fungsi lebih lanjut dalam aplikasi dan dapat diintegrasikan dengan komponen antarmuka pengguna lainnya.
-
-
-### Catatan
-Pastikan kode ini terhubung dengan bagian lain dari aplikasi untuk menjalankan fungsi yang diinginkan.
-
-Di kelas, ini akan melakuknimo _import___ package dari java, salah, satunya dalam contoh diatas adalah ArrayList.
-
-![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/04cb50f8-c49d-4ea7-bed0-2440e7c76768)
+### Output
 ![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/ccda7616-44af-4639-899e-9cf47290800c)
 Dibagian ini, user dapat memilih menu berdasarkan _role_ akun yang dimiliki, dalam kasus ini, kita akan menggunakan akun mahasiswa.
 ![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/ddf5644c-4e36-4558-ad2e-8624e2acaa55)
