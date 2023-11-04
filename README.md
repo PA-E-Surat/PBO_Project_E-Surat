@@ -244,17 +244,6 @@ public class Main {
 ### Penjelasan Kode
 Kelas ini berisi metode `main` yang berfungsi sebagai titik awal eksekusi aplikasi. Ketika Anda menjalankan program Java, metode `main` di kelas ini akan dijalankan terlebih dahulu. Dalam metode `main`, kita membuat instance dari kelas `ChooseLogin`, mengatur preferensi jendela, dan menampilkannya.
 
-```java
-public static void main(String[] args) {
-    ChooseLogin chooseLogin = new ChooseLogin();
-
-    chooseLogin.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-    chooseLogin.setPreferredSize(new Dimension(800, 600));
-
-    chooseLogin.setVisible(true);
-}
-
-
 ### Database Package
 ##### Database
 - Melakukan _Import__ paket
@@ -263,7 +252,7 @@ public static void main(String[] args) {
   import java.sql.Connection;
   import java.sql.DriverManager;
   import java.sql.SQLException;
-```
+  ```
 ### Penjelasan Kode
 - `Connection`: Kelas ini digunakan untuk membuka dan menutup koneksi ke basis data. Fungsinya adalah mengelola koneksi ke database yang digunakan oleh aplikasi.
 - `DriverManager`: Kelas ini memungkinkan Anda untuk mendaftar driver JDBC yang diperlukan untuk berkomunikasi dengan database tertentu.
@@ -1115,14 +1104,12 @@ Kode ini menciptakan form staf dengan inisialisasi komponen dan persiapan awal u
         // TODO add your handling code here:
         String email = emailTextField.getText();
         String password = new String(passTextField.getPassword());
-
         if (email.equals("Email") || password.isEmpty()) {
             popError.setText("• Email tidak boleh kosong\n• Password tidak boleh kosong");
             popError.setVisible(true);
         } else {
             Admin data = new Admin (email,password);
             data.openConnection();
-
             if (data.readData()) {
                 StaffInterface staffInterface = new StaffInterface(email);
                 staffInterface.setVisible(true);
@@ -1132,7 +1119,6 @@ Kode ini menciptakan form staf dengan inisialisasi komponen dan persiapan awal u
                 popError.setText("• Login gagal, silahkan cek kembali nim dan password");
                 popError.setVisible(true);
             }
-
             data.closeConnection();
   ```
 ### Penjelasan Kode
@@ -1145,38 +1131,37 @@ Kode ini menciptakan form staf dengan inisialisasi komponen dan persiapan awal u
 - Terakhir, koneksi ke database ditutup.
 
 #### Staff Interface
-- Imported Package
 ```
 package gui;
-  import action.PanelAction;
-  import action.TableActionCellRender;
-  import controller.DataUpdate;
-  import database.Database;
-  import entitas.Admin;
-  import entitas.DataDiri;
-  import entitas.Pengajuan;
-  import entitas.RiwayatSurat;
-  import javax.swing.table.TableCellRenderer;
-  import javax.swing.table.TableColumn;
-  import javax.swing.JTable;
-  import java.awt.CardLayout;
-  import java.awt.Component;
-  import java.awt.Dimension;
-  import java.awt.event.ActionEvent;
-  import java.awt.event.ActionListener;
-  import java.awt.event.MouseAdapter;
-  import java.awt.event.MouseEvent;
-  import java.util.Arrays;
-  import javax.swing.table.DefaultTableModel;
-  import java.util.List;
-  import java.util.ArrayList;
-  import java.util.List;
-  import java.sql.SQLException;
-  import java.sql.PreparedStatement;
-  import java.sql.ResultSet;
-  import java.util.logging.Level;
-  import java.util.logging.Logger;
-  import javax.swing.JOptionPane;
+import action.PanelAction;
+import action.TableActionCellRender;
+import controller.DataUpdate;
+import database.Database;
+import entitas.Admin;
+import entitas.DataDiri;
+import entitas.Pengajuan;
+import entitas.RiwayatSurat;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
+import javax.swing.JTable;
+import java.awt.CardLayout;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.Arrays;
+import javax.swing.table.DefaultTableModel;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.List;
+import java.sql.SQLException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.logging.Level;
+import java.util.logging Logger;
+import javax.swing.JOptionPane;
 ```
 ### Penjelasan Kode
 - `database`: Objek database yang digunakan dalam kelas ini.
@@ -1194,21 +1179,22 @@ package gui;
 
 - Created Constrcutor
 ```
- public StaffInterface(String roleChecker) {
-        initComponents();
-        database = new Database();
-        this.roleChecker = roleChecker;
-        pnlCards.add(welcomePanel, "pnlCard5");
-        pnlCards.add(suratPanel, "pnlCard2");
-        pnlCards.add(profilPanel, "pnlCard1");
-        pnlCards.add(buatPanel, "pnlCard4");
-        Navigation.setPreferredSize(new Dimension(50, 520)); 
-        Navigation.setVisible(true);
-        cardLayout = (CardLayout) (pnlCards.getLayout());
-        suratTabel.setDefaultEditor(Object.class, null);
-        suratTabel.setCellSelectionEnabled(false);
-    }
-```
+    java
+    public StaffInterface(String roleChecker) {
+    initComponents();
+    database = new Database();
+    this.roleChecker = roleChecker;
+    pnlCards.add(welcomePanel, "pnlCard5");
+    pnlCards.add(suratPanel, "pnlCard2");
+    pnlCards add(profilPanel, "pnlCard1");
+    pnlCards.add(buatPanel, "pnlCard4");
+    Navigation.setPreferredSize(new Dimension(50, 520));
+    Navigation.setVisible(true);
+    cardLayout = (CardLayout) (pnlCards.getLayout());
+    suratTabel.setDefaultEditor(Object.class, null);
+    suratTabel.setCellSelectionEnabled(false);
+    } 
+    ```
 ### Penjelasan Kode
 - `database`: Variabel database adalah objek dari kelas Database yang digunakan untuk berinteraksi dengan basis data.
 - `roleChecker`: Variabel roleChecker adalah string yang digunakan untuk menyimpan peran pengguna yang saat ini digunakan dalam aplikasi.
@@ -1225,7 +1211,7 @@ package gui;
 
 - Metode showTabel
 ```
-  private void showTable() {
+private void showTable() {
         DefaultTableModel model = new DefaultTableModel();
         Admin admin = new Admin(email, password);
 
@@ -1250,7 +1236,7 @@ package gui;
                 return new PanelAction();
             }
         });
-```
+        ```
 ### Penjelasan Kode
 - Metode `showTable()` digunakan untuk mengisi dan menampilkan data pada sebuah tabel di antarmuka pengguna.
 - Sebuah model tabel (DefaultTableModel) dibuat untuk menampung data yang akan ditampilkan.
@@ -1262,10 +1248,9 @@ package gui;
 
 - Metode showData
 ```
- private void showData(String nimToCheck, String idSurat) {
+private void showData(String nimToCheck, String idSurat) {
         DataDiri dataMahasiswa = new DataDiri();
         String[] data = dataMahasiswa.readData(nimToCheck);
-
         if (data != null) {
             System.out.println("NIM: " + Arrays.toString(data));
             namaLengkap.setText((String) data[0]);
@@ -1282,7 +1267,6 @@ package gui;
             System.out.println("Data tidak ditemukan");
         }
     }
-
     private void navigateToLoginScreen() {
             ChooseLogin loginScreen = new ChooseLogin();
             loginScreen.setVisible(true); 
@@ -1311,18 +1295,16 @@ Metode-metode ini memungkinkan pengguna untuk menampilkan data mahasiswa terkait
 
 - Metode actionButton (Tombol / Buttom)
 ```
- private void suratActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_suratActionPerformed
+private void suratActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_suratActionPerformed
         // TODO add your handling code here:
         cardLayout.show(pnlCards, "pnlCard5");
         showTable();
-    }//GEN-LAST:event_suratActionPerformed
-
+    }
     private void acceptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acceptButtonActionPerformed
         // TODO add your handling code here:
         DataUpdate dataUpdate = new DataUpdate(idSuratToAccept, "Accept");
         RiwayatSurat riwayatSurat = new RiwayatSurat();
         boolean updateSuccessful = riwayatSurat.updateData(dataUpdate);
-
         if (updateSuccessful) {
             System.out.println("Status updated to 'accept'");
         } else {
@@ -1345,8 +1327,6 @@ Kode ini berisi dua metode yang menangani aksi pengguna pada antarmuka:
    - Jika pembaruan berhasil, metode mencetak pesan "Status updated to 'accept'".
    - Jika pembaruan gagal, metode mencetak pesan "Status update failed".
 Metode-metode ini memungkinkan pengguna untuk melihat data surat dan mengubah status surat menjadi "Accept" saat diperlukan.
-
-
 
 ### Metode AddMouseListener
 ### Penjelasan Kode
@@ -1374,7 +1354,7 @@ Pastikan kode ini terhubung dengan bagian lain dari aplikasi untuk menjalankan f
 
 Di kelas, ini akan melakuknimo _import___ package dari java, salah, satunya dalam contoh diatas adalah ArrayList.
 
-- ![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/04cb50f8-c49d-4ea7-bed0-2440e7c76768)
+![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/04cb50f8-c49d-4ea7-bed0-2440e7c76768)
 ![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/ccda7616-44af-4639-899e-9cf47290800c)
 Dibagian ini, user dapat memilih menu berdasarkan _role_ akun yang dimiliki, dalam kasus ini, kita akan menggunakan akun mahasiswa.
 ![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/ddf5644c-4e36-4558-ad2e-8624e2acaa55)
@@ -1386,4 +1366,4 @@ Profil terdiri dari data diri mahasiswa, sedangkan E-Surat, user akan dapat memi
 Dalam menu profil, terdapat data pribadi mahasiswa. Dalam menu ini pula, mahasiswa dapat mengubah data diri, dengan cara menekan tombol "Ubah Data"
 ![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/2a9e60b8-1848-4e07-9ebc-bbf71986464d)
 Selanjutnya adalah menu E-Surat, yaitu menu dimana mahasiswa dapat melakukan pengajuan surat, dalam menu ini, jika mahasiswa melakukan pengajuan surat, maka mahasiswa diharuskan menunggu kurang lebih 1-3 hari kerja.
-Setelah itu, surat akan ditampilkan, apakah di _Accept__ atau _Denied._
+Setelah itu, surat akan ditampilkan, apakah di _Accept__ atau _Denied.
