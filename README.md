@@ -1,4 +1,43 @@
 # LAPORAN PRAKTIKUM PBO E-SURAT
+Oleh Kelompok 13 SI A 22:
+- Ayu Cahyarani (2209116008)
+- Abdul Rahman (2209116045)
+#
+### Deskripsi Project
+Proyek E-Surat adalah aplikasi manajemen surat berbasis pemrograman berorientasi objek yang bertujuan untuk mengotomatisasi dan meningkatkan efisiensi dalam proses pembuatan surat di Fakultas Teknik Universitas Mulawarman. Aplikasi ini dirancang untuk menggantikan proses manual dalam penanganan surat dan membawa manfaat signifikan seperti peningkatan efisiensi, pengurangan penggunaan kertas, penghematan biaya pengiriman surat fisik, dan peningkatan kemampuan dalam mengelola surat elektronik. Aplikasi ini memberikan solusi modern dan berkelanjutan untuk manajemen surat.
+#
+# Table of contents- [LAPORAN PRAKTIKUM PBO E-SURAT](#laporan-praktikum-pbo-e-surat)
+- [LAPORAN PRAKTIKUM PBO E-SURAT](#laporan-praktikum-pbo-e-surat)
+    - [Deskripsi Project](#deskripsi-project)
+- [Table of contents- LAPORAN PRAKTIKUM PBO E-SURAT](#table-of-contents--laporan-praktikum-pbo-e-surat)
+    - [Flowchart](#flowchart)
+    - [ERD](#erd)
+    - [Hierarki Kelas](#hierarki-kelas)
+    - [Source Code](#source-code)
+    - [Output](#output)
+- [Tampilan menu awal](#tampilan-menu-awal)
+#
+## Flowchart
+Berikut adalah flowchart dari aplikasi sederhana e-surat, didalam flowchart terlihat bahwa aplikasi secara tidak langsung terhubung dengan database melalui ORM. Program dimulai dari user menjalankan aplikasi, hingga log out.
+![](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/848f6c5d-d068-4e06-a9fc-da42f8d27c06 =600x500)
+#
+### ERD
+Berikut adalah diagram yang digunakan untuk perancangan database yang menunjukan relasi antar objek beserta atribut-atribut dalam sistem E-Surat secara detail:
+
+![](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/6d1c52fb-874f-49a4-99e8-0d911dc57b52 =600x500)
+#
+### Hierarki Kelas
+Berikut adalah hierarki kelas dari aplikasi E-Surat sederhana:
+
+![](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/fabea52a-155c-457f-adb6-1e4857fab174 =500x600)
+
+
+### Source Code
+Berikut adalah screenshoot source code dari program E-Surat:
+
+### Output
+Berikut adalah screenshoot output dari program E-Surat:
+# LAPORAN PRAKTIKUM PBO E-SURAT
 ### Oleh Kelompok 13 SI A 22:
 ### Ayu Cahyarani (2209116008)
 ### Abdul Rahman (2209116045)
@@ -19,14 +58,23 @@ Berikut adalah kelas yang digunakan dalam sistem E-Surat:
 ![HIerarki](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/1ebd1f13-28d9-4ebc-889f-22e83886323e)
 
 ### Source Code
-Berikut adalah penjelasan singkat mengenai source code didalam aplikasi ini:
-##### ActionButton - Tombol 
+Berikut adalah penjelasan singkat mengenai source code didalam aplikasi ini
+#
+Didalam aplikasi java ini terdapat 5 package, yaitu:
+- Action (ActionButton, PanelAction, TableActionCellRender, Test)
+- Controller (Controller, DataUpdate, Main)
+- Database (Database)
+- Entitas (Admin, DataDiri, Pengajuan, Pengguna, RiwayatSurat)
+- Gui (ChooseLogin, MahasiswaForm, MahasiswaInterface, StaffForm, StaffInterface)
+- Resource (Icon dan Mysql file)
+# 
+Adapun berikut ini adalah penjelasan singkat masing-masing class.
+## Action Package
+### Action (ActionButton).java - Efek tombol 
 - Kelas ActionButton
 ```
 public class ActionButton extends JButton {
-    
     private boolean mousePress;
-    
     public ActionButton() {
         setContentAreaFilled(false);
         addMouseListener(new MouseAdapter() {
@@ -34,7 +82,6 @@ public class ActionButton extends JButton {
             public void mousePress(MouseEvent me) {
                 mousePress = true;
             }
-            
             @Override
             public void mouseReleased(MouseEvent me) {
                 mousePress = false;
@@ -56,11 +103,11 @@ public class ActionButton extends JButton {
         }
 ```
 ### Penjelasan Kode
-- private boolean mousePress: Ini adalah atribut boolean yang digunakan untuk melacak apakah tombol sedang ditekan atau tidak.
-- Konstruktor ActionButton: Dalam konstruktor, Anda mengatur beberapa sifat tombol, seperti setContentAreaFilled(false), yang membuat tombol tidak menggambar latar belakangnya sendiri.
-- Metode paintComponent: Metode ini digunakan untuk menggambar tampilan tombol. Anda membuat objek Graphics2D dan mengatur beberapa opsi rendering untuk menghasilkan tampilan yang lebih mulus dan rapi.
+- `private boolean mousePress` yaitu atribut boolean yang digunakan untuk melacak apakah tombol sedang ditekan atau tidak.
+- `ActionButton` yaitu konstruktor yang digunakan untuk mengatur beberapa sifat tombol, seperti `setContentAreaFilled(false)`, yang membuat tombol tidak memiliki background / transparan.
+- Metode `paintComponent` yaitu metode yang digunakan untuk menggambar tampilan tombol. Kita dapat menggunakan objek Graphics2D dan mengatur beberapa opsi rendering untuk menghasilkan tampilan yang lebih mulus dan rapi. Perlu diketahui bahwa kode ini belum final, sehingga mungkin hasil outputnya tidak seperti ekspektasi.
 
-##### PanelAction - Panel tombol untuk tabel
+### Action (PanelAction.java) - Panel tombol
 - Kelas PanelAction
 ```
 public class PanelAction extends javax.swing.JPanel {
@@ -104,12 +151,13 @@ public class PanelAction extends javax.swing.JPanel {
 }
 ``` 
 ### Penjelasan Kode
-- Konstruktor PanelAction digunakan untuk menginisialisasi panel dan komponennya. Dalam hal ini _actionButton_ yang akan digunakan untuk menampilkan detail aksi.
-- Tombol aksi (actionButton) dibuat dengan label "DETAIL" dan memiliki aksi yang akan dilakukan ketika tombol tersebut ditekan.
+- Konstruktor `PanelAction` digunakan untuk menginisialisasi panel dan komponennya. Dalam hal `ini _actionButton_` yang akan digunakan untuk menampilkan detail aksi disaat user menekan tombol.
+- Tombol `actionButton` dibuat dengan label "DETAIL" dan memiliki aksi yang akan dilakukan ketika tombol tersebut ditekan.
 - metode `actionButtonActionPerformed`, yang akan dipanggil ketika tombol aksi (actionButton) ditekan. Metode ini mencetak pesan ke konsol.
+- `Component com = super.getTableCellRendererComponent...` adalah deklarasi dari metode getTableCellRendererComponent, yang digunakan untuk merender (mengatur tampilan) sel dalam tabel.
 
-##### TableActionCellRender
-- Kelas TableAction sebagai pengatur table
+### Action (TableActionCellRender.java) - Efek tabel
+- Kelas TableAction sebagai pengatur tabel
 ```
 package action;
 
@@ -131,11 +179,11 @@ public class TableActionCellRender extends DefaultTableCellRenderer {
 ### Penjelasan Kode
 - TableActionCellRender adalah kelas yang menggantikan renderer sel standar dalam JTable.
 - `getTableCellRendererComponent` adalah metode yang digunakan untuk mengambil komponen yang akan digunakan untuk merender sel dalam tabel.
-- Component `com = super.getTableCellRendererComponent(...)` mengambil komponen sel standar yang digunakan untuk merender sel dalam tabel.
-- Kemudian, sebuah instance dari PanelAction dibuat dan diatur sebagai latar belakang dari komponen sel.
+- `Component com = super.getTableCellRendererComponent(...)` ini adalah pemanggilan metode getTableCellRendererComponent dari superclass (kelas dasar) yang digunakan untuk mendapatkan komponen yang akan digunakan untuk merender sel.
+- `public Component getTableCellRendererComponent...` Ini adalah deklarasi dari metode `getTableCellRendererComponent`, yang digunakan untuk merender (mengatur tampilan) sel dalam tabel.
 
 ### Controller Package
-##### Controller
+### Controller.java
 - Kelas Controller
 ```
 package controller;
@@ -145,25 +193,19 @@ import gui.MahasiswaForm;
 import gui.MahasiswaInterface;
 import gui.StaffForm;
 
-/**
- *
- * @author Footdua
- */
 class Controller {
-
     Controller(Main.Model appModel, ChooseLogin chooseLoginView, MahasiswaForm mahasiswaFormView, MahasiswaInterface mahasiswaInterfaceView, StaffForm staffFormView) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-    
+    } 
 }
 ```
 ### Penjelasan Kode
- - Kelas `Controller` berperan sebagai pengendali atau perantara antara model aplikasi Anda (dalam hal ini, `Main.Model`) dan tampilan (antarmuka pengguna) yang terdiri dari `ChooseLogin`, `MahasiswaForm`, `MahasiswaInterface`, dan `StaffForm`.- `Main.Model appModel`: Kelas `Controller` menerima model aplikasi sebagai parameter konstruktor. Ini berarti kelas `Controller` bertanggung jawab untuk mengatur komunikasi antara model dan tampilan, mengelola logika bisnis, dan mengatur alur kerja aplikasi.
-- `ChooseLogin chooseLoginView, MahasiswaForm mahasiswaFormView, MahasiswaInterface mahasiswaInterfaceView, StaffForm staffFormView`: Kelas `Controller` menerima tampilan yang terkait dengan aplikasi Anda. Ini memungkinkan `Controller` untuk berinteraksi dengan tampilan dan mengambil tindakan yang diperlukan berdasarkan masukan pengguna atau perubahan dalam model.
-- Di dalam metode konstruktor, Anda dapat melihat pernyataan `throw new UnsupportedOperationException`. Ini menunjukkan bahwa metode yang diimplementasikan dalam kelas `Controller` belum didukung atau belum diimplementasikan secara lengkap.
-- Kelas `Controller` adalah komponen kunci dalam arsitektur MVC (Model-View-Controller) yang memungkinkan pemisahan tugas antara logika bisnis, representasi data, dan tampilan dalam aplikasi Anda. Ini memungkinkan aplikasi Anda untuk lebih mudah di-maintain, dikembangkan, dan diperluas.
-
-##### DataUpdate 
+ - Kelas `Controller` berperan sebagai pengendali atau perantara antara model aplikasi (dalam hal ini, `Main`) dan tampilan (GUI) yang terdiri dari `ChooseLogin`, `MahasiswaForm`, `MahasiswaInterface`, dan `StaffForm`.
+- `Main.Model appModel`: Kelas `Controller` menerima model aplikasi sebagai parameter konstruktor. Ini berarti kelas `Controller` bertanggung jawab untuk mengatur komunikasi antara model dan tampilan, mengelola logika bisnis, dan mengatur alur kerja aplikasi.
+- Di dalam metode konstruktor, terdapat `throw new UnsupportedOperationException`. Ini menunjukkan bahwa metode yang diimplementasikan dalam kelas `Controller` belum didukung atau belum diimplementasikan secara lengkap.
+- Kelas `Controller` adalah komponen kunci dalam arsitektur MVC (Model-View-Controller) yang memungkinkan pemisahan tugas antara logika bisnis, representasi data, dan tampilan dalam aplikasi. Meski begitu penulis sadar betul bahwa implemntasi MVC aplikasi ini belum lah sempurna.
+  
+### DataUpdate.java
 - Metode insertData
 ```
 package controller;
@@ -203,26 +245,20 @@ public class DataUpdate {
  ............
 ```
 ### Penjelasan Kode
-- Kelas `DataUpdate` berperan sebagai wadah data yang akan diperbarui atau dimasukkan ke dalam database aplikasi Anda. Kelas ini menyediakan berbagai atribut dan metode akses untuk mengelola data ini. Berikut adalah penjelasan singkat tentang kelas ini:
+- Kelas `DataUpdate` berperan sebagai wadah data yang akan diperbarui atau dimasukkan ke dalam database aplikasi. Kelas ini menyediakan berbagai atribut dan metode akses untuk mengelola data ini.
 - `String nim`: Atribut ini digunakan untuk menyimpan NIM (Nomor Induk Mahasiswa) yang akan diperbarui atau dimasukkan ke dalam database.
 - `String status`: Atribut ini digunakan untuk menyimpan status yang akan diatur dalam database, seperti "Diterima", "Ditolak", atau nilai lain yang sesuai.
 - `String alamat`, `String tanggalLahir`, `String angkatan`, `String ipk`, `String program`, `String jenjang`, `String kontak`, `String semester`: Atribut-atribut ini digunakan untuk menyimpan data tambahan yang akan diperbarui atau dimasukkan ke dalam database, seperti alamat, tanggal lahir, dan sebagainya.
 - Konstruktor `DataUpdate` digunakan untuk membuat objek `DataUpdate` dengan parameter yang sesuai berdasarkan jenis data yang akan diperbarui atau dimasukkan.
-- Metode get dan set tersedia untuk mengakses dan mengubah nilai atribut dalam objek `DataUpdate`.
-- Kelas `DataUpdate` adalah bagian penting dalam model aplikasi Anda yang memungkinkan Anda untuk mengelola dan menyimpan data yang akan diperbarui atau dimasukkan ke dalam database dengan cara yang terstruktur. Hal ini membantu menjaga kejelasan dan konsistensi dalam pengolahan data aplikasi Anda.
+- Metode `get` dan `set` tersedia untuk mengakses dan mengubah nilai atribut dalam objek `DataUpdate`.
 
-##### Main
+### Main.java
 - Kelas Main
 ```
 package controller;
 
 import gui.ChooseLogin;
 import java.awt.Dimension;
-
-/**
- *
- * @author Udinkosd
- */
 
 public class Main {
     public static void main(String[] args) {
@@ -242,25 +278,17 @@ public class Main {
 }
 ```
 ### Penjelasan Kode
-Kelas ini berisi metode `main` yang berfungsi sebagai titik awal eksekusi aplikasi. Ketika Anda menjalankan program Java, metode `main` di kelas ini akan dijalankan terlebih dahulu. Dalam metode `main`, kita membuat instance dari kelas `ChooseLogin`, mengatur preferensi jendela, dan menampilkannya.
+- Kelas ini berisi metode `main` yang berfungsi sebagai titik awal eksekusi aplikasi, ketika menjalankan program Java, metode `main` di kelas ini akan dijalankan terlebih dahulu. Dalam metode `main`, kita membuat instance dari kelas `ChooseLogin`, mengatur preferensi jendela, dan menampilkannya.
 
 ### Database Package
-##### Database
-- Melakukan _Import__ paket
+### Database.java
+- Public class Database
  ```
   package database;
   import java.sql.Connection;
   import java.sql.DriverManager;
   import java.sql.SQLException;
-  ```
-### Penjelasan Kode
-- `Connection`: Kelas ini digunakan untuk membuka dan menutup koneksi ke basis data. Fungsinya adalah mengelola koneksi ke database yang digunakan oleh aplikasi.
-- `DriverManager`: Kelas ini memungkinkan Anda untuk mendaftar driver JDBC yang diperlukan untuk berkomunikasi dengan database tertentu.
-- `SQLException`: Kelas ini menangani pengecualian yang terkait dengan kesalahan yang mungkin terjadi selama berinteraksi dengan database, seperti kesalahan koneksi atau pernyataan SQL.
-Kelas `Database` adalah bagian kunci dalam mengelola koneksi ke database, dan memungkinkan aplikasi Anda untuk melakukan operasi basis data yang diperlukan, seperti membaca dan menulis data.
 
-- Melakukan pengelolaan koneksi antar aplikasi dan database
-```
 public class Database {
     public final Connection connection;
 
@@ -298,17 +326,16 @@ public class Database {
 }
 ```
 ### Penjelasan Kode
-Kelas `Database` adalah kelas yang digunakan untuk mengelola koneksi dengan basis data MySQL. Ini memungkinkan aplikasi Anda untuk berinteraksi dengan basis data, dalam hal ini, mengakses data yang diperlukan. Di bawah ini adalah ringkasan singkat tentang kelas `Database`:
-- `Connection`: Kelas ini digunakan untuk membuka dan menutup koneksi ke basis data MySQL. Fungsinya adalah mengelola koneksi ke database yang digunakan oleh aplikasi.
-- `DriverManager`: Kelas ini memungkinkan Anda untuk mendaftar driver JDBC yang diperlukan untuk berkomunikasi dengan database MySQL.
+- `Connection`: Kelas ini digunakan untuk membuka dan menutup koneksi ke basis data. Fungsinya adalah mengelola koneksi ke database yang digunakan oleh aplikasi.
+- `DriverManager`: Kelas ini memungkinkan Anda untuk mendaftar driver JDBC yang diperlukan untuk berkomunikasi dengan database tertentu.
 - `SQLException`: Kelas ini menangani pengecualian yang terkait dengan kesalahan yang mungkin terjadi selama berinteraksi dengan database, seperti kesalahan koneksi atau pernyataan SQL.
-Kelas `Database` digunakan untuk menginisialisasi dan membuka koneksi ke basis data MySQL dengan host "localhost", nama database "database_e_surat", pengguna "root", dan kata sandi kosong. Setelah koneksi berhasil dibuka, pesan "Database Connected!" akan ditampilkan di konsol.
-Kelas `Database` adalah bagian kunci dalam mengelola koneksi ke database MySQL, dan memungkinkan aplikasi Anda untuk melakukan operasi basis data yang diperlukan, seperti membaca dan menulis data.
+Kelas `Database` adalah bagian kunci dalam mengelola koneksi ke database, dan memungkinkan aplikasi untuk melakukan operasi basis data yang diperlukan, seperti membaca dan menulis data.
+- Pada dasarnya kelas ini melakukan pengelolaan koneksi antar aplikasi dan database SQL.
 
 
 ### Entitas Package
-##### Admin
-- Melakukan  _import_ paket
+### Admin
+### - Melakukan  _import_ paket
   ```
   package entitas;
   import database.Database;
@@ -319,13 +346,14 @@ Kelas `Database` adalah bagian kunci dalam mengelola koneksi ke database MySQL, 
   import java.util.logging.Logger;'
   ```
 ### Penjelasan Kode
-Paket `entitas` berisi kelas-kelas yang digunakan untuk merepresentasikan entitas atau objek-objek dalam aplikasi. Objek-objek ini mewakili data dan informasi yang diperlukan untuk operasi aplikasi. Di bawah ini adalah ringkasan singkat tentang paket `entitas`:
-- `Database`: Kelas ini bertanggung jawab untuk berinteraksi dengan basis data. Ini mencakup operasi seperti menjalankan pernyataan SQL dan mengambil data dari database. Kelas ini adalah penghubung penting antara aplikasi dan basis data.
-- `PreparedStatement`: Kelas ini digunakan untuk mempersiapkan dan mengeksekusi pernyataan SQL. Ini membantu dalam menghindari serangan SQL injeksi dan memungkinkan aplikasi untuk memasukkan parameter ke dalam pernyataan SQL.
-- `ResultSet`: Kelas ini digunakan untuk menyimpan hasil dari pernyataan SQL yang dijalankan di database. Data hasil query dapat diekstrak dan digunakan oleh aplikasi.
-Paket `entitas` berperan penting dalam merepresentasikan data yang diperlukan oleh aplikasi, dan kelas-kelas di dalamnya berfungsi sebagai model data yang digunakan dalam aplikasi Anda.
+- import database.Database;: Ini mengimpor kelas Database dari paket (package) database. Kelas Database sepertinya digunakan untuk mengelola koneksi ke database dan menjalankan operasi database lainnya dalam aplikasi.
+- import java.sql.PreparedStatement;: Ini mengimpor kelas PreparedStatement dari pustaka standar Java java.sql. Kelas PreparedStatement digunakan untuk menyiapkan dan menjalankan pernyataan SQL parameter, yang sering digunakan untuk menghindari SQL injection dalam operasi database.
+- import java.sql.ResultSet;: Ini mengimpor kelas ResultSet dari pustaka standar Java java.sql. Kelas ResultSet digunakan untuk mewakili hasil dari permintaan SQL yang dijalankan pada database. Hasil ini kemudian dapat digunakan untuk membaca data dari database.
+- import java.sql.SQLException;: Ini mengimpor kelas SQLException dari pustaka standar Java java.sql. Kelas SQLException adalah pengecualian yang dilemparkan saat terjadi kesalahan dalam operasi database. Dengan mengimpor SQLException, Anda dapat menangani kesalahan operasi database dengan lebih baik.
+- import java.util.logging.Level;: Ini mengimpor kelas Level dari pustaka java.util.logging. Kelas Level digunakan dalam logika pengelolaan log atau pencatatan (logging) untuk mengatur level log atau tingkat pentingnya pesan log, misalnya SEVERE, WARNING, INFO, dsb.
+- import java.util.logging.Logger;: Ini mengimpor kelas Logger dari pustaka java.util.logging. Kelas Logger digunakan dalam pencatatan (logging) untuk mencatat pesan log dan memungkinkan penanganan log yang lebih baik dalam aplikasi.
 
-- Metode readData
+### - Metode readData()
 ```
       public final boolean readData() {
         boolean loginSuccessful = false;
@@ -348,7 +376,7 @@ Paket `entitas` berperan penting dalam merepresentasikan data yang diperlukan ol
         }
 ```
 ### Penjelasan Kode
-Metode `readData` digunakan untuk mengautentikasi pengguna dengan mencocokkan email dan kata sandi yang dimasukkan dengan catatan dalam basis data. Di bawah ini adalah penjelasan singkat tentang bagaimana metode ini bekerja:
+Metode `readData` digunakan untuk mengautentikasi pengguna dengan mencocokkan email dan kata sandi yang dimasukkan dengan catatan dalam basis data.
 - `boolean loginSuccessful`: Variabel ini digunakan untuk menunjukkan apakah proses login berhasil. Awalnya diatur sebagai `false`.
 - Metode `openConnection()`: Metode ini digunakan untuk membuka koneksi ke database sebelum mengambil data.
 - `String sql`: Ini adalah pernyataan SQL yang digunakan untuk mencari pengguna dengan email dan kata sandi tertentu dalam tabel `admin`. Tanda tanya (`?`) digunakan sebagai tanda tanya yang akan diisi dengan nilai yang sesuai.
@@ -358,7 +386,7 @@ Metode `readData` digunakan untuk mengautentikasi pengguna dengan mencocokkan em
 - Terakhir, metode `closeConnection()` dipanggil untuk menutup koneksi database setelah selesai mengambil data.
 Metode ini memainkan peran penting dalam mengelola proses otentikasi pengguna dan menentukan apakah pengguna berhasil masuk atau tidak.
 
-- Melakukan findData
+### - Melakukan findData()
 ```
     public String findData(String suratID) {
         String nim = null;
@@ -376,17 +404,18 @@ Metode ini memainkan peran penting dalam mengelola proses otentikasi pengguna da
     }
 ```
 ### Penjelasan Kode
-Metode `findData` digunakan untuk mencari NIM (Nomor Induk Mahasiswa) berdasarkan ID surat yang diberikan. Berikut penjelasan singkat tentang bagaimana metode ini bekerja:
+Metode `findData` digunakan untuk mencari NIM (Nomor Induk Mahasiswa) berdasarkan ID surat yang diberikan.
 - `String nim`: Variabel ini digunakan untuk menyimpan NIM (Nomor Induk Mahasiswa) yang akan ditemukan. Awalnya diatur sebagai `null`.
 - Metode ini mengambil ID surat sebagai argumen dan menggabungkannya ke dalam pernyataan SQL untuk mencari NIM yang terkait dalam tabel `pengajuan`.
 - `String sql`: Ini adalah pernyataan SQL yang digunakan untuk mencari NIM dengan menggunakan ID surat yang diberikan.
 - `PreparedStatement preparedStatement`: Objek ini digunakan untuk mempersiapkan pernyataan SQL dengan memasukkan ID surat ke dalam pernyataan.
 - `ResultSet resultSet`: Objek ini digunakan untuk menyimpan hasil dari eksekusi pernyataan SQL. Jika ada hasil yang sesuai, maka NIM akan diambil dari hasil tersebut.
 - Jika ada kesalahan SQL selama proses, misalnya terjadi kesalahan dalam eksekusi pernyataan SQL, maka kesalahan tersebut akan ditangkap dan diabaikan.
+
 Metode `findData` berfungsi sebagai alat untuk menemukan NIM berdasarkan ID surat yang diberikan dalam konteks aplikasi Anda. Hal ini berguna ketika Anda perlu menghubungkan ID surat dengan NIM mahasiswa yang sesuai dalam basis data.
 
-##### DataDiri
-- Melakukan Inisialisasi komponen
+### DataDiri
+### - Metode readData()
 ```
 public class DataDiri extends Database {
     private String nim;
@@ -432,24 +461,23 @@ public class DataDiri extends Database {
     return null;
 }
 ```
-### Penjelasan Kode=
+### Penjelasan Kode
 - `String nim`: Variabel ini digunakan untuk menyimpan NIM mahasiswa yang akan digunakan sebagai kunci pencarian.
-- Metode ini membuka koneksi ke database yang digunakan dalam aplikasi Anda.
-- Sebuah array `data` dengan ukuran 10 dibuat untuk menyimpan data pribadi mahasiswa, seperti Nama, Program Studi, IPK, dan sebagainya.
-- Pernyataan SQL digunakan untuk mencari data pribadi berdasarkan NIM yang diberikan dalam tabel `data_diri`.
+- Metode ini membuka koneksi ke database yang digunakan dalam aplikasi, dalam hal ini SQL.
+- array `data` 1 hingga 10 dibuat untuk menyimpan data pribadi mahasiswa, seperti Nama, Program Studi, IPK, dan sebagainya.
+- `String sql = SELECT * FROM ...` , SQL digunakan untuk mencari data pribadi berdasarkan NIM yang diberikan dalam tabel `data_diri`.
 - Hasil dari pernyataan SQL disimpan dalam `ResultSet` untuk dianalisis.
 - Jika ada hasil yang sesuai, data pribadi seperti NIM, Nama Mahasiswa, Program Studi, dan lainnya akan dimasukkan ke dalam array `data`. Kemudian, array ini dikembalikan sebagai hasil dari metode.
 - Jika tidak ada hasil yang sesuai atau terjadi kesalahan SQL, metode akan mengembalikan `null`.
+  
 Metode `readData` berfungsi sebagai alat untuk mengambil data pribadi seorang mahasiswa berdasarkan NIM dalam konteks aplikasi Anda. Ini memungkinkan aplikasi Anda untuk menampilkan dan mengelola data pribadi mahasiswa dengan mudah.
 
-- Melakukan updateData
+### - Melakukan operasi update dengan updateData()
 ```
  public final boolean updateData(DataUpdate dataUpdate) {
         boolean updateSuccessful = false;
-
         try {
             openConnection();
-
             String sql = "UPDATE data_diri SET Alamat = ?, Prodi = ?, Jenjang_Studi = ?, IPK = ?, Kontak = ?, Angkatan = ?, Semester = ?, TTL = ? WHERE NIM = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, dataUpdate.getAlamat());
@@ -463,7 +491,6 @@ Metode `readData` berfungsi sebagai alat untuk mengambil data pribadi seorang ma
             preparedStatement.setString(9, dataUpdate.getNim());
 
             int rowsUpdated = preparedStatement.executeUpdate();
-
             if (rowsUpdated > 0) {
                 updateSuccessful = true;
             }
@@ -471,22 +498,21 @@ Metode `readData` berfungsi sebagai alat untuk mengambil data pribadi seorang ma
         } finally {
             closeConnection();
         }
-
         return updateSuccessful;
     }
 ```
 ### Penjelasan Kode
 - `DataUpdate dataUpdate`: Metode ini menerima objek `DataUpdate` yang berisi informasi terbaru yang akan diperbarui dalam database.
-- Metode ini membuka koneksi ke database yang digunakan dalam aplikasi Anda.
 - Pernyataan SQL digunakan untuk mengupdate data pribadi mahasiswa dalam tabel `data_diri` berdasarkan NIM.
-- Parameter yang akan diperbarui, seperti Alamat, Program Studi, IPK, dan lainnya, diambil dari objek `dataUpdate` dan dimasukkan ke dalam pernyataan SQL.
+- Parameter `PreparedStatement` yaitu parameter yang digunakan untuk melakukan *insert data* kedalam SQL, seperti Alamat, Program Studi, IPK, dan lainnya, diambil dari objek `dataUpdate` dan dimasukkan ke dalam pernyataan SQL.
 - Jika pembaruan berhasil dilakukan dan satu atau lebih baris dalam database telah diperbarui, variabel `updateSuccessful` akan diatur ke `true`.
 - Jika pembaruan gagal atau terjadi kesalahan SQL, variabel `updateSuccessful` akan tetap `false`.
 - Terakhir, metode ini akan menutup koneksi ke database sebelum mengembalikan nilai `updateSuccessful`.
-Metode `updateData` adalah alat yang memungkinkan aplikasi Anda untuk memperbarui data pribadi seorang mahasiswa dalam database, yang bisa digunakan untuk memastikan bahwa informasi mahasiswa tetap akurat dan mutakhir.
+  
+Metode `updateData` adalah alat yang memungkinkan aplikasi untuk memperbarui data pribadi seorang mahasiswa dalam database SQL.
 
-##### Pengajuan
-- Metode inserData
+### Pengajuan
+### - Metode inserData()
 ```
 public Pengajuan(String peruntukanValue, String mahasiswaNIM, String roleChecker) {
         this.peruntukanValue = peruntukanValue;
@@ -524,15 +550,13 @@ public Pengajuan(String peruntukanValue, String mahasiswaNIM, String roleChecker
 ```
 ### Penjelasan Kode
 - `String generatedId`: Variabel ini digunakan untuk menyimpan ID yang dihasilkan setelah pengajuan disimpan ke dalam database.
-- Metode ini membuka koneksi ke database yang digunakan dalam aplikasi Anda.
 - Pernyataan SQL digunakan untuk menyimpan data pengajuan ke dalam tabel `pengajuan` di database. Informasi yang disimpan meliputi peruntukan surat, lampiran (dalam contoh ini diatur sebagai "Null"), NIM mahasiswa, dan ID aktivitas (dalam contoh ini diatur sebagai "null").
 - Parameter yang akan disimpan dalam pernyataan SQL diambil dari variabel `peruntukanValue` dan `roleChecker`.
 - Setelah data pengajuan disimpan dalam database, metode ini akan mengambil ID yang dihasilkan. Jika penyimpanan berhasil (lebih dari 0 baris dimasukkan), ID yang dihasilkan akan disimpan dalam variabel `generatedId`.
 - Jika terjadi kesalahan SQL selama penyimpanan, metode ini akan menangani kesalahan tersebut dan memprosesnya.
 - Terakhir, metode ini akan menutup koneksi ke database sebelum mengembalikan nilai `generatedId`.
-Metode `insertData` adalah alat yang memungkinkan aplikasi Anda untuk menyimpan pengajuan surat mahasiswa ke dalam database dengan parameter seperti peruntukan surat, NIM mahasiswa, dan ID aktivitas yang relevan.
 
-- Metode readData
+### - Metode readData()
 ```
 public String[] readData() {
         try {
@@ -559,19 +583,15 @@ public String[] readData() {
 
         return null;
     }
-}
 ```
 ### Penjelasan Kode
 - `String[] data`: Variabel ini adalah array string dengan panjang 6 yang digunakan untuk menyimpan data pengajuan yang akan diambil dari database.
-- Metode ini membuka koneksi ke database yang digunakan dalam aplikasi Anda.
-- Pernyataan SQL digunakan untuk mengambil data dari tabel `pengajuan`. Data yang diambil termasuk ID pengajuan, peruntukan surat, lampiran, NIM mahasiswa, ID aktivitas, dan tanggal pengajuan.
 - Hasil eksekusi pernyataan SQL diambil dalam variabel `resultSet`.
 - Jika data pengajuan tersedia dalam tabel (ada hasil dalam `resultSet`), metode ini akan mengambil data tersebut dan menyimpannya dalam array `data`. Setiap elemen array sesuai dengan kolom yang sesuai dalam tabel.
 - Jika tidak ada data yang ditemukan atau terjadi kesalahan SQL selama pengambilan data, metode ini akan menangani kesalahan tersebut dan mengembalikan nilai `null`.
-Metode `readData` adalah alat yang memungkinkan aplikasi Anda untuk mengambil data pengajuan surat dari database, yang kemudian dapat digunakan untuk ditampilkan atau diproses sesuai kebutuhan.
 
-##### Pengguna
-- Metode readData
+### Pengguna
+### - Metode readData()
 ```
 public final boolean readData() {
         boolean loginSuccessful = false;
@@ -599,15 +619,12 @@ public final boolean readData() {
 ```
 ### Penjelasan Kode
 - `boolean loginSuccessful`: Variabel ini adalah boolean yang menunjukkan apakah proses login berhasil. Nilai ini akan mengindikasikan apakah pengguna dengan ID_Pengguna dan kata sandi yang diberikan berhasil diotentikasi atau tidak.
-- Metode ini membuka koneksi ke database yang digunakan dalam aplikasi Anda.
-- Pernyataan SQL digunakan untuk mengambil data dari tabel `pengguna` berdasarkan ID_Pengguna dan kata sandi yang diberikan. Data ini digunakan untuk mencocokkan informasi yang diinputkan oleh pengguna dengan data yang ada di database.
 - Hasil eksekusi pernyataan SQL diambil dalam variabel `resultSet`.
 - Jika data pengguna dengan ID_Pengguna dan kata sandi yang sesuai ditemukan dalam tabel (ada hasil dalam `resultSet`), maka `loginSuccessful` akan diatur sebagai `true`, mengindikasikan bahwa proses login berhasil.
 - Jika tidak ada data yang ditemukan atau terjadi kesalahan SQL selama proses login, metode ini akan menangani kesalahan tersebut dan mengembalikan `false`, yang menunjukkan bahwa proses login gagal.
-Metode `readData` adalah alat yang memungkinkan aplikasi Anda untuk mengotentikasi pengguna berdasarkan ID_Pengguna dan kata sandi yang mereka berikan, yang merupakan langkah penting dalam pengamanan aplikasi.
 
-##### RiwayatSurat
-- Metode insertData
+### RiwayatSurat
+### - Metode insertData()
 ```
 public boolean insertData(String jenisSurat, String posisiSurat, String action, String idPengajuan) {
         boolean insertSuccessful = false;
@@ -636,15 +653,13 @@ public boolean insertData(String jenisSurat, String posisiSurat, String action, 
 ```
 ### Penjelasan Kode
 - `boolean insertSuccessful`: Variabel ini adalah boolean yang mengindikasikan apakah proses penambahan data riwayat surat berhasil. Nilai `true` menunjukkan bahwa data berhasil dimasukkan, sedangkan nilai `false` menunjukkan bahwa proses penambahan data gagal.
-- Metode ini membuka koneksi ke database yang digunakan dalam aplikasi Anda.
 - Pernyataan SQL digunakan untuk menyisipkan data baru ke dalam tabel `riwayat_surat`. Data yang dimasukkan meliputi jenis surat, status, posisi surat, action, dan ID_Pengajuan.
 - Nilai-nilai yang ingin dimasukkan ke dalam pernyataan SQL diambil dari parameter yang dilewatkan ke metode ini.
 - Jika proses penyisipan data berhasil (tidak ada kesalahan SQL), maka `insertSuccessful` akan diatur sebagai `true`, mengindikasikan bahwa data riwayat surat berhasil dimasukkan.
 - Jika terjadi kesalahan SQL selama proses penyisipan data atau proses tersebut gagal, metode ini akan menangani kesalahan tersebut dan mengembalikan `false`.
-Metode `insertData` merupakan komponen penting dalam aplikasi Anda yang memungkinkan Anda untuk mencatat riwayat surat yang terkait dengan berbagai tindakan dan posisi dalam alur kerja aplikasi Anda.
-
-
-- Metode readData
+- Dalam SQL sendiri, nilai yang diinput yaitu "Pending" akan diset sebagai default, sehingga disaat user melakukan insertData() valuenya akan pending hingga diuba "Accept" atau "Denied" oleh admin/staff.
+  
+### - Metode readData()
 ```
 public List<String[]> readData() {
         List<String[]> data = new ArrayList<>();
@@ -677,15 +692,10 @@ public List<String[]> readData() {
 ```
 ### Penjelasan Kode
 - `List<String[]> data`: Variabel ini adalah daftar yang berisi array string. Setiap elemen dalam daftar adalah array yang berisi informasi riwayat surat, seperti ID Surat, Jenis Surat, Status, Posisi Surat, Action, dan ID Pengajuan.
-- Metode ini membuka koneksi ke database yang digunakan dalam aplikasi Anda.
-- Pernyataan SQL digunakan untuk mengambil data dari tabel `riwayat_surat`.
-- Hasil dari pernyataan SQL diambil dalam bentuk objek `ResultSet`, dan setiap baris data riwayat surat diekstrak dari hasil ini.
 - Setiap baris data riwayat surat disimpan dalam bentuk array string, dan array tersebut ditambahkan ke dalam daftar `data`.
 - Setelah semua data riwayat surat telah dibaca dan dimasukkan ke dalam daftar, daftar `data` dikembalikan sebagai hasil dari metode.
-- Jika terjadi kesalahan SQL selama proses pembacaan data, metode ini akan menangani kesalahan tersebut dan mengembalikan daftar kosong.
-Metode `readData` merupakan komponen penting dalam aplikasi Anda yang memungkinkan Anda untuk mengakses dan menampilkan riwayat surat dalam berbagai konteks aplikasi Anda.
 
-- Metode updateData
+### - Metode updateData
 ```
 public final boolean updateData(DataUpdate dataUpdate) {
       boolean updateSuccessful = false;
@@ -715,17 +725,15 @@ public final boolean updateData(DataUpdate dataUpdate) {
 ```
 ### Penjelasan Kode
 - `DataUpdate dataUpdate`: Metode ini menerima objek `DataUpdate` yang berisi informasi yang diperlukan untuk melakukan pembaruan, seperti ID Surat yang akan diperbarui dan status yang akan diatur.
-- Metode ini membuka koneksi ke database yang digunakan dalam aplikasi Anda.
 - Pernyataan SQL digunakan untuk mengupdate status suatu surat berdasarkan ID Surat yang diberikan.
 - Status yang akan diupdate diambil dari objek `dataUpdate`.
 - Hasil dari pernyataan SQL menunjukkan berapa banyak baris yang berhasil diupdate.
 - Jika baris berhasil diupdate (jumlah baris yang diupdate lebih dari 0), maka metode mengembalikan `true`, yang menunjukkan bahwa pembaruan berhasil. Jika tidak ada baris yang diupdate, maka metode mengembalikan `false`.
 - Jika terjadi kesalahan SQL selama proses pembaruan, metode ini akan menangani kesalahan tersebut.
-Metode `updateData` adalah komponen penting dalam aplikasi Anda yang memungkinkan Anda untuk mengubah status suatu surat dalam riwayat surat, seperti mengubahnya menjadi "Diterima" atau "Ditolak". Hal ini sangat berguna dalam mengelola riwayat surat dalam aplikasi Anda.
-
+#
 ### GUI Package
-##### ChooseLogin
-- Kelas ChoosLogin
+### ChooseLogin
+### - Kelas ChoosLogin
   ```
   public class ChooseLogin extends javax.swing.JFrame {
     private MahasiswaForm mahasiswaForm;
@@ -744,8 +752,7 @@ Kelas `ChooseLogin` digunakan dalam aplikasi untuk memberikan pilihan login kepa
 - Selain itu, kelas ini juga mengatur preferensi dimensi jendela aplikasi menjadi 800x600 piksel.
 Kelas `ChooseLogin` bertindak sebagai jendela awal yang memberikan pilihan login kepada pengguna. Dengan memilih login sebagai mahasiswa atau staff, pengguna dapat mengakses fungsi yang sesuai dalam aplikasi.
 
-
-- Metode untuk memilih jendela login
+### - Metode untuk memilih jendela login
   ```
    private void loginNonMahasiswaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginNonMahasiswaActionPerformed
         // TODO add your handling code here:
@@ -760,19 +767,18 @@ Kelas `ChooseLogin` bertindak sebagai jendela awal yang memberikan pilihan login
     }
   ```
 ### Penjelasan Kode
-Metode `loginNonMahasiswaActionPerformed` dan `loginMahasiswaActionPerformed` digunakan dalam kelas `ChooseLogin` untuk menangani tindakan yang terjadi saat pengguna memilih login sebagai mahasiswa atau staff. Berikut adalah penjelasan dari kedua metode ini:
+Metode `loginNonMahasiswaActionPerformed` dan `loginMahasiswaActionPerformed` digunakan dalam kelas `ChooseLogin` untuk menangani tindakan yang terjadi saat pengguna memilih login sebagai mahasiswa atau staff.
 - Metode `loginNonMahasiswaActionPerformed`:
   - Metode ini dipanggil ketika pengguna memilih untuk login sebagai staff.
   - Saat metode ini dipanggil, jendela antarmuka staff (`staffForm`) akan ditampilkan dengan memanggil metode `setVisible(true)`.
   - Jendela antarmuka `ChooseLogin` akan ditutup (`this.dispose()`) sehingga hanya antarmuka staff yang ditampilkan.
-- Metode `loginMahasiswaActionPerformed`:
+  - Metode `loginMahasiswaActionPerformed`:
   - Metode ini dipanggil ketika pengguna memilih untuk login sebagai mahasiswa.
   - Saat metode ini dipanggil, jendela antarmuka mahasiswa (`mahasiswaForm`) akan ditampilkan dengan memanggil metode `setVisible(true)`.
   - Jendela antarmuka `ChooseLogin` akan ditutup (`this.dispose()`) sehingga hanya antarmuka mahasiswa yang ditampilkan.
-Metode-metode ini memungkinkan pengguna untuk memilih jenis login yang sesuai, yaitu sebagai mahasiswa atau staff, dan mengarahkan mereka ke antarmuka yang sesuai untuk melakukan proses login.
-
-##### MahasiswaForm
-- Melakukan Inisialisasi pada komponen
+  
+### MahasiswaForm
+### - Melakukan Inisialisasi pada komponen
   ```
   public class MahasiswaForm extends javax.swing.JFrame {
     final Database database;
@@ -796,10 +802,8 @@ Metode konstruktor ini akan dijalankan saat objek kelas `MahasiswaForm` dibuat.
 - `passTextField.setEchoChar((char) 0)`: Baris ini mengatur `passTextField` (kotak teks untuk kata sandi) untuk menampilkan karakter tanpa menyembunyikannya. Ini berguna untuk menampilkan kata sandi secara jelas.
 - `passTextField.setText("Password")`: Baris ini mengatur teks default "Password" dalam `passTextField` yang akan diganti saat pengguna memasukkan kata sandi mereka.
 - `popError.setVisible(false)`: Baris ini mengatur komponen `popError` (mungkin sebuah popup kesalahan) agar tidak terlihat pada awalnya.
-Kelas `MahasiswaForm` digunakan untuk mengatur antarmuka pengguna dan melakukan inisialisasi komponen-komponen dalam antarmuka pengguna yang berkaitan dengan mahasiswa.
 
-
-- Metode Focus gained and Focus lost pada TextField
+### - Metode Focus gained and Focus lost pada TextField
   ```
       private void nimTextFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_nimTextFieldFocusGained
         // TODO add your handling code here:
@@ -821,9 +825,8 @@ Kelas `MahasiswaForm` digunakan untuk mengatur antarmuka pengguna dan melakukan 
 Kelas `MahasiswaForm` mengandung dua metode, yaitu `nimTextFieldFocusGained` dan `nimTextFieldFocusLost`, yang digunakan untuk mengatur perilaku dan tampilan `nimTextField` saat fokus masuk dan keluar.
 - `nimTextFieldFocusGained`: Metode ini akan dipanggil saat fokus masuk ke komponen `nimTextField`. Jika teks dalam `nimTextField` sama dengan "Nim", maka teks tersebut akan dihapus dan warna teks akan diatur kembali menjadi hitam.
 - `nimTextFieldFocusLost`: Metode ini akan dipanggil saat fokus keluar dari komponen `nimTextField`. Jika teks dalam `nimTextField` kosong, maka teksnya akan diatur kembali menjadi "Nim" dan warna teks akan diatur menjadi abu-abu.
-Dua metode ini digunakan untuk memberikan interaktivitas yang lebih baik dengan pengguna, memudahkan pengguna dalam memasukkan NIM, dan memberikan umpan balik visual saat mengisi NIM di dalam `nimTextField`.
 
-- Metode signIn Button untuk login
+### - Metode signIn Button untuk login
 ```
 private void signButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signButtonActionPerformed
         // TODO add your handling code here:
@@ -852,7 +855,7 @@ private void signButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         }
 ```
 ### Penjelasan Kode
-Dalam kelas `MahasiswaForm`, terdapat metode `signButtonActionPerformed` yang digunakan untuk mengatur tindakan saat tombol "Sign In" ditekan. Berikut adalah penjelasan dari metode ini:
+Dalam kelas `MahasiswaForm`, terdapat metode `signButtonActionPerformed` yang digunakan untuk mengatur tindakan saat tombol "Sign In" ditekan.
 - Saat tombol "Sign In" ditekan, metode ini akan dipanggil.
 - Metode ini mengambil teks yang dimasukkan oleh pengguna dalam komponen `nimTextField` sebagai NIM dan teks dalam komponen `passTextField` sebagai kata sandi.
 - Kemudian, metode ini memeriksa apakah NIM sama dengan "Nim" atau kata sandi kosong. Jika salah satu dari kondisi tersebut terpenuhi, maka akan ditampilkan pesan kesalahan yang menyatakan bahwa NIM dan kata sandi tidak boleh kosong.
@@ -861,10 +864,9 @@ Dalam kelas `MahasiswaForm`, terdapat metode `signButtonActionPerformed` yang di
 - Jika data pengguna ditemukan, maka pengguna akan diarahkan ke antarmuka MahasiswaInterface dengan NIM yang sesuai, dan pesan kesalahan (jika ada) akan disembunyikan.
 - Jika login gagal atau data pengguna tidak ditemukan, maka akan ditampilkan pesan kesalahan yang menyatakan bahwa login gagal dan pengguna diminta untuk memeriksa kembali NIM dan kata sandi.
 - Terakhir, objek `Pengguna` menutup koneksi ke basis data.
-Metode ini bertanggung jawab untuk mengelola proses otentikasi pengguna saat mereka mencoba masuk ke aplikasi. Jika otentikasi berhasil, pengguna akan diarahkan ke antarmuka MahasiswaInterface, dan jika gagal, pesan kesalahan akan ditampilkan.
 
-##### MahasiswaInterface
-- Melakukan Inisialisasi MahasiswaInterface
+### MahasiswaInterface
+### - Melakukan Inisialisasi MahasiswaInterface
 ```
 public class MahasiswaInterface extends javax.swing.JFrame {
     final Database database;
@@ -889,7 +891,7 @@ public class MahasiswaInterface extends javax.swing.JFrame {
 - `suratButtonPanel`: Variabel `suratButtonPanel` adalah objek dari kelas JPanel yang digunakan untuk menampilkan tombol-tombol aksi terkait surat pada antarmuka pengguna.
 
 
-- Melakukan Inisialisasi pada komponen konstruktor JFrame MahasiswaInterface
+### - Melakukan Inisialisasi pada komponen konstruktor JFrame MahasiswaInterface
 ```
  public MahasiswaInterface(String roleChecker) {
         initComponents();
@@ -916,7 +918,7 @@ Konstruktor `MahasiswaInterface` adalah metode khusus yang digunakan untuk mengi
 - `cardLayout`: Variabel `cardLayout` adalah objek dari kelas `CardLayout` yang digunakan untuk mengelola tampilan panel (kartu) dalam antarmuka pengguna.
 - `suratButtonPanel`: Variabel `suratButtonPanel` adalah objek dari kelas `JPanel` yang digunakan untuk menampilkan tombol-tombol aksi terkait surat pada antarmuka pengguna.
 
-- Metode showData
+###- Metode showData
 ```
   private void showData() {
         String nimToCheck = roleChecker;
@@ -940,7 +942,7 @@ Konstruktor `MahasiswaInterface` adalah metode khusus yang digunakan untuk mengi
         }
 ```
 ### Penjelasan Kode
-Metode `showData()` digunakan untuk menampilkan dan mengisi data dari seorang mahasiswa pada antarmuka pengguna.
+Metode `showData()` digunakan untuk menampilkan dan mengisi data dari seorang mahasiswa.
 - `nimToCheck`: Variabel `nimToCheck` digunakan untuk menyimpan Nomor Induk Mahasiswa (NIM) yang akan dicek atau ditampilkan datanya. Nilainya diambil dari variabel `roleChecker`.
 - `dataMahasiswa`: Objek `dataMahasiswa` adalah objek dari kelas `DataDiri` yang digunakan untuk mengakses data mahasiswa.
 - `data`: Variabel `data` digunakan untuk menyimpan data mahasiswa yang diambil dari metode `readData(nimToCheck)` dari objek `dataMahasiswa`.
@@ -949,9 +951,10 @@ Jika data ditemukan:
 - Data mahasiswa diambil dan disimpan dalam bentuk array `data`.
 - Data ini kemudian digunakan untuk mengisi berbagai komponen pada antarmuka pengguna, seperti `namaLengkap`, `nimNomor`, `programStudi`, dan lainnya.
 - Jika data mahasiswa tidak ditemukan, maka pesan "Data tidak ditemukan" akan dicetak di konsol.
+
 Metode `showData()` digunakan untuk menampilkan informasi dan data mahasiswa pada antarmuka pengguna sesuai dengan NIM yang saat ini sedang digunakan.
 
-- Metode inputData
+### - Metode inputData
 ```
 private void inputDataShow() {
         String nimToCheck = roleChecker;
@@ -986,8 +989,7 @@ Jika data ditemukan:
 
 Metode `inputDataShow()` digunakan untuk mengisi ulang data mahasiswa pada antarmuka pengguna sesuai dengan NIM yang saat ini sedang digunakan.
 
-
-- Metode signOut
+### - Metode signOut
 ```
 private void navigateToLoginScreen() {
         ChooseLogin loginScreen = new ChooseLogin();
@@ -1007,10 +1009,9 @@ Metode `navigateToLoginScreen()` digunakan untuk menavigasi pengguna dari antarm
 Metode `navigateToLoginScreen()` memungkinkan pengguna untuk keluar dari aplikasi dan kembali ke halaman login dengan cara yang mudah dan efisien.
 Metode `signOutActionPerformed()` digunakan untuk menangani peristiwa saat tombol "Sign Out" ditekan oleh pengguna dalam antarmuka.
 - Ketika tombol "Sign Out" ditekan, metode ini memanggil `navigateToLoginScreen()` untuk menavigasi pengguna ke layar login.
-Metode ini memberikan kemudahan bagi pengguna untuk keluar dari aplikasi dan kembali ke halaman login dengan cara yang sederhana.
 
 
-- Metode navigationBar
+### - Metode navigationBar
   ```
   private void navButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_navButtonActionPerformed
         // TODO add your handling code here:
@@ -1027,14 +1028,14 @@ Metode ini memberikan kemudahan bagi pengguna untuk keluar dari aplikasi dan kem
     }
   ```
 ### Penjelasan Kode
-Metode `navButtonActionPerformed()` digunakan untuk mengelola peristiwa saat tombol navigasi pada antarmuka pengguna ditekan. Tombol ini bertujuan untuk menyembunyikan atau menampilkan panel navigasi.
+Metode `navButtonActionPerformed()` digunakan untuk mengelola panel saat tombol navigasi pada antarmuka pengguna ditekan. Tombol ini bertujuan untuk menyembunyikan atau menampilkan panel navigasi.
 - Pertama, metode ini mendapatkan dimensi (ukuran) saat ini dari komponen Navigation (panel navigasi).
 - Selanjutnya, metode ini memeriksa apakah dimensi saat ini sama dengan `new Dimension(50, 520)`. Jika ya, itu berarti panel navigasi sedang disembunyikan, dan metode akan mengubah ukurannya menjadi `new Dimension(110, 520)`, sehingga panel navigasi akan terlihat.
 - Jika dimensi saat ini tidak sama dengan `new Dimension(50, 520)`, itu berarti panel navigasi sedang terlihat, dan metode akan mengubah ukurannya kembali menjadi `new Dimension(50, 520)`, sehingga panel navigasi akan disembunyikan.
 - Akhirnya, metode memastikan bahwa perubahan ukuran diterapkan dengan memanggil `Navigation.revalidate()` dan `Navigation.repaint()`.
 Metode ini memberikan pengguna kontrol sederhana untuk menyembunyikan atau menampilkan panel navigasi sesuai dengan preferensi mereka, sehingga antarmuka menjadi lebih fleksibel dan mudah digunakan.
 
-- Melakukan updateData dengan changeButton
+### - Melakukan updateData dengan changeButton
   ```
   private void changeButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeButton1ActionPerformed
         // TODO add your handling code here:
@@ -1067,10 +1068,9 @@ Metode `changeButton1ActionPerformed()` digunakan untuk mengelola peristiwa saat
 - Kemudian, metode membuat objek `DataUpdate` dengan menggunakan data yang telah diambil, yang akan digunakan untuk menyimpan perubahan data.
 - Selanjutnya, metode membuat objek `DataDiri` dan mencoba untuk memperbarui data dengan menggunakan objek `DataUpdate`. Jika perubahan data berhasil disimpan, metode mencetak pesan "Data updated successfully." ke konsol.
 - Jika perubahan data gagal disimpan, metode mencetak pesan "Data update failed." ke konsol.
-Metode ini memungkinkan pengguna untuk menyimpan perubahan pada data diri mereka, seperti alamat, tanggal lahir, dan lainnya, yang akan digunakan dalam aplikasi.
-
-##### StaffForm
-- Melakukan Inisialisasi pada komponen
+#
+### StaffForm
+### - Melakukan Inisialisasi pada komponen
 ```
 package gui;
 
@@ -1096,8 +1096,6 @@ Kode ini menciptakan antarmuka untuk staf pada aplikasi dan menginisialisasi kom
   - Objek `database` diinisialisasi untuk berinteraksi dengan database.
   - Teks pada komponen `passTextField` diatur ke "Password" dan tampilan karakter acak (echo char) diaktifkan. Ini membantu dalam input kata sandi yang aman.
   - Komponen `popError` (pop-up error) awalnya diatur menjadi tidak terlihat (false), yang berarti tidak ada pesan error yang ditampilkan secara default.
-Kode ini menciptakan form staf dengan inisialisasi komponen dan persiapan awal untuk antarmuka pengguna.
-
 - Metode Action (Tombol Login/Sign in button)
   ```
   private void signButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signButtonActionPerformed
@@ -1129,8 +1127,8 @@ Kode ini menciptakan form staf dengan inisialisasi komponen dan persiapan awal u
 - akan ditampilkan dan antarmuka login saat ini akan ditutup (`dispose`).
 - Jika informasi login tidak sesuai atau tidak ditemukan dalam database, pesan error akan ditampilkan pada komponen `popError`, memberikan informasi bahwa login gagal.
 - Terakhir, koneksi ke database ditutup.
-
-#### Staff Interface
+#
+### Staff Interface
 ```
 package gui;
 import action.PanelAction;
@@ -1177,7 +1175,7 @@ import javax.swing.JOptionPane;
 - `currentNim`: String yang menyimpan NIM saat ini.
 - `idSuratToAccept`: String yang menyimpan ID surat yang akan diterima.
 
-- Created Constrcutor
+### - Komponen Interface
 ```
     java
     public StaffInterface(String roleChecker) {
@@ -1194,7 +1192,7 @@ import javax.swing.JOptionPane;
     suratTabel.setDefaultEditor(Object.class, null);
     suratTabel.setCellSelectionEnabled(false);
     } 
-    ```
+```
 ### Penjelasan Kode
 - `database`: Variabel database adalah objek dari kelas Database yang digunakan untuk berinteraksi dengan basis data.
 - `roleChecker`: Variabel roleChecker adalah string yang digunakan untuk menyimpan peran pengguna yang saat ini digunakan dalam aplikasi.
@@ -1209,7 +1207,7 @@ import javax.swing.JOptionPane;
 - `currentNim`: Variabel currentNim adalah string yang digunakan untuk menyimpan NIM (Nomor Induk Mahasiswa) saat ini dalam aplikasi.
 - `idSuratToAccept`: Variabel idSuratToAccept adalah string yang digunakan untuk menyimpan ID surat yang akan diterima atau terkait dalam operasi aplikasi.
 
-- Metode showTabel
+### - Metode showTabel()
 ```
 private void showTable() {
         DefaultTableModel model = new DefaultTableModel();
@@ -1236,17 +1234,16 @@ private void showTable() {
                 return new PanelAction();
             }
         });
-        ```
+```
 ### Penjelasan Kode
-- Metode `showTable()` digunakan untuk mengisi dan menampilkan data pada sebuah tabel di antarmuka pengguna.
-- Sebuah model tabel (DefaultTableModel) dibuat untuk menampung data yang akan ditampilkan.
+- Model tabel `DefaultTableModel` dibuat untuk menampung data yang akan ditampilkan.
 - Objek Admin diciptakan dengan menggunakan alamat email dan kata sandi yang ada.
 - Kemudian, kolom-kolom (kolom "ID Surat", "Jenis Surat", "Status", "Posisi Surat", dan "Action") ditambahkan ke model tabel.
 - Data riwayat surat dibaca dan dimasukkan ke dalam model tabel sebagai baris-baris data.
 - Model tabel ditetapkan ke komponen JTable dengan nama suratTabel.
 - Kolom "Action" (kolom ke-4) dalam tabel diperoleh dan diubah penampilannya agar dapat menampilkan komponen PanelAction di dalam sel "Action". Ini memungkinkan kita untuk menampilkan komponen khusus di dalam sel ini.
 
-- Metode showData
+### - Metode showData
 ```
 private void showData(String nimToCheck, String idSurat) {
         DataDiri dataMahasiswa = new DataDiri();
@@ -1291,9 +1288,8 @@ Kode ini terdiri dari dua metode yang digunakan dalam antarmuka pengguna:
    - Metode menciptakan objek `ChooseLogin` dengan nama `loginScreen`.
    - Selanjutnya, metode menjadikan layar login `loginScreen` terlihat dengan memanggil `setVisible(true)`.
    - Terakhir, metode ini menutup layar saat ini dengan memanggil `this.dispose()`.
-Metode-metode ini memungkinkan pengguna untuk menampilkan data mahasiswa terkait dan berpindah ke layar login ketika diperlukan.
 
-- Metode actionButton (Tombol / Buttom)
+### - Metode actionButton (Tombol / Buttom)
 ```
 private void suratActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_suratActionPerformed
         // TODO add your handling code here:
@@ -1338,14 +1334,7 @@ Kode ini digunakan untuk mengendalikan tindakan ketika pengguna mengklik sel dal
 - Jika pengguna mengklik sel di kolom "Action" dan indeks baris valid, maka program akan mengambil ID surat yang terkait dengan baris yang diklik, mencari data berdasarkan ID surat tersebut, dan menampilkan data tersebut di "pnlCard1" dalam antarmuka pengguna.
 - Hasil dari kode ini adalah mengubah tampilan antarmuka pengguna ke kartu "pnlCard1" dan menampilkan data yang sesuai dengan surat yang diklik oleh pengguna.
 
-### Penjelasan
-Kode ini adalah bagian dari kelas `StaffInterface`, yang digunakan untuk mengelola antarmuka pengguna dalam aplikasi Java. Kelas ini memiliki berbagai variabel yang digunakan untuk mengakses data, mengelola tampilan, dan menyimpan informasi pengguna.
-
-Kelas ini digunakan dalam aplikasi untuk berinteraksi dengan pengguna, mengelola data surat, dan mengelola pengajuan. Variabel-variabelnya digunakan untuk menyimpan data seperti alamat email, kata sandi, NIM mahasiswa, peruntukan, dan ID surat yang sedang diterima.
-
-Kelas ini memiliki banyak fungsi dan fitur yang tidak ditampilkan di potongan kode ini, tetapi kode ini adalah bagian penting dari aplikasi untuk memulai antarmuka pengguna dan mengakses data.
-
-### Output
+### Output User
 ![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/ccda7616-44af-4639-899e-9cf47290800c)
 Dibagian ini, user dapat memilih menu berdasarkan _role_ akun yang dimiliki, dalam kasus ini, kita akan menggunakan akun mahasiswa.
 ![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/ddf5644c-4e36-4558-ad2e-8624e2acaa55)
@@ -1358,3 +1347,12 @@ Dalam menu profil, terdapat data pribadi mahasiswa. Dalam menu ini pula, mahasis
 ![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/2a9e60b8-1848-4e07-9ebc-bbf71986464d)
 Selanjutnya adalah menu E-Surat, yaitu menu dimana mahasiswa dapat melakukan pengajuan surat, dalam menu ini, jika mahasiswa melakukan pengajuan surat, maka mahasiswa diharuskan menunggu kurang lebih 1-3 hari kerja.
 Setelah itu, surat akan ditampilkan, apakah di _Accept__ atau _Denied.
+### Output Admin/Staff
+![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/c3471b07-2939-465d-adea-db4bd1bbb0db)
+Dalam contoh output ini, kita akan menggunakan user `contoh@hotmail.com` untuk login.
+![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/2566d58b-5b8f-4c68-b6e8-c53b40d887d1)
+Selanjutnya, jika berhasil masuk, maka akan muncul 2 menu simple yaitu `Home` dan `Surat`. Didalam menu ini, admin dapat melihat surat yang diajukan, jika admin ingin melihat detail surat, serta data diri pengaju surat, admin dapat menekan tombol `DETAIL`.
+![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/dafe3f63-6ff2-498f-b274-a7258eeafb3b)
+Disini, terdapat data diri dari mahasiswa yang ingin mengajukan e-surat, dalam kasus ini adalah mahasiswa bernama Akbar Thoriq. Admin dapat memilih, antara `Denied` maupun `Accept`. Dalam kasus ini, kita akan menekan tombol `Accept`, sehingga pengajuan surat dapat dianggap disetujui.
+![image](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/5e01251a-8412-44a9-b113-236432922042)
+Maka output dari tombol tersebut, akan membuat surat yang tadinya `Denied` menjadi `Accept`.
