@@ -158,6 +158,106 @@ import javax.swing.JOptionPane;
 - Model tabel ditetapkan ke komponen JTable dengan nama suratTabel.
 - Kolom "Action" (kolom ke-4) dalam tabel diperoleh dan diubah penampilannya agar dapat menampilkan komponen PanelAction di dalam sel "Action". Ini memungkinkan kita untuk menampilkan komponen khusus di dalam sel ini.
 
+### Metode showData
+```
+ private void showData(String nimToCheck, String idSurat) {
+        DataDiri dataMahasiswa = new DataDiri();
+        String[] data = dataMahasiswa.readData(nimToCheck);
+
+        if (data != null) {
+            System.out.println("NIM: " + Arrays.toString(data));
+            namaLengkap.setText((String) data[0]);
+            nimNomor.setText((String) data[1]);
+            programStudi.setText((String) data[2]);
+            jenjangStudi.setText((String) data[3]);
+            ipkMahasiswa.setText((String) data[4]);
+            kontakNomor.setText((String) data[5]);
+            angkatanTahun.setText((String) data[6]);
+            semesterTahun.setText((String) data[7]);
+            alamatRumah.setText((String) data[8]);
+            tempatTanggalLahir.setText((String) data[9]);
+        } else {
+            System.out.println("Data tidak ditemukan");
+        }
+    }
+
+    private void navigateToLoginScreen() {
+            ChooseLogin loginScreen = new ChooseLogin();
+            loginScreen.setVisible(true); 
+            this.dispose();
+        }
+```
+
+### Penjelasan Kode
+### Menampilkan Data Mahasiswa dan Navigasi ke Layar Login
+Kode ini terdiri dari dua metode yang digunakan dalam antarmuka pengguna:
+
+1. `showData(String nimToCheck, String idSurat)`:
+   - Metode ini digunakan untuk menampilkan data mahasiswa berdasarkan NIM (Nomor Induk Mahasiswa) yang diberikan dan ID surat yang terkait.
+   - Pertama, metode membuat objek `DataDiri` dengan nama `dataMahasiswa`.
+   - Selanjutnya, metode memanggil metode `readData(nimToCheck)` dari objek `dataMahasiswa` untuk mengambil data mahasiswa berdasarkan NIM yang diberikan.
+   - Jika data ditemukan (bernilai tidak `null`), metode akan menampilkan data tersebut di antarmuka pengguna. Data tersebut mencakup informasi seperti nama lengkap, NIM, program studi, jenjang studi, IPK, nomor kontak, tahun angkatan,
+   - semester tahun, alamat rumah, dan tempat/tanggal lahir.
+   - Jika data tidak ditemukan (bernilai `null`), metode akan mencetak pesan "Data tidak ditemukan."
+
+2. `navigateToLoginScreen()`:
+   - Metode ini digunakan untuk mengganti tampilan antarmuka pengguna ke layar login (`ChooseLogin`).
+   - Metode menciptakan objek `ChooseLogin` dengan nama `loginScreen`.
+   - Selanjutnya, metode menjadikan layar login `loginScreen` terlihat dengan memanggil `setVisible(true)`.
+   - Terakhir, metode ini menutup layar saat ini dengan memanggil `this.dispose()`.
+Metode-metode ini memungkinkan pengguna untuk menampilkan data mahasiswa terkait dan berpindah ke layar login ketika diperlukan.
+
+### Metode ActionButton (Tombol/Button)
+```
+ private void suratActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_suratActionPerformed
+        // TODO add your handling code here:
+        cardLayout.show(pnlCards, "pnlCard5");
+        showTable();
+    }//GEN-LAST:event_suratActionPerformed
+
+    private void acceptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acceptButtonActionPerformed
+        // TODO add your handling code here:
+        DataUpdate dataUpdate = new DataUpdate(idSuratToAccept, "Accept");
+        RiwayatSurat riwayatSurat = new RiwayatSurat();
+        boolean updateSuccessful = riwayatSurat.updateData(dataUpdate);
+
+        if (updateSuccessful) {
+            System.out.println("Status updated to 'accept'");
+        } else {
+            System.out.println("Status update failed");
+        }
+    }
+```
+
+### Penjelasan Kode
+Kode ini berisi dua metode yang menangani aksi pengguna pada antarmuka:
+1. `suratActionPerformed(java.awt.event.ActionEvent evt)`:
+   - Metode ini menangani aksi yang terjadi ketika tombol "surat" pada antarmuka ditekan.
+   - Pertama, metode mengganti tampilan antarmuka ke "pnlCard5" menggunakan objek `cardLayout`. Ini mengubah tampilan ke panel yang menampilkan data surat.
+   - Selanjutnya, metode memanggil metode `showTable()` untuk menampilkan data surat di dalam tabel.
+2. `acceptButtonActionPerformed(java.awt.event.ActionEvent evt)`:
+   - Metode ini menangani aksi yang terjadi ketika tombol "acceptButton" pada antarmuka ditekan.
+   - Pertama, metode menciptakan objek `DataUpdate` dengan informasi ID surat yang akan diterima dan status "Accept".
+   - Kemudian, metode menciptakan objek `RiwayatSurat` untuk mengakses dan mengelola data riwayat surat.
+   - Metode berusaha untuk memperbarui status surat menjadi "Accept" dengan memanggil metode `updateData(dataUpdate)` pada objek `riwayatSurat`.
+   - Jika pembaruan berhasil, metode mencetak pesan "Status updated to 'accept'".
+   - Jika pembaruan gagal, metode mencetak pesan "Status update failed".
+Metode-metode ini memungkinkan pengguna untuk melihat data surat dan mengubah status surat menjadi "Accept" saat diperlukan.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ### Metode AddMouseListener
 ### Penjelasan Kode
 Kode ini digunakan untuk mengendalikan tindakan ketika pengguna mengklik sel dalam kolom "Action" di tabel `suratTabel`.
