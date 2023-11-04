@@ -39,8 +39,100 @@ Berikut adalah kelas yang digunakan dalam sistem E-Surat:
 ### GUI Package
 ##### ChooseLogin
 ##### MahasiswaForm
-##### MahasiswaInterface
+
 - Melakukan Inisialisasi pada komponen
+  ```
+  public class MahasiswaForm extends javax.swing.JFrame {
+    final Database database;
+    private  DataDiri dataMahasiswa;
+ 
+    public MahasiswaForm() {
+        initComponents();
+        database = new Database();
+        passTextField.setEchoChar((char) 0);
+        passTextField.setText("Password");
+        popError.setVisible(false);
+    }
+  ```
+### Penjelasan Kode
+### Kelas MahasiswaForm
+Kelas `MahasiswaForm` merupakan salah satu kelas dalam proyek ini dan digunakan untuk mengelola antarmuka pengguna untuk mahasiswa. Ini termasuk pengelolaan masuk dan tampilan data diri mahasiswa.
+- `database`: Variabel `database` adalah objek dari kelas `Database` yang digunakan untuk berinteraksi dengan basis data.
+- `dataMahasiswa`: Variabel `dataMahasiswa` adalah objek dari kelas `DataDiri` yang digunakan untuk mengelola dan menampilkan data diri mahasiswa.
+Metode konstruktor ini akan dijalankan saat objek kelas `MahasiswaForm` dibuat.
+- `initComponents()`: Metode ini adalah metode yang digenerate secara otomatis oleh IDE dan digunakan untuk menginisialisasi komponen-komponen dalam antarmuka pengguna.
+- `passTextField.setEchoChar((char) 0)`: Baris ini mengatur `passTextField` (kotak teks untuk kata sandi) untuk menampilkan karakter tanpa menyembunyikannya. Ini berguna untuk menampilkan kata sandi secara jelas.
+- `passTextField.setText("Password")`: Baris ini mengatur teks default "Password" dalam `passTextField` yang akan diganti saat pengguna memasukkan kata sandi mereka.
+- `popError.setVisible(false)`: Baris ini mengatur komponen `popError` (mungkin sebuah popup kesalahan) agar tidak terlihat pada awalnya.
+Kelas `MahasiswaForm` digunakan untuk mengatur antarmuka pengguna dan melakukan inisialisasi komponen-komponen dalam antarmuka pengguna yang berkaitan dengan mahasiswa.
+
+
+- Metode Focus gained and Focus lost pada TextField
+  ```
+      private void nimTextFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_nimTextFieldFocusGained
+        // TODO add your handling code here:
+        if (nimTextField.getText().equals("Nim")) {
+        nimTextField.setText("");
+        nimTextField.setForeground(Color.BLACK);
+        }
+    }//GEN-LAST:event_nimTextFieldFocusGained
+
+    private void nimTextFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_nimTextFieldFocusLost
+        // TODO add your handling code here:
+        if (nimTextField.getText().isEmpty()) {
+        nimTextField.setText("Nim");
+        nimTextField.setForeground(Color.GRAY);
+        }
+    }
+  ```
+### Penjelasan Kode
+Kelas `MahasiswaForm` mengandung dua metode, yaitu `nimTextFieldFocusGained` dan `nimTextFieldFocusLost`, yang digunakan untuk mengatur perilaku dan tampilan `nimTextField` saat fokus masuk dan keluar.
+- `nimTextFieldFocusGained`: Metode ini akan dipanggil saat fokus masuk ke komponen `nimTextField`. Jika teks dalam `nimTextField` sama dengan "Nim", maka teks tersebut akan dihapus dan warna teks akan diatur kembali menjadi hitam.
+- `nimTextFieldFocusLost`: Metode ini akan dipanggil saat fokus keluar dari komponen `nimTextField`. Jika teks dalam `nimTextField` kosong, maka teksnya akan diatur kembali menjadi "Nim" dan warna teks akan diatur menjadi abu-abu.
+Dua metode ini digunakan untuk memberikan interaktivitas yang lebih baik dengan pengguna, memudahkan pengguna dalam memasukkan NIM, dan memberikan umpan balik visual saat mengisi NIM di dalam `nimTextField`.
+
+- Metode signIn Button untuk login
+```
+private void signButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signButtonActionPerformed
+        // TODO add your handling code here:
+        String nim = nimTextField.getText();
+        String password = new String(passTextField.getPassword());
+
+        if (nim.equals("Nim") || password.isEmpty()) {
+            popError.setText("• Nim tidak boleh kosong\n• Password tidak boleh kosong");
+            popError.setVisible(true);
+        } else {
+            Pengguna data = new Pengguna(nim, password);
+
+            data.openConnection();
+
+            if (data.readData()) {
+                MahasiswaInterface mahasiswaInterface = new MahasiswaInterface(nim);
+                mahasiswaInterface.setVisible(true);
+                popError.setVisible(false);
+                this.dispose();
+            } else {
+                popError.setText("• Login gagal, silahkan cek kembali nim dan password");
+                popError.setVisible(true);
+            }
+
+            data.closeConnection();
+        }
+```
+### Penjelasan Kode
+Dalam kelas `MahasiswaForm`, terdapat metode `signButtonActionPerformed` yang digunakan untuk mengatur tindakan saat tombol "Sign In" ditekan. Berikut adalah penjelasan dari metode ini:
+- Saat tombol "Sign In" ditekan, metode ini akan dipanggil.
+- Metode ini mengambil teks yang dimasukkan oleh pengguna dalam komponen `nimTextField` sebagai NIM dan teks dalam komponen `passTextField` sebagai kata sandi.
+- Kemudian, metode ini memeriksa apakah NIM sama dengan "Nim" atau kata sandi kosong. Jika salah satu dari kondisi tersebut terpenuhi, maka akan ditampilkan pesan kesalahan yang menyatakan bahwa NIM dan kata sandi tidak boleh kosong.
+- Jika NIM dan kata sandi tidak kosong, metode ini menciptakan objek `Pengguna` dengan NIM dan kata sandi yang dimasukkan.
+- Objek `Pengguna` membuka koneksi ke basis data dan mencoba untuk membaca data pengguna.
+- Jika data pengguna ditemukan, maka pengguna akan diarahkan ke antarmuka MahasiswaInterface dengan NIM yang sesuai, dan pesan kesalahan (jika ada) akan disembunyikan.
+- Jika login gagal atau data pengguna tidak ditemukan, maka akan ditampilkan pesan kesalahan yang menyatakan bahwa login gagal dan pengguna diminta untuk memeriksa kembali NIM dan kata sandi.
+- Terakhir, objek `Pengguna` menutup koneksi ke basis data.
+Metode ini bertanggung jawab untuk mengelola proses otentikasi pengguna saat mereka mencoba masuk ke aplikasi. Jika otentikasi berhasil, pengguna akan diarahkan ke antarmuka MahasiswaInterface, dan jika gagal, pesan kesalahan akan ditampilkan.
+
+##### MahasiswaInterface
+- Melakukan Inisialisasi MahasiswaInterface
 ```
 public class MahasiswaInterface extends javax.swing.JFrame {
     final Database database;
