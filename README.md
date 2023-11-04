@@ -28,18 +28,571 @@ Berikut adalah kelas yang digunakan dalam sistem E-Surat:
 
 ### Controller Package
 ##### Controller
-###### Controller - Kontroller Aplikasi
+- Metode insertData
+### Penjelasan Kode
+
+- Metode insertData
+### Penjelasan Kode
+
+
+- Metode insertData
+### Penjelasan Kode
+
+
+- Metode insertData
+### Penjelasan Kode
+
+
 ##### DataUpdate 
+- Metode insertData
+### Penjelasan Kode
+
+
+- Metode insertData
+### Penjelasan Kode
+
+
+- Metode insertData
+### Penjelasan Kode
+
+
+- Metode insertData
+### Penjelasan Kode
+
+
+- Metode insertData
+### Penjelasan Kode
+
 
 ### Database Package
 ##### Database
+- Melakukan _Import__ paket
+ ```
+  package database;
+  import java.sql.Connection;
+  import java.sql.DriverManager;
+  import java.sql.SQLException;
+```
+### Penjelasan Kode
+Kelas `Database` adalah kelas yang digunakan untuk mengelola koneksi dengan basis data. Ini memungkinkan aplikasi Anda untuk berinteraksi dengan basis data, dalam hal ini, mengakses data yang diperlukan. Di bawah ini adalah ringkasan singkat tentang kelas `Database`:
+- `Connection`: Kelas ini digunakan untuk membuka dan menutup koneksi ke basis data. Fungsinya adalah mengelola koneksi ke database yang digunakan oleh aplikasi.
+- `DriverManager`: Kelas ini memungkinkan Anda untuk mendaftar driver JDBC yang diperlukan untuk berkomunikasi dengan database tertentu.
+- `SQLException`: Kelas ini menangani pengecualian yang terkait dengan kesalahan yang mungkin terjadi selama berinteraksi dengan database, seperti kesalahan koneksi atau pernyataan SQL.
+Kelas `Database` adalah bagian kunci dalam mengelola koneksi ke database, dan memungkinkan aplikasi Anda untuk melakukan operasi basis data yang diperlukan, seperti membaca dan menulis data.
+
+- Melakukan pengelolaan koneksi antar aplikasi dan database
+```
+public class Database {
+    public final Connection connection;
+
+    public Database() {
+        this.connection = openConnection();
+    }
+
+    public Connection openConnection() {
+        Connection conn = null;
+        try {
+            String dbHost = "localhost";
+            String dbName = "database_e_surat";
+            String dbUser = "root";
+            String dbPass = "";
+
+            String url = "jdbc:mysql://" + dbHost + "/" + dbName;
+            conn = DriverManager.getConnection(url, dbUser, dbPass);
+            System.out.println("Database Connected!");
+        } catch (SQLException e) {
+            System.out.println("Failed to connect to the database.");
+        }
+        return conn;
+    }
+
+    public void closeConnection() {
+        try {
+            if (connection != null) {
+                connection.close();
+                System.out.println("Database Closed");
+            }
+        } catch (SQLException ex) {
+            System.out.println("Failed to close the database.");
+        }
+    }
+}
+```
+### Penjelasan Kode
+Kelas `Database` adalah kelas yang digunakan untuk mengelola koneksi dengan basis data MySQL. Ini memungkinkan aplikasi Anda untuk berinteraksi dengan basis data, dalam hal ini, mengakses data yang diperlukan. Di bawah ini adalah ringkasan singkat tentang kelas `Database`:
+- `Connection`: Kelas ini digunakan untuk membuka dan menutup koneksi ke basis data MySQL. Fungsinya adalah mengelola koneksi ke database yang digunakan oleh aplikasi.
+- `DriverManager`: Kelas ini memungkinkan Anda untuk mendaftar driver JDBC yang diperlukan untuk berkomunikasi dengan database MySQL.
+- `SQLException`: Kelas ini menangani pengecualian yang terkait dengan kesalahan yang mungkin terjadi selama berinteraksi dengan database, seperti kesalahan koneksi atau pernyataan SQL.
+Kelas `Database` digunakan untuk menginisialisasi dan membuka koneksi ke basis data MySQL dengan host "localhost", nama database "database_e_surat", pengguna "root", dan kata sandi kosong. Setelah koneksi berhasil dibuka, pesan "Database Connected!" akan ditampilkan di konsol.
+Kelas `Database` adalah bagian kunci dalam mengelola koneksi ke database MySQL, dan memungkinkan aplikasi Anda untuk melakukan operasi basis data yang diperlukan, seperti membaca dan menulis data.
+
 
 ### Entitas Package
+##### Admin
+- Melakukan  _import_ paket
+  ```
+  package entitas;
+  import database.Database;
+  import java.sql.PreparedStatement;
+  import java.sql.ResultSet;
+  import java.sql.SQLException;
+  import java.util.logging.Level;
+  import java.util.logging.Logger;'
+  ```
+### Penjelasan Kode
+Paket `entitas` berisi kelas-kelas yang digunakan untuk merepresentasikan entitas atau objek-objek dalam aplikasi. Objek-objek ini mewakili data dan informasi yang diperlukan untuk operasi aplikasi. Di bawah ini adalah ringkasan singkat tentang paket `entitas`:
+- `Database`: Kelas ini bertanggung jawab untuk berinteraksi dengan basis data. Ini mencakup operasi seperti menjalankan pernyataan SQL dan mengambil data dari database. Kelas ini adalah penghubung penting antara aplikasi dan basis data.
+- `PreparedStatement`: Kelas ini digunakan untuk mempersiapkan dan mengeksekusi pernyataan SQL. Ini membantu dalam menghindari serangan SQL injeksi dan memungkinkan aplikasi untuk memasukkan parameter ke dalam pernyataan SQL.
+- `ResultSet`: Kelas ini digunakan untuk menyimpan hasil dari pernyataan SQL yang dijalankan di database. Data hasil query dapat diekstrak dan digunakan oleh aplikasi.
+Paket `entitas` berperan penting dalam merepresentasikan data yang diperlukan oleh aplikasi, dan kelas-kelas di dalamnya berfungsi sebagai model data yang digunakan dalam aplikasi Anda.
+
+- Metode readData
+```
+      public final boolean readData() {
+        boolean loginSuccessful = false;
+
+        try {
+            openConnection();
+
+            String sql = "SELECT * FROM admin WHERE Email = ? AND Password = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(2, password);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            loginSuccessful = resultSet.next();
+        } catch (SQLException e) {
+            Logger.getLogger(Pengguna.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            closeConnection();
+        }
+```
+### Penjelasan Kode
+Metode `readData` digunakan untuk mengautentikasi pengguna dengan mencocokkan email dan kata sandi yang dimasukkan dengan catatan dalam basis data. Di bawah ini adalah penjelasan singkat tentang bagaimana metode ini bekerja:
+- `boolean loginSuccessful`: Variabel ini digunakan untuk menunjukkan apakah proses login berhasil. Awalnya diatur sebagai `false`.
+- Metode `openConnection()`: Metode ini digunakan untuk membuka koneksi ke database sebelum mengambil data.
+- `String sql`: Ini adalah pernyataan SQL yang digunakan untuk mencari pengguna dengan email dan kata sandi tertentu dalam tabel `admin`. Tanda tanya (`?`) digunakan sebagai tanda tanya yang akan diisi dengan nilai yang sesuai.
+- `PreparedStatement preparedStatement`: Objek ini mempersiapkan pernyataan SQL dengan memasukkan email dan kata sandi ke dalam pernyataan.
+- `ResultSet resultSet`: Objek ini digunakan untuk menyimpan hasil dari eksekusi pernyataan SQL. Jika ada hasil yang sesuai, maka login dianggap berhasil.
+- Jika ada kesalahan SQL selama proses, misalnya terjadi kesalahan dalam eksekusi pernyataan SQL, maka kesalahan tersebut akan ditangkap dan dicatat.
+- Terakhir, metode `closeConnection()` dipanggil untuk menutup koneksi database setelah selesai mengambil data.
+Metode ini memainkan peran penting dalam mengelola proses otentikasi pengguna dan menentukan apakah pengguna berhasil masuk atau tidak.
+
+- Melakukan findData
+```
+    public String findData(String suratID) {
+        String nim = null;
+        try {
+            String sql = "SELECT Mahasiswa_NIM1 FROM pengajuan WHERE ID_Pengajuan = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, suratID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                nim = resultSet.getString("Mahasiswa_NIM1");
+            }
+        } catch (SQLException e) {
+        }
+        return nim;
+    }
+```
+### Penjelasan Kode
+Metode `findData` digunakan untuk mencari NIM (Nomor Induk Mahasiswa) berdasarkan ID surat yang diberikan. Berikut penjelasan singkat tentang bagaimana metode ini bekerja:
+- `String nim`: Variabel ini digunakan untuk menyimpan NIM (Nomor Induk Mahasiswa) yang akan ditemukan. Awalnya diatur sebagai `null`.
+- Metode ini mengambil ID surat sebagai argumen dan menggabungkannya ke dalam pernyataan SQL untuk mencari NIM yang terkait dalam tabel `pengajuan`.
+- `String sql`: Ini adalah pernyataan SQL yang digunakan untuk mencari NIM dengan menggunakan ID surat yang diberikan.
+- `PreparedStatement preparedStatement`: Objek ini digunakan untuk mempersiapkan pernyataan SQL dengan memasukkan ID surat ke dalam pernyataan.
+- `ResultSet resultSet`: Objek ini digunakan untuk menyimpan hasil dari eksekusi pernyataan SQL. Jika ada hasil yang sesuai, maka NIM akan diambil dari hasil tersebut.
+- Jika ada kesalahan SQL selama proses, misalnya terjadi kesalahan dalam eksekusi pernyataan SQL, maka kesalahan tersebut akan ditangkap dan diabaikan.
+Metode `findData` berfungsi sebagai alat untuk menemukan NIM berdasarkan ID surat yang diberikan dalam konteks aplikasi Anda. Hal ini berguna ketika Anda perlu menghubungkan ID surat dengan NIM mahasiswa yang sesuai dalam basis data.
+
+##### DataDiri
+- Melakukan Inisialisasi komponen
+```
+public class DataDiri extends Database {
+    private String nim;
+    private String alamat;
+    private String tempatLahir;
+    private String angkatan;
+    private String ipk;
+    private String program;
+    private String jenjang;
+    private String kontak;
+
+    public DataDiri() {
+        this.nim = nim;
+    }
+
+     public final String[] readData(String nim) {
+        try {
+            openConnection();
+
+            String[] data = new String[10];
+            String sql = "SELECT * FROM data_diri WHERE NIM = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, nim);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+
+        if (resultSet.next()) {
+            data[0] = resultSet.getString("NIM");
+            data[1] = resultSet.getString("Nama_Mahasiswa");
+            data[2] = resultSet.getString("Prodi");
+            data[3] = resultSet.getString("Jenjang_Studi");
+            data[4] = resultSet.getString("IPK");
+            data[5] = resultSet.getString("Kontak");
+            data[6] = resultSet.getString("Angkatan");
+            data[7] = resultSet.getString("Semester");
+            data[8] = resultSet.getString("Alamat");
+            data[9] = resultSet.getString("TTL");
+            return data;
+        }
+    } catch (SQLException ex) {
+        Logger.getLogger(DataDiri.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    return null;
+}
+```
+### Penjelasan Kode=
+- `String nim`: Variabel ini digunakan untuk menyimpan NIM mahasiswa yang akan digunakan sebagai kunci pencarian.
+- Metode ini membuka koneksi ke database yang digunakan dalam aplikasi Anda.
+- Sebuah array `data` dengan ukuran 10 dibuat untuk menyimpan data pribadi mahasiswa, seperti Nama, Program Studi, IPK, dan sebagainya.
+- Pernyataan SQL digunakan untuk mencari data pribadi berdasarkan NIM yang diberikan dalam tabel `data_diri`.
+- Hasil dari pernyataan SQL disimpan dalam `ResultSet` untuk dianalisis.
+- Jika ada hasil yang sesuai, data pribadi seperti NIM, Nama Mahasiswa, Program Studi, dan lainnya akan dimasukkan ke dalam array `data`. Kemudian, array ini dikembalikan sebagai hasil dari metode.
+- Jika tidak ada hasil yang sesuai atau terjadi kesalahan SQL, metode akan mengembalikan `null`.
+Metode `readData` berfungsi sebagai alat untuk mengambil data pribadi seorang mahasiswa berdasarkan NIM dalam konteks aplikasi Anda. Ini memungkinkan aplikasi Anda untuk menampilkan dan mengelola data pribadi mahasiswa dengan mudah.
+
+- Melakukan updateData
+```
+ public final boolean updateData(DataUpdate dataUpdate) {
+        boolean updateSuccessful = false;
+
+        try {
+            openConnection();
+
+            String sql = "UPDATE data_diri SET Alamat = ?, Prodi = ?, Jenjang_Studi = ?, IPK = ?, Kontak = ?, Angkatan = ?, Semester = ?, TTL = ? WHERE NIM = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, dataUpdate.getAlamat());
+            preparedStatement.setString(2, dataUpdate.getProgram());
+            preparedStatement.setString(3, dataUpdate.getJenjang());
+            preparedStatement.setString(4, dataUpdate.getIpk());
+            preparedStatement.setString(5, dataUpdate.getKontak());
+            preparedStatement.setString(6, dataUpdate.getAngkatan());
+            preparedStatement.setString(7, dataUpdate.getSemester());
+            preparedStatement.setString(8, dataUpdate.getTanggalLahir());
+            preparedStatement.setString(9, dataUpdate.getNim());
+
+            int rowsUpdated = preparedStatement.executeUpdate();
+
+            if (rowsUpdated > 0) {
+                updateSuccessful = true;
+            }
+        } catch (SQLException e) {
+        } finally {
+            closeConnection();
+        }
+
+        return updateSuccessful;
+    }
+```
+### Penjelasan Kode
+- `DataUpdate dataUpdate`: Metode ini menerima objek `DataUpdate` yang berisi informasi terbaru yang akan diperbarui dalam database.
+- Metode ini membuka koneksi ke database yang digunakan dalam aplikasi Anda.
+- Pernyataan SQL digunakan untuk mengupdate data pribadi mahasiswa dalam tabel `data_diri` berdasarkan NIM.
+- Parameter yang akan diperbarui, seperti Alamat, Program Studi, IPK, dan lainnya, diambil dari objek `dataUpdate` dan dimasukkan ke dalam pernyataan SQL.
+- Jika pembaruan berhasil dilakukan dan satu atau lebih baris dalam database telah diperbarui, variabel `updateSuccessful` akan diatur ke `true`.
+- Jika pembaruan gagal atau terjadi kesalahan SQL, variabel `updateSuccessful` akan tetap `false`.
+- Terakhir, metode ini akan menutup koneksi ke database sebelum mengembalikan nilai `updateSuccessful`.
+Metode `updateData` adalah alat yang memungkinkan aplikasi Anda untuk memperbarui data pribadi seorang mahasiswa dalam database, yang bisa digunakan untuk memastikan bahwa informasi mahasiswa tetap akurat dan mutakhir.
+
+##### Pengajuan
+- Metode inserData
+```
+public Pengajuan(String peruntukanValue, String mahasiswaNIM, String roleChecker) {
+        this.peruntukanValue = peruntukanValue;
+        this.mahasiswaNIM = mahasiswaNIM;
+        this.roleChecker = roleChecker;
+    }
+
+    public String insertData() {
+        String generatedId = null;
+
+        try {
+            openConnection();
+
+            String sql = "INSERT INTO pengajuan (Peruntukan, Lampiran, Mahasiswa_NIM1, Aktivitas_ID_Aktivitas) VALUES (?, 'Null', ?, 'null')";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, peruntukanValue);
+            preparedStatement.setString(2, roleChecker);
+
+            int rowsInserted = preparedStatement.executeUpdate();
+
+            if (rowsInserted > 0) {
+                ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    generatedId = generatedKeys.getString(1);
+                }
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(Pengajuan.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            closeConnection();
+        }
+
+        return generatedId;
+    }
+```
+### Penjelasan Kode
+- `String generatedId`: Variabel ini digunakan untuk menyimpan ID yang dihasilkan setelah pengajuan disimpan ke dalam database.
+- Metode ini membuka koneksi ke database yang digunakan dalam aplikasi Anda.
+- Pernyataan SQL digunakan untuk menyimpan data pengajuan ke dalam tabel `pengajuan` di database. Informasi yang disimpan meliputi peruntukan surat, lampiran (dalam contoh ini diatur sebagai "Null"), NIM mahasiswa, dan ID aktivitas (dalam contoh ini diatur sebagai "null").
+- Parameter yang akan disimpan dalam pernyataan SQL diambil dari variabel `peruntukanValue` dan `roleChecker`.
+- Setelah data pengajuan disimpan dalam database, metode ini akan mengambil ID yang dihasilkan. Jika penyimpanan berhasil (lebih dari 0 baris dimasukkan), ID yang dihasilkan akan disimpan dalam variabel `generatedId`.
+- Jika terjadi kesalahan SQL selama penyimpanan, metode ini akan menangani kesalahan tersebut dan memprosesnya.
+- Terakhir, metode ini akan menutup koneksi ke database sebelum mengembalikan nilai `generatedId`.
+Metode `insertData` adalah alat yang memungkinkan aplikasi Anda untuk menyimpan pengajuan surat mahasiswa ke dalam database dengan parameter seperti peruntukan surat, NIM mahasiswa, dan ID aktivitas yang relevan.
+
+- Metode readData
+```
+public String[] readData() {
+        try {
+            openConnection();
+
+            String[] data = new String[6];
+            String sql = "SELECT * FROM pengajuan";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                data[0] = resultSet.getString("ID_Pengajuan");
+                data[1] = resultSet.getString("Peruntukan");
+                data[2] = resultSet.getString("Lampiran");
+                data[3] = resultSet.getString("Mahasiswa_NIM");
+                data[4] = resultSet.getString("Aktivitas_ID_Aktivitas");
+                data[5] = resultSet.getString("Tanggal");
+
+                return data;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Pengajuan.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return null;
+    }
+}
+```
+### Penjelasan Kode
+- `String[] data`: Variabel ini adalah array string dengan panjang 6 yang digunakan untuk menyimpan data pengajuan yang akan diambil dari database.
+- Metode ini membuka koneksi ke database yang digunakan dalam aplikasi Anda.
+- Pernyataan SQL digunakan untuk mengambil data dari tabel `pengajuan`. Data yang diambil termasuk ID pengajuan, peruntukan surat, lampiran, NIM mahasiswa, ID aktivitas, dan tanggal pengajuan.
+- Hasil eksekusi pernyataan SQL diambil dalam variabel `resultSet`.
+- Jika data pengajuan tersedia dalam tabel (ada hasil dalam `resultSet`), metode ini akan mengambil data tersebut dan menyimpannya dalam array `data`. Setiap elemen array sesuai dengan kolom yang sesuai dalam tabel.
+- Jika tidak ada data yang ditemukan atau terjadi kesalahan SQL selama pengambilan data, metode ini akan menangani kesalahan tersebut dan mengembalikan nilai `null`.
+Metode `readData` adalah alat yang memungkinkan aplikasi Anda untuk mengambil data pengajuan surat dari database, yang kemudian dapat digunakan untuk ditampilkan atau diproses sesuai kebutuhan.
+
+##### Pengguna
+- Metode readData
+```
+public final boolean readData() {
+        boolean loginSuccessful = false;
+
+        try {
+            openConnection();
+
+            String sql = "SELECT * FROM pengguna WHERE ID_Pengguna = ? AND Password = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, id_pengguna);
+            preparedStatement.setString(2, password);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            loginSuccessful = resultSet.next();
+        } catch (SQLException e) {
+            Logger.getLogger(Pengguna.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            closeConnection();
+        }
+
+        return loginSuccessful;
+    }
+}
+```
+### Penjelasan Kode
+- `boolean loginSuccessful`: Variabel ini adalah boolean yang menunjukkan apakah proses login berhasil. Nilai ini akan mengindikasikan apakah pengguna dengan ID_Pengguna dan kata sandi yang diberikan berhasil diotentikasi atau tidak.
+- Metode ini membuka koneksi ke database yang digunakan dalam aplikasi Anda.
+- Pernyataan SQL digunakan untuk mengambil data dari tabel `pengguna` berdasarkan ID_Pengguna dan kata sandi yang diberikan. Data ini digunakan untuk mencocokkan informasi yang diinputkan oleh pengguna dengan data yang ada di database.
+- Hasil eksekusi pernyataan SQL diambil dalam variabel `resultSet`.
+- Jika data pengguna dengan ID_Pengguna dan kata sandi yang sesuai ditemukan dalam tabel (ada hasil dalam `resultSet`), maka `loginSuccessful` akan diatur sebagai `true`, mengindikasikan bahwa proses login berhasil.
+- Jika tidak ada data yang ditemukan atau terjadi kesalahan SQL selama proses login, metode ini akan menangani kesalahan tersebut dan mengembalikan `false`, yang menunjukkan bahwa proses login gagal.
+Metode `readData` adalah alat yang memungkinkan aplikasi Anda untuk mengotentikasi pengguna berdasarkan ID_Pengguna dan kata sandi yang mereka berikan, yang merupakan langkah penting dalam pengamanan aplikasi.
+
+##### RiwayatSurat
+- Metode insertData
+```
+public boolean insertData(String jenisSurat, String posisiSurat, String action, String idPengajuan) {
+        boolean insertSuccessful = false;
+        
+        try {
+            openConnection();
+
+            String sql = "INSERT INTO riwayat_surat (Jenis_Surat, Status, Posisi_Surat, Action, Pengajuan_ID_Pengajuan) VALUES (?, 'Pending', ?, ?, ?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, jenisSurat);
+            preparedStatement.setString(2, posisiSurat);
+            preparedStatement.setString(3, action);
+            preparedStatement.setString(4, idPengajuan);
+
+            int rowsInserted = preparedStatement.executeUpdate();
+
+            insertSuccessful = rowsInserted > 0;
+        } catch (SQLException e) {
+            Logger.getLogger(RiwayatSurat.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            closeConnection();
+        }
+
+        return insertSuccessful;
+    }
+```
+### Penjelasan Kode
+- `boolean insertSuccessful`: Variabel ini adalah boolean yang mengindikasikan apakah proses penambahan data riwayat surat berhasil. Nilai `true` menunjukkan bahwa data berhasil dimasukkan, sedangkan nilai `false` menunjukkan bahwa proses penambahan data gagal.
+- Metode ini membuka koneksi ke database yang digunakan dalam aplikasi Anda.
+- Pernyataan SQL digunakan untuk menyisipkan data baru ke dalam tabel `riwayat_surat`. Data yang dimasukkan meliputi jenis surat, status, posisi surat, action, dan ID_Pengajuan.
+- Nilai-nilai yang ingin dimasukkan ke dalam pernyataan SQL diambil dari parameter yang dilewatkan ke metode ini.
+- Jika proses penyisipan data berhasil (tidak ada kesalahan SQL), maka `insertSuccessful` akan diatur sebagai `true`, mengindikasikan bahwa data riwayat surat berhasil dimasukkan.
+- Jika terjadi kesalahan SQL selama proses penyisipan data atau proses tersebut gagal, metode ini akan menangani kesalahan tersebut dan mengembalikan `false`.
+Metode `insertData` merupakan komponen penting dalam aplikasi Anda yang memungkinkan Anda untuk mencatat riwayat surat yang terkait dengan berbagai tindakan dan posisi dalam alur kerja aplikasi Anda.
+
+
+- Metode readData
+```
+public List<String[]> readData() {
+        List<String[]> data = new ArrayList<>();
+
+        try {
+            openConnection();
+
+            String sql = "SELECT * FROM riwayat_surat"; 
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                String idSurat = resultSet.getString("ID_Surat");
+                String jenisSurat = resultSet.getString("Jenis_Surat");
+                String status = resultSet.getString("Status");
+                String posisiSurat = resultSet.getString("Posisi_Surat");
+                String action = resultSet.getString("Action");
+                String pengajuanID = resultSet.getString("Pengajuan_ID_Pengajuan");
+
+                String[] row = {idSurat, jenisSurat, status, posisiSurat, action, pengajuanID};
+                data.add(row);
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(RiwayatSurat.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            openConnection();
+        }
+        return data;
+    }
+```
+### Penjelasan Kode
+- `List<String[]> data`: Variabel ini adalah daftar yang berisi array string. Setiap elemen dalam daftar adalah array yang berisi informasi riwayat surat, seperti ID Surat, Jenis Surat, Status, Posisi Surat, Action, dan ID Pengajuan.
+- Metode ini membuka koneksi ke database yang digunakan dalam aplikasi Anda.
+- Pernyataan SQL digunakan untuk mengambil data dari tabel `riwayat_surat`.
+- Hasil dari pernyataan SQL diambil dalam bentuk objek `ResultSet`, dan setiap baris data riwayat surat diekstrak dari hasil ini.
+- Setiap baris data riwayat surat disimpan dalam bentuk array string, dan array tersebut ditambahkan ke dalam daftar `data`.
+- Setelah semua data riwayat surat telah dibaca dan dimasukkan ke dalam daftar, daftar `data` dikembalikan sebagai hasil dari metode.
+- Jika terjadi kesalahan SQL selama proses pembacaan data, metode ini akan menangani kesalahan tersebut dan mengembalikan daftar kosong.
+Metode `readData` merupakan komponen penting dalam aplikasi Anda yang memungkinkan Anda untuk mengakses dan menampilkan riwayat surat dalam berbagai konteks aplikasi Anda.
+
+- Metode updateData
+```
+public final boolean updateData(DataUpdate dataUpdate) {
+      boolean updateSuccessful = false;
+
+      try {
+          openConnection();
+
+          String sql = "UPDATE riwayat_surat SET Status = ? WHERE ID_Surat = ?";
+          PreparedStatement preparedStatement = connection.prepareStatement(sql);
+          preparedStatement.setString(1, dataUpdate.getStatus()); 
+          preparedStatement.setString(2, dataUpdate.getNim());
+
+          int rowsUpdated = preparedStatement.executeUpdate();
+
+          if (rowsUpdated > 0) {
+              updateSuccessful = true;
+          }
+      } catch (SQLException e) {
+          e.printStackTrace();
+      } finally {
+          closeConnection();
+      }
+
+      return updateSuccessful;
+  }
+}
+```
+### Penjelasan Kode
+- `DataUpdate dataUpdate`: Metode ini menerima objek `DataUpdate` yang berisi informasi yang diperlukan untuk melakukan pembaruan, seperti ID Surat yang akan diperbarui dan status yang akan diatur.
+- Metode ini membuka koneksi ke database yang digunakan dalam aplikasi Anda.
+- Pernyataan SQL digunakan untuk mengupdate status suatu surat berdasarkan ID Surat yang diberikan.
+- Status yang akan diupdate diambil dari objek `dataUpdate`.
+- Hasil dari pernyataan SQL menunjukkan berapa banyak baris yang berhasil diupdate.
+- Jika baris berhasil diupdate (jumlah baris yang diupdate lebih dari 0), maka metode mengembalikan `true`, yang menunjukkan bahwa pembaruan berhasil. Jika tidak ada baris yang diupdate, maka metode mengembalikan `false`.
+- Jika terjadi kesalahan SQL selama proses pembaruan, metode ini akan menangani kesalahan tersebut.
+Metode `updateData` adalah komponen penting dalam aplikasi Anda yang memungkinkan Anda untuk mengubah status suatu surat dalam riwayat surat, seperti mengubahnya menjadi "Diterima" atau "Ditolak". Hal ini sangat berguna dalam mengelola riwayat surat dalam aplikasi Anda.
 
 ### GUI Package
 ##### ChooseLogin
-##### MahasiswaForm
+- Kelas ChoosLogin
+  ```
+  public class ChooseLogin extends javax.swing.JFrame {
+    private MahasiswaForm mahasiswaForm;
+    private StaffForm staffForm;
+    public ChooseLogin() {
+        initComponents();
+        mahasiswaForm = new MahasiswaForm();
+        staffForm = new StaffForm();
+        this.setPreferredSize(new Dimension(800, 600));
+    }
+  ```
+### Penjelasan Kode
+Kelas `ChooseLogin` digunakan dalam aplikasi untuk memberikan pilihan login kepada pengguna. Pengguna dapat memilih untuk login sebagai mahasiswa atau staff dengan mengeklik tombol yang sesuai. Berikut adalah penjelasan dari kelas ini:
+- Kelas ini memiliki dua atribut, yaitu `mahasiswaForm` dan `staffForm`, yang masing-masing merupakan objek dari kelas `MahasiswaForm` dan `StaffForm`. Kedua objek ini digunakan untuk mengakses antarmuka login mahasiswa dan staff.
+- Dalam konstruktor kelas `ChooseLogin`, objek `mahasiswaForm` dan `staffForm` diciptakan. Ini memungkinkan aplikasi untuk menampilkan antarmuka login mahasiswa dan staff saat pengguna memilihnya.
+- Selain itu, kelas ini juga mengatur preferensi dimensi jendela aplikasi menjadi 800x600 piksel.
+Kelas `ChooseLogin` bertindak sebagai jendela awal yang memberikan pilihan login kepada pengguna. Dengan memilih login sebagai mahasiswa atau staff, pengguna dapat mengakses fungsi yang sesuai dalam aplikasi.
 
+
+- Metode untuk memilih jendela login
+  ```
+   private void loginNonMahasiswaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginNonMahasiswaActionPerformed
+        // TODO add your handling code here:
+        staffForm.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_loginNonMahasiswaActionPerformed
+
+    private void loginMahasiswaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginMahasiswaActionPerformed
+        // TODO add your handling code here:
+        mahasiswaForm.setVisible(true);
+        this.dispose();
+    }
+  ```
+### Penjelasan Kode
+Metode `loginNonMahasiswaActionPerformed` dan `loginMahasiswaActionPerformed` digunakan dalam kelas `ChooseLogin` untuk menangani tindakan yang terjadi saat pengguna memilih login sebagai mahasiswa atau staff. Berikut adalah penjelasan dari kedua metode ini:
+- Metode `loginNonMahasiswaActionPerformed`:
+  - Metode ini dipanggil ketika pengguna memilih untuk login sebagai staff.
+  - Saat metode ini dipanggil, jendela antarmuka staff (`staffForm`) akan ditampilkan dengan memanggil metode `setVisible(true)`.
+  - Jendela antarmuka `ChooseLogin` akan ditutup (`this.dispose()`) sehingga hanya antarmuka staff yang ditampilkan.
+- Metode `loginMahasiswaActionPerformed`:
+  - Metode ini dipanggil ketika pengguna memilih untuk login sebagai mahasiswa.
+  - Saat metode ini dipanggil, jendela antarmuka mahasiswa (`mahasiswaForm`) akan ditampilkan dengan memanggil metode `setVisible(true)`.
+  - Jendela antarmuka `ChooseLogin` akan ditutup (`this.dispose()`) sehingga hanya antarmuka mahasiswa yang ditampilkan.
+Metode-metode ini memungkinkan pengguna untuk memilih jenis login yang sesuai, yaitu sebagai mahasiswa atau staff, dan mengarahkan mereka ke antarmuka yang sesuai untuk melakukan proses login.
+
+##### MahasiswaForm
 - Melakukan Inisialisasi pada komponen
   ```
   public class MahasiswaForm extends javax.swing.JFrame {
