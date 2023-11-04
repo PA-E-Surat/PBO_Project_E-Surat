@@ -15,28 +15,7 @@ Proyek E-Surat adalah aplikasi manajemen surat berbasis pemrograman berorientasi
     - [Hierarki Kelas](#hierarki-kelas)
     - [Source Code](#source-code)
     - [Output](#output)
-- [Tampilan menu awal](#tampilan-menu-awal)
 #
-## Flowchart
-Berikut adalah flowchart dari aplikasi sederhana e-surat, didalam flowchart terlihat bahwa aplikasi secara tidak langsung terhubung dengan database melalui ORM. Program dimulai dari user menjalankan aplikasi, hingga log out.
-![](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/848f6c5d-d068-4e06-a9fc-da42f8d27c06 =600x500)
-#
-### ERD
-Berikut adalah diagram yang digunakan untuk perancangan database yang menunjukan relasi antar objek beserta atribut-atribut dalam sistem E-Surat secara detail:
-
-![](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/6d1c52fb-874f-49a4-99e8-0d911dc57b52 =600x500)
-#
-### Hierarki Kelas
-Berikut adalah hierarki kelas dari aplikasi E-Surat sederhana:
-
-![](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/fabea52a-155c-457f-adb6-1e4857fab174 =500x600)
-
-
-### Source Code
-Berikut adalah screenshoot source code dari program E-Surat:
-
-### Output
-Berikut adalah screenshoot output dari program E-Surat:
 # LAPORAN PRAKTIKUM PBO E-SURAT
 ### Oleh Kelompok 13 SI A 22:
 ### Ayu Cahyarani (2209116008)
