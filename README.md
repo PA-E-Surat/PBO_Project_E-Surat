@@ -42,6 +42,68 @@ Berikut adalah kelas yang digunakan dalam sistem E-Surat:
 ##### MahasiswaInterface
 ##### StaffForm
 
+- Metode showDta
+```
+package gui;
+
+import database.Database;
+import java.awt.Color;
+import entitas.Admin;
+
+public class StaffForm extends javax.swing.JFrame {
+    final Database database;
+    
+    public StaffForm() {
+        initComponents();
+        database = new Database();
+        passTextField.setEchoChar((char) 0);
+        passTextField.setText("Password");
+        popError.setVisible(false);
+```
+### Penjelasan Kode
+Kode ini menciptakan antarmuka untuk staf pada aplikasi dan menginisialisasi komponen pentingnya.
+- `database`: Variabel datbase adalah objek dari kelas Database yang digunakan untuk berinteraksi dengan basis data.
+- `StaffForm()`: Konstruktor ini digunakan untuk menginisialisasi form staf.
+  - Metode `initComponents()` digunakan untuk menginisialisasi komponen antarmuka.
+  - Objek `database` diinisialisasi untuk berinteraksi dengan database.
+  - Teks pada komponen `passTextField` diatur ke "Password" dan tampilan karakter acak (echo char) diaktifkan. Ini membantu dalam input kata sandi yang aman.
+  - Komponen `popError` (pop-up error) awalnya diatur menjadi tidak terlihat (false), yang berarti tidak ada pesan error yang ditampilkan secara default.
+Kode ini menciptakan form staf dengan inisialisasi komponen dan persiapan awal untuk antarmuka pengguna.
+
+- Metode showDta
+  ```
+  private void signButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signButtonActionPerformed
+        // TODO add your handling code here:
+        String email = emailTextField.getText();
+        String password = new String(passTextField.getPassword());
+
+        if (email.equals("Email") || password.isEmpty()) {
+            popError.setText("• Email tidak boleh kosong\n• Password tidak boleh kosong");
+            popError.setVisible(true);
+        } else {
+            Admin data = new Admin (email,password);
+            data.openConnection();
+
+            if (data.readData()) {
+                StaffInterface staffInterface = new StaffInterface(email);
+                staffInterface.setVisible(true);
+                popError.setVisible(false);
+                this.dispose();
+            } else {
+                popError.setText("• Login gagal, silahkan cek kembali nim dan password");
+                popError.setVisible(true);
+            }
+
+            data.closeConnection();
+  ```
+### Penjelasan Kode
+
+- Metode showDta
+### Penjelasan Kode
+
+- Metode showDta
+### Penjelasan Kode
+
 #### Staff Interface
 - Imported Package
 ```
@@ -121,7 +183,7 @@ import javax.swing.JOptionPane;
 - `currentNim`: Variabel currentNim adalah string yang digunakan untuk menyimpan NIM (Nomor Induk Mahasiswa) saat ini dalam aplikasi.
 - `idSuratToAccept`: Variabel idSuratToAccept adalah string yang digunakan untuk menyimpan ID surat yang akan diterima atau terkait dalam operasi aplikasi.
 
-### Metode showTable
+- Metode showTabel
 ```
   private void showTable() {
         DefaultTableModel model = new DefaultTableModel();
@@ -158,7 +220,7 @@ import javax.swing.JOptionPane;
 - Model tabel ditetapkan ke komponen JTable dengan nama suratTabel.
 - Kolom "Action" (kolom ke-4) dalam tabel diperoleh dan diubah penampilannya agar dapat menampilkan komponen PanelAction di dalam sel "Action". Ini memungkinkan kita untuk menampilkan komponen khusus di dalam sel ini.
 
-### Metode showData
+- Metode showData
 ```
  private void showData(String nimToCheck, String idSurat) {
         DataDiri dataMahasiswa = new DataDiri();
@@ -207,7 +269,7 @@ Kode ini terdiri dari dua metode yang digunakan dalam antarmuka pengguna:
    - Terakhir, metode ini menutup layar saat ini dengan memanggil `this.dispose()`.
 Metode-metode ini memungkinkan pengguna untuk menampilkan data mahasiswa terkait dan berpindah ke layar login ketika diperlukan.
 
-### Metode ActionButton (Tombol/Button)
+- Metode actionButton (Tombol / Buttom)
 ```
  private void suratActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_suratActionPerformed
         // TODO add your handling code here:
