@@ -5,63 +5,254 @@
 #
 ### Deskripsi Project
 Proyek E-Surat adalah aplikasi manajemen surat berbasis pemrograman berorientasi objek yang bertujuan untuk mengotomatisasi dan meningkatkan efisiensi dalam proses pembuatan surat di Fakultas Teknik Universitas Mulawarman. Aplikasi ini dirancang untuk menggantikan proses manual dalam penanganan surat dan membawa manfaat signifikan seperti peningkatan efisiensi, pengurangan penggunaan kertas, penghematan biaya pengiriman surat fisik, dan peningkatan kemampuan dalam mengelola surat elektronik. Aplikasi ini memberikan solusi modern dan berkelanjutan untuk manajemen surat.
-### Flowchart
-Berikut adalah diagram yang menggambarkan alur proses sistem E-Surat:
 
+### Flowchart
+Berikut adalah diagram alur flowchart E-Surat:
+![flowchart](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/d110e379-3e57-4de6-9484-9b6439c322ea)
 
 ### ERD
-
-``Berikut adalah diagram yang digunakan untuk perancangan database yang menunjukan relasi antar objek beserta atribut-atribut dalam sistem E-Surat secara detail:``
-
+Berikut adalah diagram yang digunakan untuk perancangan database yang menunjukan relasi antar objek beserta atribut-atribut dalam sistem E-Surat secara detail:
+![erd esurat19](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/983fa9a7-4ea4-4b9a-9293-b6f3c020c1be)
 
 ### Hierarki Kelas
 Berikut adalah kelas yang digunakan dalam sistem E-Surat:
-
-
+![HIerarki](https://github.com/PA-E-Surat/PBO_Project_E-Surat/assets/126738691/1ebd1f13-28d9-4ebc-889f-22e83886323e)
 
 ### Source Code
-### Action Package
+Berikut adalah penjelasan singkat mengenai source code didalam aplikasi ini:
 ##### ActionButton - Tombol 
-##### PanelAction - Panel Tombolndakan ketika diklik.
-##### TableActionCellRender - Pengatur Tampilan Tombol Kustome Tabel
-##### Tester - Untuk Mencoba Aplikasi
+- Kelas ActionButton
+```
+public class ActionButton extends JButton {
+    
+    private boolean mousePress;
+    
+    public ActionButton() {
+        setContentAreaFilled(false);
+        addMouseListener(new MouseAdapter() {
+            
+            public void mousePress(MouseEvent me) {
+                mousePress = true;
+            }
+            
+            @Override
+            public void mouseReleased(MouseEvent me) {
+                mousePress = false;
+            }
+        });
+    }
+    protected void paintComponenent (Graphics grphcs) {
+        Graphics2D g2 = (Graphics2D) grphcs.create();
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        int width = getWidth();
+        int height = getHeight();
+        int size = Math.min(width, height);
+        int x = (width - size ) / 2;
+        int y = (height - size) / 2;
+        if (mousePress) {
+            g2.setColor(new Color(158, 158, 158 ));
+        } else {
+            g2.setColor(new Color(199, 199, 199));
+        }
+```
+### Penjelasan Kode
+- private boolean mousePress: Ini adalah atribut boolean yang digunakan untuk melacak apakah tombol sedang ditekan atau tidak.
+- Konstruktor ActionButton: Dalam konstruktor, Anda mengatur beberapa sifat tombol, seperti setContentAreaFilled(false), yang membuat tombol tidak menggambar latar belakangnya sendiri.
+- Metode paintComponent: Metode ini digunakan untuk menggambar tampilan tombol. Anda membuat objek Graphics2D dan mengatur beberapa opsi rendering untuk menghasilkan tampilan yang lebih mulus dan rapi.
+
+##### PanelAction - Panel tombol untuk tabel
+- Kelas PanelAction
+```
+public class PanelAction extends javax.swing.JPanel {
+    public PanelAction() {
+        initComponents();
+    }
+    private void initComponents() {
+
+        jButton1 = new javax.swing.JButton();
+        actionButton = new javax.swing.JButton();
+
+        jButton1.setText("jButton1");
+
+        actionButton.setBackground(new java.awt.Color(51, 153, 255));
+        actionButton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        actionButton.setForeground(new java.awt.Color(0, 0, 0));
+        actionButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/detailcon.png"))); // NOI18N
+        actionButton.setText("DETAIL");
+        actionButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                actionButtonActionPerformed(evt);
+            }
+        });
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(actionButton)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(actionButton)
+        );
+    }
+    private void actionButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        System.out.println("Button clicked!");
+        System.out.println("ITWORKKKKKK");
+    }
+    public javax.swing.JButton actionButton;
+    private javax.swing.JButton jButton1;
+}
+``` 
+### Penjelasan Kode
+- Konstruktor PanelAction digunakan untuk menginisialisasi panel dan komponennya. Dalam hal ini _actionButton_ yang akan digunakan untuk menampilkan detail aksi.
+- Tombol aksi (actionButton) dibuat dengan label "DETAIL" dan memiliki aksi yang akan dilakukan ketika tombol tersebut ditekan.
+- metode `actionButtonActionPerformed`, yang akan dipanggil ketika tombol aksi (actionButton) ditekan. Metode ini mencetak pesan ke konsol.
+
+##### TableActionCellRender
+- Kelas TableAction sebagai pengatur table
+```
+package action;
+
+import javax.swing.JTable;
+import java.awt.Component;
+import javax.swing.table.DefaultTableCellRenderer;
+
+public class TableActionCellRender extends DefaultTableCellRenderer {
+    @Override
+    public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean blnl, int i, int il){
+        Component com = super.getTableCellRendererComponent(jtable, o, bln, blnl, i, il);
+        
+        PanelAction action = new PanelAction();
+        action.setBackground(jtable.getSelectionBackground());
+        return action;
+    }
+}
+```
+### Penjelasan Kode
+- TableActionCellRender adalah kelas yang menggantikan renderer sel standar dalam JTable.
+- `getTableCellRendererComponent` adalah metode yang digunakan untuk mengambil komponen yang akan digunakan untuk merender sel dalam tabel.
+- Component `com = super.getTableCellRendererComponent(...)` mengambil komponen sel standar yang digunakan untuk merender sel dalam tabel.
+- Kemudian, sebuah instance dari PanelAction dibuat dan diatur sebagai latar belakang dari komponen sel.
 
 ### Controller Package
 ##### Controller
-- Metode insertData
+- Kelas Controller
+```
+package controller;
+
+import gui.ChooseLogin;
+import gui.MahasiswaForm;
+import gui.MahasiswaInterface;
+import gui.StaffForm;
+
+/**
+ *
+ * @author Footdua
+ */
+class Controller {
+
+    Controller(Main.Model appModel, ChooseLogin chooseLoginView, MahasiswaForm mahasiswaFormView, MahasiswaInterface mahasiswaInterfaceView, StaffForm staffFormView) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
+}
+```
 ### Penjelasan Kode
-
-- Metode insertData
-### Penjelasan Kode
-
-
-- Metode insertData
-### Penjelasan Kode
-
-
-- Metode insertData
-### Penjelasan Kode
-
+ - Kelas `Controller` berperan sebagai pengendali atau perantara antara model aplikasi Anda (dalam hal ini, `Main.Model`) dan tampilan (antarmuka pengguna) yang terdiri dari `ChooseLogin`, `MahasiswaForm`, `MahasiswaInterface`, dan `StaffForm`.- `Main.Model appModel`: Kelas `Controller` menerima model aplikasi sebagai parameter konstruktor. Ini berarti kelas `Controller` bertanggung jawab untuk mengatur komunikasi antara model dan tampilan, mengelola logika bisnis, dan mengatur alur kerja aplikasi.
+- `ChooseLogin chooseLoginView, MahasiswaForm mahasiswaFormView, MahasiswaInterface mahasiswaInterfaceView, StaffForm staffFormView`: Kelas `Controller` menerima tampilan yang terkait dengan aplikasi Anda. Ini memungkinkan `Controller` untuk berinteraksi dengan tampilan dan mengambil tindakan yang diperlukan berdasarkan masukan pengguna atau perubahan dalam model.
+- Di dalam metode konstruktor, Anda dapat melihat pernyataan `throw new UnsupportedOperationException`. Ini menunjukkan bahwa metode yang diimplementasikan dalam kelas `Controller` belum didukung atau belum diimplementasikan secara lengkap.
+- Kelas `Controller` adalah komponen kunci dalam arsitektur MVC (Model-View-Controller) yang memungkinkan pemisahan tugas antara logika bisnis, representasi data, dan tampilan dalam aplikasi Anda. Ini memungkinkan aplikasi Anda untuk lebih mudah di-maintain, dikembangkan, dan diperluas.
 
 ##### DataUpdate 
 - Metode insertData
+```
+package controller;
+
+public class DataUpdate {
+    private String nim;
+    private String status;
+    private String alamat;
+    private String tanggalLahir;
+    private String angkatan;
+    private String ipk;
+    private String program;
+    private String jenjang;
+    private String kontak;
+    private String semester;
+
+    public DataUpdate(String nim, String status) {
+        this.nim = nim;
+        this.status = status;
+    }
+
+    public DataUpdate(String nim, String alamat, String tanggalLahir, String angkatan, String ipk, String program, String jenjang, String kontak, String semester) {
+        this.nim = nim;
+        this.alamat = alamat;
+        this.tanggalLahir = tanggalLahir;
+        this.angkatan = angkatan;
+        this.ipk = ipk;
+        this.program = program;
+        this.jenjang = jenjang;
+        this.kontak = kontak;
+        this.semester = semester;
+    }
+
+    public String getNim() {
+        return nim;
+    }
+ ............
+```
 ### Penjelasan Kode
+- Kelas `DataUpdate` berperan sebagai wadah data yang akan diperbarui atau dimasukkan ke dalam database aplikasi Anda. Kelas ini menyediakan berbagai atribut dan metode akses untuk mengelola data ini. Berikut adalah penjelasan singkat tentang kelas ini:
+- `String nim`: Atribut ini digunakan untuk menyimpan NIM (Nomor Induk Mahasiswa) yang akan diperbarui atau dimasukkan ke dalam database.
+- `String status`: Atribut ini digunakan untuk menyimpan status yang akan diatur dalam database, seperti "Diterima", "Ditolak", atau nilai lain yang sesuai.
+- `String alamat`, `String tanggalLahir`, `String angkatan`, `String ipk`, `String program`, `String jenjang`, `String kontak`, `String semester`: Atribut-atribut ini digunakan untuk menyimpan data tambahan yang akan diperbarui atau dimasukkan ke dalam database, seperti alamat, tanggal lahir, dan sebagainya.
+- Konstruktor `DataUpdate` digunakan untuk membuat objek `DataUpdate` dengan parameter yang sesuai berdasarkan jenis data yang akan diperbarui atau dimasukkan.
+- Metode get dan set tersedia untuk mengakses dan mengubah nilai atribut dalam objek `DataUpdate`.
+- Kelas `DataUpdate` adalah bagian penting dalam model aplikasi Anda yang memungkinkan Anda untuk mengelola dan menyimpan data yang akan diperbarui atau dimasukkan ke dalam database dengan cara yang terstruktur. Hal ini membantu menjaga kejelasan dan konsistensi dalam pengolahan data aplikasi Anda.
 
+##### Main
+- Kelas Main
+```
+package controller;
 
-- Metode insertData
+import gui.ChooseLogin;
+import java.awt.Dimension;
+
+/**
+ *
+ * @author Udinkosd
+ */
+
+public class Main {
+    public static void main(String[] args) {
+        ChooseLogin chooseLogin = new ChooseLogin();
+
+        chooseLogin.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        chooseLogin.setPreferredSize(new Dimension(800, 600));
+
+        chooseLogin.setVisible(true);
+    }
+
+    static class Model {
+
+        public Model() {
+        }
+    }
+}
+```
 ### Penjelasan Kode
+Kelas ini berisi metode `main` yang berfungsi sebagai titik awal eksekusi aplikasi. Ketika Anda menjalankan program Java, metode `main` di kelas ini akan dijalankan terlebih dahulu. Dalam metode `main`, kita membuat instance dari kelas `ChooseLogin`, mengatur preferensi jendela, dan menampilkannya.
 
+```java
+public static void main(String[] args) {
+    ChooseLogin chooseLogin = new ChooseLogin();
 
-- Metode insertData
-### Penjelasan Kode
+    chooseLogin.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+    chooseLogin.setPreferredSize(new Dimension(800, 600));
 
-
-- Metode insertData
-### Penjelasan Kode
-
-
-- Metode insertData
-### Penjelasan Kode
+    chooseLogin.setVisible(true);
+}
 
 
 ### Database Package
@@ -74,7 +265,6 @@ Berikut adalah kelas yang digunakan dalam sistem E-Surat:
   import java.sql.SQLException;
 ```
 ### Penjelasan Kode
-Kelas `Database` adalah kelas yang digunakan untuk mengelola koneksi dengan basis data. Ini memungkinkan aplikasi Anda untuk berinteraksi dengan basis data, dalam hal ini, mengakses data yang diperlukan. Di bawah ini adalah ringkasan singkat tentang kelas `Database`:
 - `Connection`: Kelas ini digunakan untuk membuka dan menutup koneksi ke basis data. Fungsinya adalah mengelola koneksi ke database yang digunakan oleh aplikasi.
 - `DriverManager`: Kelas ini memungkinkan Anda untuk mendaftar driver JDBC yang diperlukan untuk berkomunikasi dengan database tertentu.
 - `SQLException`: Kelas ini menangani pengecualian yang terkait dengan kesalahan yang mungkin terjadi selama berinteraksi dengan database, seperti kesalahan koneksi atau pernyataan SQL.
@@ -958,36 +1148,36 @@ Kode ini menciptakan form staf dengan inisialisasi komponen dan persiapan awal u
 - Imported Package
 ```
 package gui;
-import action.PanelAction;
-import action.TableActionCellRender;
-import controller.DataUpdate;
-import database.Database;
-import entitas.Admin;
-import entitas.DataDiri;
-import entitas.Pengajuan;
-import entitas.RiwayatSurat;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumn;
-import javax.swing.JTable;
-import java.awt.CardLayout;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.Arrays;
-import javax.swing.table.DefaultTableModel;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.List;
-import java.sql.SQLException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-````
+  import action.PanelAction;
+  import action.TableActionCellRender;
+  import controller.DataUpdate;
+  import database.Database;
+  import entitas.Admin;
+  import entitas.DataDiri;
+  import entitas.Pengajuan;
+  import entitas.RiwayatSurat;
+  import javax.swing.table.TableCellRenderer;
+  import javax.swing.table.TableColumn;
+  import javax.swing.JTable;
+  import java.awt.CardLayout;
+  import java.awt.Component;
+  import java.awt.Dimension;
+  import java.awt.event.ActionEvent;
+  import java.awt.event.ActionListener;
+  import java.awt.event.MouseAdapter;
+  import java.awt.event.MouseEvent;
+  import java.util.Arrays;
+  import javax.swing.table.DefaultTableModel;
+  import java.util.List;
+  import java.util.ArrayList;
+  import java.util.List;
+  import java.sql.SQLException;
+  import java.sql.PreparedStatement;
+  import java.sql.ResultSet;
+  import java.util.logging.Level;
+  import java.util.logging.Logger;
+  import javax.swing.JOptionPane;
+```
 ### Penjelasan Kode
 - `database`: Objek database yang digunakan dalam kelas ini.
 - `roleChecker`: String yang menyimpan peran pengguna.
@@ -1158,18 +1348,6 @@ Metode-metode ini memungkinkan pengguna untuk melihat data surat dan mengubah st
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 ### Metode AddMouseListener
 ### Penjelasan Kode
 Kode ini digunakan untuk mengendalikan tindakan ketika pengguna mengklik sel dalam kolom "Action" di tabel `suratTabel`.
@@ -1179,11 +1357,6 @@ Kode ini digunakan untuk mengendalikan tindakan ketika pengguna mengklik sel dal
 - Berdasarkan kolom yang di-klik ("Action") dan indeks baris yang ditemukan, kode ini memeriksa apakah pengguna mengklik sel di kolom "Action" dan juga memeriksa apakah indeks baris valid (lebih besar atau sama dengan nol).
 - Jika pengguna mengklik sel di kolom "Action" dan indeks baris valid, maka program akan mengambil ID surat yang terkait dengan baris yang diklik, mencari data berdasarkan ID surat tersebut, dan menampilkan data tersebut di "pnlCard1" dalam antarmuka pengguna.
 - Hasil dari kode ini adalah mengubah tampilan antarmuka pengguna ke kartu "pnlCard1" dan menampilkan data yang sesuai dengan surat yang diklik oleh pengguna.
-
-
-
-
-
 
 ### Penjelasan
 Kode ini adalah bagian dari kelas `StaffInterface`, yang digunakan untuk mengelola antarmuka pengguna dalam aplikasi Java. Kelas ini memiliki berbagai variabel yang digunakan untuk mengakses data, mengelola tampilan, dan menyimpan informasi pengguna.
