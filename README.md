@@ -40,9 +40,213 @@ Berikut adalah kelas yang digunakan dalam sistem E-Surat:
 ##### ChooseLogin
 ##### MahasiswaForm
 ##### MahasiswaInterface
-##### StaffForm
+- Melakukan Inisialisasi pada komponen
+```
+public class MahasiswaInterface extends javax.swing.JFrame {
+    final Database database;
+    private final String roleChecker;
+    RiwayatSurat riwayatSurat = new RiwayatSurat();
+    CardLayout cardLayout;
+    private String mahasiswaNIM;
+    private String peruntukan;
+    private String mahasiswaNim;
+    private String checkNim;
+    private JPanel suratButtonPanel;
+```
+### Penjelasan Kode
+- `database`: Variabel `database` adalah objek dari kelas Database yang digunakan untuk berinteraksi dengan basis data.
+- `roleChecker`: Variabel `roleChecker` adalah string yang digunakan untuk menyimpan peran pengguna yang saat ini digunakan dalam aplikasi.
+- `riwayatSurat`: Variabel `riwayatSurat` adalah objek dari kelas RiwayatSurat yang digunakan untuk mengakses dan mengelola data riwayat surat.
+- `cardLayout`: Variabel `cardLayout` adalah objek dari kelas CardLayout yang digunakan untuk mengelola tampilan panel (kartu) dalam antarmuka pengguna.
+- `mahasiswaNIM`: Variabel `mahasiswaNIM` adalah string yang digunakan untuk menyimpan NIM (Nomor Induk Mahasiswa) mahasiswa yang saat ini digunakan dalam aplikasi.
+- `peruntukan`: Variabel `peruntukan` adalah string yang digunakan untuk menyimpan peruntukan yang saat ini digunakan dalam aplikasi.
+- `mahasiswaNim`: Variabel `mahasiswaNim` adalah string yang digunakan untuk menyimpan NIM (Nomor Induk Mahasiswa) yang saat ini digunakan dalam aplikasi.
+- `checkNim`: Variabel `checkNim` adalah string yang digunakan untuk memeriksa dan menyimpan NIM (Nomor Induk Mahasiswa) saat memeriksa operasi aplikasi.
+- `suratButtonPanel`: Variabel `suratButtonPanel` adalah objek dari kelas JPanel yang digunakan untuk menampilkan tombol-tombol aksi terkait surat pada antarmuka pengguna.
 
-- Metode showDta
+
+- Melakukan Inisialisasi pada komponen konstruktor JFrame MahasiswaInterface
+```
+ public MahasiswaInterface(String roleChecker) {
+        initComponents();
+        database = new Database();
+        this.roleChecker = roleChecker;
+        pnlCards.add(welcomePanel, "pnlCard4");
+        pnlCards.add(suratPanel, "pnlCard2");
+        pnlCards.add(profilPanel, "pnlCard1");
+        pnlCards.add(changeProfil, "pnlCard3");
+        pnlCards.add(buatPanel, "pnlCard4");
+        Navigation.setPreferredSize(new Dimension(50, 520)); 
+        Navigation.setVisible(true);
+        cardLayout = (CardLayout) (pnlCards.getLayout());
+        suratButtonPanel = new JPanel();
+    }
+```
+### Penjelasan 
+Konstruktor `MahasiswaInterface` adalah metode khusus yang digunakan untuk menginisialisasi objek dari kelas `MahasiswaInterface` ketika kelas ini dibuat (diinstansiasi).
+- `roleChecker`: Parameter `roleChecker` adalah sebuah string yang digunakan untuk menerima peran pengguna yang akan digunakan dalam aplikasi.
+- `database`: Variabel `database` adalah objek dari kelas `Database` yang digunakan untuk berinteraksi dengan basis data.
+- `pnlCards`: Objek `pnlCards` adalah panel yang digunakan untuk menampilkan berbagai kartu (panel) dalam antarmuka pengguna.
+- `welcomePanel`, `suratPanel`, `profilPanel`, `changeProfil`, `buatPanel`: Objek-objek ini adalah panel-panel yang akan ditampilkan dalam kartu-kartu antarmuka pengguna.
+- `Navigation`: Objek `Navigation` adalah komponen yang digunakan untuk navigasi dalam antarmuka pengguna.
+- `cardLayout`: Variabel `cardLayout` adalah objek dari kelas `CardLayout` yang digunakan untuk mengelola tampilan panel (kartu) dalam antarmuka pengguna.
+- `suratButtonPanel`: Variabel `suratButtonPanel` adalah objek dari kelas `JPanel` yang digunakan untuk menampilkan tombol-tombol aksi terkait surat pada antarmuka pengguna.
+
+- Metode showData
+```
+  private void showData() {
+        String nimToCheck = roleChecker;
+        DataDiri dataMahasiswa = new DataDiri();
+        String[] data = dataMahasiswa.readData(nimToCheck);
+        
+        if (data != null) {
+            System.out.println("NIM: " + Arrays.toString(data));
+            namaLengkap.setText((String) data[0]);
+            nimNomor.setText((String) data[1]);
+            programStudi.setText((String) data[2]);
+            jenjangStudi.setText((String) data[3]);
+            ipkMahasiswa.setText((String) data[4]);
+            kontakNomor.setText((String) data[5]);
+            angkatanTahun.setText((String) data[6]);
+            semesterTahun.setText((String) data[7]);
+            alamatRumah.setText((String) data[8]);
+            tempatTanggalLahir.setText((String) data[9]);
+        } else {
+            System.out.println("Data tidak ditemukan");
+        }
+```
+### Penjelasan Kode
+Metode `showData()` digunakan untuk menampilkan dan mengisi data dari seorang mahasiswa pada antarmuka pengguna.
+- `nimToCheck`: Variabel `nimToCheck` digunakan untuk menyimpan Nomor Induk Mahasiswa (NIM) yang akan dicek atau ditampilkan datanya. Nilainya diambil dari variabel `roleChecker`.
+- `dataMahasiswa`: Objek `dataMahasiswa` adalah objek dari kelas `DataDiri` yang digunakan untuk mengakses data mahasiswa.
+- `data`: Variabel `data` digunakan untuk menyimpan data mahasiswa yang diambil dari metode `readData(nimToCheck)` dari objek `dataMahasiswa`.
+
+Jika data ditemukan:
+- Data mahasiswa diambil dan disimpan dalam bentuk array `data`.
+- Data ini kemudian digunakan untuk mengisi berbagai komponen pada antarmuka pengguna, seperti `namaLengkap`, `nimNomor`, `programStudi`, dan lainnya.
+- Jika data mahasiswa tidak ditemukan, maka pesan "Data tidak ditemukan" akan dicetak di konsol.
+Metode `showData()` digunakan untuk menampilkan informasi dan data mahasiswa pada antarmuka pengguna sesuai dengan NIM yang saat ini sedang digunakan.
+
+- Metode inputData
+```
+private void inputDataShow() {
+        String nimToCheck = roleChecker;
+        DataDiri dataMahasiswa = new DataDiri();
+        String[] data = dataMahasiswa.readData(nimToCheck);
+        
+        if (data != null) {
+            System.out.println("NIM: " + Arrays.toString(data));
+            inputAlamat.setText((String) data[8]);
+            inputTempat.setText((String) data[9]);
+            inputTanggal.setText((String) data[9]);
+            inputAngkatan.setText((String) data[6]);
+            inputIPK.setText((String) data[4]);
+            inputProgram.setText((String) data[2]);
+            inputJenjang.setText((String) data[3]);
+            inputKontak.setText((String) data[5]);
+            inputSemester.setText((String) data[7]);
+        } else {
+            System.out.println("Data tidak ditemukan"); 
+        }
+    }
+```
+### Penjelasan Kode
+Metode `inputDataShow()` digunakan untuk menampilkan dan mengisi data mahasiswa pada antarmuka pengguna dengan tujuan pengisian ulang data.
+- `nimToCheck`: Variabel `nimToCheck` digunakan untuk menyimpan Nomor Induk Mahasiswa (NIM) yang akan dicek atau ditampilkan datanya. Nilainya diambil dari variabel `roleChecker`.
+- `dataMahasiswa`: Objek `dataMahasiswa` adalah objek dari kelas `DataDiri` yang digunakan untuk mengakses data mahasiswa.
+- `data`: Variabel `data` digunakan untuk menyimpan data mahasiswa yang diambil dari metode `readData(nimToCheck)` dari objek `dataMahasiswa`.
+Jika data ditemukan:
+- Data mahasiswa diambil dan disimpan dalam bentuk array `data`.
+- Data ini kemudian digunakan untuk mengisi ulang berbagai komponen pada antarmuka pengguna, seperti `inputAlamat`, `inputTempat`, `inputTanggal`, dan lainnya.
+- Jika data mahasiswa tidak ditemukan, maka pesan "Data tidak ditemukan" akan dicetak di konsol.
+
+Metode `inputDataShow()` digunakan untuk mengisi ulang data mahasiswa pada antarmuka pengguna sesuai dengan NIM yang saat ini sedang digunakan.
+
+
+- Metode signOut
+```
+private void navigateToLoginScreen() {
+        ChooseLogin loginScreen = new ChooseLogin();
+        loginScreen.setVisible(true); 
+        this.dispose();
+    }
+private void signOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signOutActionPerformed
+        // TODO add your handling code here:
+        navigateToLoginScreen();
+    }//GEN-LAST:event_signOutActionPerformed
+```
+### Penjelasan Kode
+Metode `navigateToLoginScreen()` digunakan untuk menavigasi pengguna dari antarmuka saat ini ke layar login ketika mereka memilih untuk keluar (sign out) dari aplikasi.
+- Metode ini menciptakan objek `ChooseLogin` yang merupakan antarmuka untuk masuk ke sistem.
+- Selanjutnya, ia mengatur antarmuka `ChooseLogin` sebagai terlihat (visible).
+- Akhirnya, metode ini menutup antarmuka saat ini dengan memanggil `this.dispose()`.
+Metode `navigateToLoginScreen()` memungkinkan pengguna untuk keluar dari aplikasi dan kembali ke halaman login dengan cara yang mudah dan efisien.
+Metode `signOutActionPerformed()` digunakan untuk menangani peristiwa saat tombol "Sign Out" ditekan oleh pengguna dalam antarmuka.
+- Ketika tombol "Sign Out" ditekan, metode ini memanggil `navigateToLoginScreen()` untuk menavigasi pengguna ke layar login.
+Metode ini memberikan kemudahan bagi pengguna untuk keluar dari aplikasi dan kembali ke halaman login dengan cara yang sederhana.
+
+
+- Metode navigationBar
+  ```
+  private void navButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_navButtonActionPerformed
+        // TODO add your handling code here:
+        Dimension currentSize = Navigation.getSize();
+
+        if (currentSize.equals(new Dimension(50, 520))) {
+            Navigation.setPreferredSize(new Dimension(110, 520));
+        } else {
+            Navigation.setPreferredSize(new Dimension(50, 520));
+        }
+
+        Navigation.revalidate();
+        Navigation.repaint();
+    }
+  ```
+### Penjelasan Kode
+Metode `navButtonActionPerformed()` digunakan untuk mengelola peristiwa saat tombol navigasi pada antarmuka pengguna ditekan. Tombol ini bertujuan untuk menyembunyikan atau menampilkan panel navigasi.
+- Pertama, metode ini mendapatkan dimensi (ukuran) saat ini dari komponen Navigation (panel navigasi).
+- Selanjutnya, metode ini memeriksa apakah dimensi saat ini sama dengan `new Dimension(50, 520)`. Jika ya, itu berarti panel navigasi sedang disembunyikan, dan metode akan mengubah ukurannya menjadi `new Dimension(110, 520)`, sehingga panel navigasi akan terlihat.
+- Jika dimensi saat ini tidak sama dengan `new Dimension(50, 520)`, itu berarti panel navigasi sedang terlihat, dan metode akan mengubah ukurannya kembali menjadi `new Dimension(50, 520)`, sehingga panel navigasi akan disembunyikan.
+- Akhirnya, metode memastikan bahwa perubahan ukuran diterapkan dengan memanggil `Navigation.revalidate()` dan `Navigation.repaint()`.
+Metode ini memberikan pengguna kontrol sederhana untuk menyembunyikan atau menampilkan panel navigasi sesuai dengan preferensi mereka, sehingga antarmuka menjadi lebih fleksibel dan mudah digunakan.
+
+- Melakukan updateData dengan changeButton
+  ```
+  private void changeButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeButton1ActionPerformed
+        // TODO add your handling code here:
+        String newAlamat = inputAlamat.getText();
+        String newTanggalLahir = inputTanggal.getText();
+        String newAngkatan = inputAngkatan.getText();
+        String newIpk = inputIPK.getText()  ;
+        String newProgram = inputProgram.getText();
+        String newJenjang = inputJenjang.getText();
+        String newKontak = inputKontak.getText();
+        String newSemester = inputSemester.getText();
+        String nim = roleChecker;
+        
+        DataUpdate dataUpdate = new DataUpdate(nim, newAlamat, newTanggalLahir, newAngkatan, newIpk, newProgram, newJenjang, newKontak, newSemester);
+    
+        DataDiri dataMahasiswa = new DataDiri();
+        boolean updateSuccessful = dataMahasiswa.updateData(dataUpdate);
+
+        if (updateSuccessful) {
+            System.out.println("Data updated successfully.");
+        } else {
+            System.out.println("Data update failed.");
+        }
+    }
+  ```
+### Penjelasan Kode
+Metode `changeButton1ActionPerformed()` digunakan untuk mengelola peristiwa saat tombol "Simpan Perubahan" pada antarmuka pengguna ditekan. Tombol ini bertujuan untuk menyimpan perubahan yang dilakukan oleh pengguna pada data diri mereka.
+- Metode ini pertama-tama mengambil semua input pengguna, seperti alamat baru, tanggal lahir baru, angkatan baru, IPK baru, program studi baru, jenjang studi baru, kontak baru, dan semester baru.
+- Selanjutnya, metode mengambil NIM (Nomor Induk Mahasiswa) saat ini dari variabel `roleChecker`, yang digunakan untuk mengidentifikasi mahasiswa yang sedang mengakses antarmuka.
+- Kemudian, metode membuat objek `DataUpdate` dengan menggunakan data yang telah diambil, yang akan digunakan untuk menyimpan perubahan data.
+- Selanjutnya, metode membuat objek `DataDiri` dan mencoba untuk memperbarui data dengan menggunakan objek `DataUpdate`. Jika perubahan data berhasil disimpan, metode mencetak pesan "Data updated successfully." ke konsol.
+- Jika perubahan data gagal disimpan, metode mencetak pesan "Data update failed." ke konsol.
+Metode ini memungkinkan pengguna untuk menyimpan perubahan pada data diri mereka, seperti alamat, tanggal lahir, dan lainnya, yang akan digunakan dalam aplikasi.
+
+##### StaffForm
+- Melakukan Inisialisasi pada komponen
 ```
 package gui;
 
@@ -70,7 +274,7 @@ Kode ini menciptakan antarmuka untuk staf pada aplikasi dan menginisialisasi kom
   - Komponen `popError` (pop-up error) awalnya diatur menjadi tidak terlihat (false), yang berarti tidak ada pesan error yang ditampilkan secara default.
 Kode ini menciptakan form staf dengan inisialisasi komponen dan persiapan awal untuk antarmuka pengguna.
 
-- Metode showDta
+- Metode Action (Tombol Login/Sign in button)
   ```
   private void signButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signButtonActionPerformed
         // TODO add your handling code here:
@@ -97,12 +301,13 @@ Kode ini menciptakan form staf dengan inisialisasi komponen dan persiapan awal u
             data.closeConnection();
   ```
 ### Penjelasan Kode
-
-- Metode showDta
-### Penjelasan Kode
-
-- Metode showDta
-### Penjelasan Kode
+- `email`: Variabel `email` mengambil teks yang dimasukkan ke dalam `emailTextField`, yaitu alamat email yang digunakan untuk login.
+- `password`: Variabel `password` mengambil kata sandi (password) yang dimasukkan ke dalam `passTextField`, yang disamarkan.
+- Kode berikutnya melakukan validasi. Jika `email` sama dengan "Email" atau `password` kosong, maka pesan error akan ditampilkan pada komponen `popError`, memberikan informasi bahwa alamat email dan kata sandi tidak boleh kosong.
+- Jika tidak ada pesan error yang ditampilkan, maka program akan mencoba melakukan login dengan memeriksa informasi yang dimasukkan melalui objek `Admin`. Jika informasi login sesuai (ditemukan dalam database), maka antarmuka `StaffInterface`
+- akan ditampilkan dan antarmuka login saat ini akan ditutup (`dispose`).
+- Jika informasi login tidak sesuai atau tidak ditemukan dalam database, pesan error akan ditampilkan pada komponen `popError`, memberikan informasi bahwa login gagal.
+- Terakhir, koneksi ke database ditutup.
 
 #### Staff Interface
 - Imported Package
